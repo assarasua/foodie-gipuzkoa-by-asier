@@ -7,27 +7,44 @@ All colors MUST be HSL.
 */
 
 @layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+:root {
+    --background: 20 20% 98%;
+    --foreground: 24 25% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 24 25% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 24 25% 12%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 14 89% 55%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 195 75% 35%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 20 15% 95%;
+    --muted-foreground: 24 10% 40%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 40 85% 60%;
+    --accent-foreground: 24 25% 12%;
+
+    /* Basque-inspired colors */
+    --basque-red: 0 75% 55%;
+    --basque-green: 120 45% 30%;
+    --ocean-blue: 195 75% 35%;
+    --golden-yellow: 45 95% 65%;
+    --warm-orange: 14 89% 55%;
+    
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--ocean-blue)), hsl(var(--basque-green)));
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(var(--muted)));
+    --gradient-accent: linear-gradient(90deg, hsl(var(--warm-orange)), hsl(var(--golden-yellow)));
+    
+    /* Shadows */
+    --shadow-elegant: 0 20px 50px -12px hsl(var(--ocean-blue) / 0.25);
+    --shadow-card: 0 8px 30px -8px hsl(24 25% 12% / 0.1);
+    --shadow-hover: 0 25px 60px -12px hsl(var(--warm-orange) / 0.3);
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
@@ -55,27 +72,44 @@ All colors MUST be HSL.
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+.dark {
+    --background: 24 15% 8%;
+    --foreground: 20 20% 95%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 24 15% 10%;
+    --card-foreground: 20 20% 95%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 24 15% 10%;
+    --popover-foreground: 20 20% 95%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 14 89% 55%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 195 75% 35%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 24 10% 15%;
+    --muted-foreground: 20 15% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 40 85% 60%;
+    --accent-foreground: 24 15% 8%;
+
+    /* Dark mode Basque colors */
+    --basque-red: 0 75% 55%;
+    --basque-green: 120 45% 35%;
+    --ocean-blue: 195 75% 40%;
+    --golden-yellow: 45 95% 70%;
+    --warm-orange: 14 89% 60%;
+    
+    /* Dark gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--ocean-blue)), hsl(var(--basque-green)));
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(var(--muted)));
+    --gradient-accent: linear-gradient(90deg, hsl(var(--warm-orange)), hsl(var(--golden-yellow)));
+    
+    /* Dark shadows */
+    --shadow-elegant: 0 20px 50px -12px hsl(0 0% 0% / 0.5);
+    --shadow-card: 0 8px 30px -8px hsl(0 0% 0% / 0.3);
+    --shadow-hover: 0 25px 60px -12px hsl(var(--warm-orange) / 0.4);
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
