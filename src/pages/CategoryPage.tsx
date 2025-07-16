@@ -499,17 +499,6 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
             </span>
           </div>
           
-          {restaurant.mapUrl && (
-            <Button 
-              variant="outline" 
-              size="sm"
-              onClick={() => window.open(restaurant.mapUrl, '_blank')}
-              className="text-primary border-primary/20 hover:bg-primary hover:text-primary-foreground"
-            >
-              <ExternalLink className="h-3 w-3 mr-1" />
-              Abrir en Maps
-            </Button>
-          )}
         </div>
 
         {/* Google Maps Link */}
