@@ -18,7 +18,7 @@ All colors MUST be HSL.
     --popover: 24 24 27;
     --popover-foreground: 250 250 250;
 
-    --primary: 142 102 255; /* Vibrant purple */
+    --primary: 200 100% 60%; /* Azul neón brillante 💙 */
     --primary-foreground: 16 16 20;
 
     --secondary: 39 39 42;
@@ -27,23 +27,23 @@ All colors MUST be HSL.
     --muted: 39 39 42;
     --muted-foreground: 161 161 170;
 
-    --accent: 255 107 107; /* Coral accent */
+    --accent: 280 100% 70%; /* Púrpura neón como acento */
     --accent-foreground: 16 16 20;
 
-    /* Gen Z Vibrant Colors */
-    --neon-pink: 322 100% 70%;
-    --electric-blue: 195 100% 60%;
-    --cyber-green: 120 100% 50%;
-    --sunset-orange: 25 100% 60%;
+    /* Gen Z Azul Neón Colors */
+    --neon-blue: 200 100% 60%;
+    --electric-cyan: 180 100% 50%;
+    --cyber-purple: 280 100% 70%;
+    --sunset-pink: 320 100% 60%;
     
-    /* Gen Z Gradients and Effects */
-    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    /* Gradientes con azul neón */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--cyber-purple)));
     --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(27 27 30));
-    --gradient-accent: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--accent)), hsl(280 100% 70%));
+    --gradient-accent: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--electric-cyan)), hsl(var(--cyber-purple)));
     
-    /* Modern Shadows */
-    --shadow-hover: 0 20px 40px -12px hsl(var(--primary) / 0.25);
-    --shadow-glow: 0 0 30px hsl(var(--accent) / 0.5);
+    /* Sombras azul neón */
+    --shadow-hover: 0 20px 40px -12px hsl(var(--primary) / 0.4);
+    --shadow-glow: 0 0 30px hsl(var(--primary) / 0.6);
     
     /* Animation Variables */
     --animate-duration: 0.6s;
@@ -85,7 +85,7 @@ All colors MUST be HSL.
     --popover: 24 24 27;
     --popover-foreground: 250 250 250;
 
-    --primary: 142 102 255;
+    --primary: 200 100% 60%; /* Mismo azul neón */
     --primary-foreground: 16 16 20;
 
     --secondary: 39 39 42;
@@ -94,23 +94,23 @@ All colors MUST be HSL.
     --muted: 39 39 42;
     --muted-foreground: 161 161 170;
 
-    --accent: 255 107 107;
+    --accent: 280 100% 70%; /* Púrpura neón */
     --accent-foreground: 16 16 20;
 
-    /* Dark mode Gen Z colors */
-    --neon-pink: 322 100% 70%;
-    --electric-blue: 195 100% 60%;
-    --cyber-green: 120 100% 50%;
-    --sunset-orange: 25 100% 60%;
+    /* Dark mode azul neón colors */
+    --neon-blue: 200 100% 60%;
+    --electric-cyan: 180 100% 50%;
+    --cyber-purple: 280 100% 70%;
+    --sunset-pink: 320 100% 60%;
     
-    /* Dark gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    /* Gradientes oscuros con azul neón */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--cyber-purple)));
     --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(27 27 30));
-    --gradient-accent: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--accent)), hsl(280 100% 70%));
+    --gradient-accent: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--electric-cyan)), hsl(var(--cyber-purple)));
     
-    /* Dark shadows */
-    --shadow-hover: 0 20px 40px -12px hsl(var(--primary) / 0.3);
-    --shadow-glow: 0 0 30px hsl(var(--accent) / 0.6);
+    /* Sombras oscuras azul neón */
+    --shadow-hover: 0 20px 40px -12px hsl(var(--primary) / 0.4);
+    --shadow-glow: 0 0 30px hsl(var(--primary) / 0.8);
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
