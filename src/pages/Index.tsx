@@ -1,39 +1,45 @@
 import { HeroSection } from "@/components/HeroSection";
 import { FoodCategoryCard } from "@/components/FoodCategoryCard";
+import { useNavigate } from "react-router-dom";
 
 const foodCategories = [
   {
     title: "Pintxos Donosti",
     emoji: "🍤",
-    description: "Los mejores pintxos de San Sebastián. Tradición y creatividad en cada bocado de la capital gastronómica."
+    description: "Lo mejor de una ruta de pintxos es ir a 3-4 lugares diferentes y probar los diferentes estilos de la cocina vasca.",
+    slug: "pintxos"
   },
   {
     title: "Pescados & Mariscos",
     emoji: "🌊",
-    description: "Del mar Cantábrico a tu mesa. Pescados frescos y mariscos de la costa vasca con sabor auténtico."
+    description: "Los mejores sabores del mar cantábrico en Gipuzkoa.",
+    slug: "pescados-mariscos"
   },
   {
     title: "Carnes",
     emoji: "🐄",
-    description: "Carnes de primera calidad. Desde el famoso chuletón a la brasa hasta las mejores carnes rojas de la región."
+    description: "Los mejores chuletones y carnes de Gipuzkoa en sus templos gastronómicos.",
+    slug: "carnes"
   },
   {
     title: "Sidrería",
     emoji: "🍎",
-    description: "La tradición sidrera vasca. Sidra natural, bacalao al pil pil y la experiencia auténtica de las sidrerías."
+    description: "Auténticas sidrerías donde disfrutar del menú tradicional vasco.",
+    slug: "sidreria"
   },
   {
     title: "Estrellas Desconocidas",
     emoji: "⭐",
-    description: "Joyas ocultas de la gastronomía gipuzkoana. Lugares secretos que solo conocen los locales."
+    description: "Restaurantes con estrella Michelin y propuestas gastronómicas únicas en Gipuzkoa.",
+    slug: "estrellas-desconocidas"
   }
 ];
 
 const Index = () => {
-  const handleCategoryClick = (title: string) => {
-    // Here we would navigate to the specific category page
-    // For now, we'll just log it
-    console.log(`Clicked on ${title}`);
+  const navigate = useNavigate();
+  
+  const handleCategoryClick = (slug: string) => {
+    navigate(`/category/${slug}`);
   };
 
   return (
@@ -63,7 +69,7 @@ const Index = () => {
                   title={category.title}
                   emoji={category.emoji}
                   description={category.description}
-                  onClick={() => handleCategoryClick(category.title)}
+                  onClick={() => handleCategoryClick(category.slug)}
                 />
               </div>
             ))}
