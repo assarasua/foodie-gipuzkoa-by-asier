@@ -1,8 +1,16 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, MapPin, ChefHat, Target, Euro } from "lucide-react";
+import { ArrowLeft, MapPin, ChefHat, Target, Euro, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useState } from "react";
+
+// Import food images
+import chefImage from "@/assets/chef-young-talent.jpg";
+import pintxosImage from "@/assets/pintxos-food.jpg";
+import carneImage from "@/assets/carne-food.jpg";
+import seafoodImage from "@/assets/seafood-food.jpg";
+import sidreriaImage from "@/assets/sidreria-food.jpg";
 
 interface Restaurant {
   name: string;
@@ -14,6 +22,8 @@ interface Restaurant {
   rating?: number;
   age?: number;
   category?: string;
+  imageUrl?: string;
+  embedMapUrl?: string;
 }
 
 interface CategoryData {
@@ -36,7 +46,10 @@ const categoriesData: Record<string, CategoryData> = {
         description: "Jefe de cocina y copropietario del Ama de Tolosa. Reconocido con 2 'Soles' de Guía Repsol, la 'T de Oro' de 'Tapas Magazine' 2023, 'Restaurante Recomendado' en la Guía Michelin, premio 'Cocineros Revelación' de Madrid Fusión 2023.",
         location: "Tolosa",
         age: 28,
-        category: "Chef"
+        category: "Chef",
+        imageUrl: chefImage,
+        mapUrl: "https://goo.gl/maps/batHyFFoDRaHtHRA9?g_st=ic",
+        embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2906.123456789!2d-2.0123456!3d43.1234567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDA3JzI0LjQiTiAywrAwMCc1Mi42Ilc!5e0!3m2!1sen!2ses!4v1234567890123!5m2!1sen!2ses"
       },
       {
         name: "Somos Bakery",
@@ -383,6 +396,29 @@ const categoriesData: Record<string, CategoryData> = {
 };
 
 const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
+  const [showMap, setShowMap] = useState(false);
+  
+  const getDefaultImage = (category: string) => {
+    switch (category?.toLowerCase()) {
+      case 'chef':
+      case 'joven talento':
+        return chefImage;
+      case 'pintxos':
+        return pintxosImage;
+      case 'carne':
+      case 'carnes':
+        return carneImage;
+      case 'pescado':
+      case 'mariscos':
+        return seafoodImage;
+      case 'sidreria':
+        return sidreriaImage;
+      default:
+        return chefImage;
+    }
+  };
+
+  const restaurantImage = restaurant.imageUrl || getDefaultImage(restaurant.category || '');
   const renderStars = () => {
     if (!restaurant.rating) return null;
     return (
@@ -407,18 +443,38 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
   };
 
   return (
-    <Card className="group hover:shadow-hover transition-all duration-300 bg-gradient-card border-0">
-      <CardHeader>
-        <div className="flex justify-between items-start">
-          <CardTitle className="text-foreground group-hover:text-primary transition-colors">
+    <Card className="group hover:shadow-glow transition-all duration-500 glassmorphism border-0 overflow-hidden">
+      {/* Restaurant Image */}
+      <div className="relative h-48 overflow-hidden">
+        <img 
+          src={restaurantImage} 
+          alt={`${restaurant.name} - ${restaurant.specialties}`}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+        <div className="absolute bottom-4 left-4 right-4">
+          <h3 className="text-white font-bold text-xl mb-1 drop-shadow-lg">
             {restaurant.name}
-          </CardTitle>
-          <div className="flex gap-2">
-            {renderAge()}
-            <Badge variant="secondary" className="bg-primary/10 text-primary">
-              {restaurant.price}
-            </Badge>
-          </div>
+          </h3>
+          {renderAge()}
+        </div>
+      </div>
+
+      <CardHeader className="pb-2">
+        <div className="flex justify-between items-start">
+          <Badge variant="secondary" className="bg-primary/10 text-primary self-start">
+            {restaurant.price}
+          </Badge>
+          {restaurant.embedMapUrl && (
+            <Button 
+              variant="ghost" 
+              size="sm"
+              onClick={() => setShowMap(!showMap)}
+              className="text-primary hover:text-primary-foreground hover:bg-primary"
+            >
+              {showMap ? 'Ocultar Mapa' : 'Ver Mapa'}
+            </Button>
+          )}
         </div>
         {renderStars()}
       </CardHeader>
@@ -453,10 +509,27 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
               onClick={() => window.open(restaurant.mapUrl, '_blank')}
               className="text-primary border-primary/20 hover:bg-primary hover:text-primary-foreground"
             >
-              Ver Mapa
+              <ExternalLink className="h-3 w-3 mr-1" />
+              Abrir en Maps
             </Button>
           )}
         </div>
+
+        {/* Embedded Google Map */}
+        {showMap && restaurant.embedMapUrl && (
+          <div className="mt-4 rounded-lg overflow-hidden border border-border/20">
+            <iframe
+              src={restaurant.embedMapUrl}
+              width="100%"
+              height="200"
+              style={{ border: 0 }}
+              allowFullScreen={true}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="w-full"
+            />
+          </div>
+        )}
       </CardContent>
     </Card>
   );
