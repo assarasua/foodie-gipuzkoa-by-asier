@@ -173,7 +173,7 @@ All colors MUST be HSL.
 
   .animate-fade-in-up {
     animation: fade-in-up var(--animate-duration) ease-out forwards;
-    opacity: 0;
+    opacity: 1; /* Cambié de 0 a 1 para evitar que el texto desaparezca */
   }
 
   .animate-pulse-glow {

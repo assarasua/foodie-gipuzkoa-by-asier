@@ -13,7 +13,7 @@ export const HeroSection = () => {
       
       {/* Content */}
       <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
-        <div className="animate-fade-in-up">
+        <div className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
           <div className="flex items-center justify-center gap-4 mb-6">
             <span className="text-6xl animate-float">👨‍🍳</span>
             <span className="text-6xl animate-float" style={{ animationDelay: '1s' }}>🍤</span>
