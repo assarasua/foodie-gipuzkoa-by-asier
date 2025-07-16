@@ -27,23 +27,23 @@ export const FoodCategoryCard = ({
       )}
       onClick={onClick}
     >
-      <CardContent className="p-8 text-center relative z-10">        
+      <CardContent className="p-6 md:p-8 text-center relative z-10">        
         <div className="relative z-20">
-          <div className="text-6xl mb-4 animate-float group-hover:animate-pulse-glow transition-all duration-500">
+          <div className="text-4xl md:text-6xl mb-4 animate-float group-hover:animate-pulse-glow transition-all duration-500">
             {emoji}
           </div>
           
-          <h3 className="text-2xl font-bold text-foreground mb-3 group-hover:text-primary group-hover:neon-text transition-all duration-300">
+          <h3 className="text-lg md:text-2xl font-bold text-foreground mb-3 group-hover:text-primary group-hover:neon-text transition-all duration-300">
             {title}
           </h3>
           
-          <p className="text-muted-foreground text-lg leading-relaxed mb-4">
+          <p className="text-muted-foreground text-sm md:text-lg leading-relaxed mb-4 min-h-[60px] md:min-h-[80px] flex items-center justify-center">
             {description}
           </p>
           
           <Badge 
             variant="secondary" 
-            className="bg-gradient-accent text-white border-0 group-hover:animate-gradient transition-all duration-300 px-4 py-2 text-sm font-semibold"
+            className="bg-gradient-accent text-white border-0 group-hover:animate-gradient transition-all duration-300 px-3 md:px-4 py-1 md:py-2 text-xs md:text-sm font-semibold"
           >
             Explorar ✨
           </Badge>
