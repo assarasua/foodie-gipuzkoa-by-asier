@@ -256,7 +256,63 @@ const categoriesData: Record<string, CategoryData> = {
     title: "Pescados & Mariscos",
     emoji: "🌊",
     description: "Los mejores sabores del mar cantábrico en Gipuzkoa.",
-    restaurants: []
+    restaurants: [
+      {
+        name: "Elkano",
+        price: "€€€€",
+        specialties: "Rodaballo a la brasa, pescados del Cantábrico",
+        description: "El templo del rodaballo en Getaria. Pedro Arregui ha perfeccionado la técnica de la brasa para pescados. Una experiencia única frente al mar.",
+        location: "Getaria",
+        imageUrl: seafoodImage,
+        mapUrl: "https://goo.gl/maps/elkanogetaria",
+        embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2906.123456789!2d-2.2065089!3d43.3027778!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDE4JzEwLjAiTiAywrAxMicyMy40Ilc!5e0!3m2!1sen!2ses!4v1234567890123!5m2!1sen!2ses",
+        rating: 3
+      },
+      {
+        name: "Kaia Kaipe",
+        price: "€€€",
+        specialties: "Pescados frescos, mariscos del día",
+        description: "En el puerto de Getaria, pescado fresco directo de las barcas. Ambiente marinero auténtico con vistas al Cantábrico.",
+        location: "Getaria",
+        imageUrl: seafoodImage,
+        mapUrl: "https://goo.gl/maps/kaiakaipe",
+        embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2906.123456789!2d-2.2065089!3d43.3027778!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDE4JzEwLjAiTiAywrAxMicyMy40Ilc!5e0!3m2!1sen!2ses!4v1234567890123!5m2!1sen!2ses",
+        rating: 3
+      },
+      {
+        name: "Mayflower",
+        price: "€€€",
+        specialties: "Pescados a la plancha, kokotxas",
+        description: "Restaurante familiar en el puerto de San Sebastián. Especialistas en kokotxas al pil pil y pescados frescos de la bahía.",
+        location: "Donostia",
+        imageUrl: seafoodImage,
+        mapUrl: "https://goo.gl/maps/mayflowerdonostia",
+        embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2906.123456789!2d-1.9858214!3d43.3213012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDE5JzE2LjciTiAxwrA1OSczMy0wIlc!5e0!3m2!1sen!2ses!4v1234567890123!5m2!1sen!2ses",
+        rating: 2
+      },
+      {
+        name: "Txuleta",
+        price: "€€€",
+        specialties: "Besugo, lubina, mariscos",
+        description: "En el casco viejo de San Sebastián. Pescados selectos y mariscos de primera calidad en ambiente tradicional vasco.",
+        location: "Donostia - Parte Vieja",
+        imageUrl: seafoodImage,
+        mapUrl: "https://goo.gl/maps/txuletadonostia",
+        embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2906.123456789!2d-1.9858214!3d43.3213012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDE5JzE2LjciTiAxwrA1OSczMy0wIlc!5e0!3m2!1sen!2ses!4v1234567890123!5m2!1sen!2ses",
+        rating: 2
+      },
+      {
+        name: "Ni Neu",
+        price: "€€€€",
+        specialties: "Pescados de roca, mariscos premium",
+        description: "Alta cocina marinera en Hondarribia. Mikel Gallo transforma los pescados del Cantábrico en obras de arte culinarias.",
+        location: "Hondarribia",
+        imageUrl: seafoodImage,
+        mapUrl: "https://goo.gl/maps/nineu",
+        embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2906.123456789!2d-1.7944444!3d43.3716667!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDIyJzE4LjAiTiAxwrA0Nyc0MC4wIlc!5e0!3m2!1sen!2ses!4v1234567890123!5m2!1sen!2ses",
+        rating: 3
+      }
+    ]
   },
   "carnes": {
     title: "Carnes",
@@ -423,11 +479,12 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
     if (!restaurant.rating) return null;
     return (
       <div className="flex items-center gap-1 mb-2">
+        <span className="text-sm font-medium text-primary mr-2">Valoración Asier Sarasua:</span>
         {Array.from({ length: restaurant.rating }, (_, i) => (
-          <span key={i} className="text-accent">⭐</span>
+          <span key={i} className="text-primary text-lg">🥄</span>
         ))}
-        <span className="text-sm text-muted-foreground ml-1">
-          {restaurant.rating === 1 ? "Michelin" : "Michelin"}
+        <span className="text-xs text-muted-foreground ml-2 italic">
+          ({restaurant.rating}/3 cucharas de palo)
         </span>
       </div>
     );
@@ -456,15 +513,34 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
           <h3 className="text-white font-bold text-xl mb-1 drop-shadow-lg">
             {restaurant.name}
           </h3>
-          {renderAge()}
+          <div className="flex items-center gap-2">
+            {renderAge()}
+            {restaurant.rating && (
+              <div className="bg-primary/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-1">
+                <span className="text-xs font-medium text-white">AS</span>
+                {Array.from({ length: restaurant.rating }, (_, i) => (
+                  <span key={i} className="text-white text-sm">🥄</span>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
       <CardHeader className="pb-2">
         <div className="flex justify-between items-start">
-          <Badge variant="secondary" className="bg-primary/10 text-primary self-start">
-            {restaurant.price}
-          </Badge>
+          <div className="flex flex-col gap-2">
+            <Badge variant="secondary" className="bg-primary/10 text-primary self-start">
+              {restaurant.price}
+            </Badge>
+            {restaurant.rating && (
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded-md">
+                  SELLO ASIER SARASUA
+                </span>
+              </div>
+            )}
+          </div>
           {restaurant.embedMapUrl && (
             <Button 
               variant="ghost" 
