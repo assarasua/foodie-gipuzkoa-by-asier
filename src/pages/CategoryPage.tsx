@@ -10,8 +10,10 @@ interface Restaurant {
   specialties: string;
   description: string;
   location: string;
-  mapUrl: string;
+  mapUrl?: string;
   rating?: number;
+  age?: number;
+  category?: string;
 }
 
 interface CategoryData {
@@ -22,6 +24,85 @@ interface CategoryData {
 }
 
 const categoriesData: Record<string, CategoryData> = {
+  "jovenes-talentos": {
+    title: "Jóvenes Talentos",
+    emoji: "🌟",
+    description: "Los 100 Jóvenes Talentos de la Gastronomía del Basque Culinary Center. Profesionales menores de 30 años que están transformando la gastronomía vasca.",
+    restaurants: [
+      {
+        name: "Gorka Rico - Ama",
+        price: "€€€",
+        specialties: "Cocina de mercado y temporada",
+        description: "Jefe de cocina y copropietario del Ama de Tolosa. Reconocido con 2 'Soles' de Guía Repsol, la 'T de Oro' de 'Tapas Magazine' 2023, 'Restaurante Recomendado' en la Guía Michelin, premio 'Cocineros Revelación' de Madrid Fusión 2023.",
+        location: "Tolosa",
+        age: 28,
+        category: "Chef"
+      },
+      {
+        name: "Somos Bakery",
+        price: "€€",
+        specialties: "Café, repostería y cocina",
+        description: "Copropietaria de Somos Bakery en Donostia, cafetería de especialidad donde el café, la repostería y la cocina son los tres pilares del proyecto. Trabajamos con los mejores productores y proveedores del sector.",
+        location: "Donostia",
+        age: 27,
+        category: "Cafetería"
+      },
+      {
+        name: "Galparsoro Okindegia",
+        price: "€",
+        specialties: "Panadería artesanal",
+        description: "Nueva generación de la emblemática panadería Galparsoso de la Parte Vieja donostiarra. Maestro panadero formado en Francia, número uno de su promoción en el Instituto Nacional de Panadería de Normandía.",
+        location: "Donostia - Parte Vieja",
+        age: 26,
+        category: "Panadería"
+      },
+      {
+        name: "Quesos Ixidro",
+        price: "€€",
+        specialties: "Queso Idiazábal artesanal",
+        description: "Pastor y maestro quesero en Lazkao. Mantiene la tradición en la elaboración del queso de oveja latxa con denominación Artzai Gazta Idiazabal Baserrikoa. En verano sube a la sierra de Aralar con las ovejas.",
+        location: "Lazkao",
+        age: 25,
+        category: "Quesería"
+      },
+      {
+        name: "Caserío Arriatzu",
+        price: "€€",
+        specialties: "Productos de caserío",
+        description: "Hernaniarra, agricultora y ganadera, cuarta generación en el caserío Arriatzu que adapta la tradición a los nuevos tiempos. Venta directa y contacto cercano con los clientes.",
+        location: "Hernani",
+        age: 29,
+        category: "Baserritarra"
+      },
+      {
+        name: "Paul Arguinzoniz - Etxebarri",
+        price: "€€€€",
+        specialties: "Sala y sumillería",
+        description: "Hijo de Bittor Arginzoniz, forma parte del equipo de sala y sumillería de Asador Etxebarri en Axpe. Especializado en el mundo del vino bajo la tutela de Mohamed Ben Abdallah.",
+        location: "Axpe (Bizkaia)",
+        age: 24,
+        category: "Sumiller"
+      },
+      {
+        name: "Trike Koffe Roasters",
+        price: "€€",
+        specialties: "Café especialidad",
+        description: "Copropietaria en Vitoria, dedicada al mundo del café desde la semilla hasta la taza. Proyecto pequeño con esencia e identidad, enfocado en calidad y sabor.",
+        location: "Vitoria",
+        age: 28,
+        category: "Café"
+      },
+      {
+        name: "Gloop - Cubiertos Comestibles",
+        price: "€€",
+        specialties: "Innovación sostenible",
+        description: "Cofundadora de startup foodtech en Bilbao que crea cubiertos comestibles como solución sostenible al plástico de un solo uso. Colaboran con marcas como Iberostar y Mahou.",
+        location: "Bilbao",
+        age: 27,
+        category: "Innovación"
+      }
+    ]
+  },
   "pintxos": {
     title: "Pintxos Donosti",
     emoji: "🍤",
@@ -65,6 +146,15 @@ const categoriesData: Record<string, CategoryData> = {
         location: "Donostia",
         mapUrl: "https://goo.gl/maps/xoaNQDFM8SD4r1S89",
         rating: 3
+      },
+      {
+        name: "David Yarnoz - Martín Berasategui",
+        price: "€€€€",
+        specialties: "Carnes premium, I+D",
+        description: "Jefe de partida de carnes en Martín Berasategui Lasarte. 11 años con Martín y su equipo, responsable de I+D y creación de nuevos platos. Dedicado al trabajo duro, disciplina y constancia.",
+        location: "Lasarte",
+        age: 29,
+        category: "Joven Talento"
       }
     ]
   },
@@ -138,6 +228,25 @@ const categoriesData: Record<string, CategoryData> = {
         location: "Urdániz",
         mapUrl: "https://maps.app.goo.gl/fgGmZHvf5tFaF4Bw9?g_st=ic",
         rating: 2
+      },
+      {
+        name: "Aitor López - Arzak I+D",
+        price: "€€€€",
+        specialties: "I+D, innovación culinaria",
+        description: "Responsable de I+D en el restaurante Arzak de Donostia. Jefe de partida de carnes y pescados, ahora uno de los responsables máximos del departamento de innovación. Finalista de 'Chef Balfegó 2024'.",
+        location: "Donostia",
+        age: 28,
+        category: "Joven Talento"
+      },
+      {
+        name: "Marc Cussó - Mugaritz",
+        price: "€€€€",
+        specialties: "Alta cocina, 2 ⭐️ Michelin",
+        description: "Jefe de cocina en Mugaritz, Errenteria. Formado en el restaurante de Michael Bras en París. Mugaritz mantiene 2 estrellas Michelin y récord de 15 años en el Top 10 mundial de 'The World's 50 Best Restaurants'.",
+        location: "Errenteria",
+        age: 29,
+        category: "Joven Talento",
+        rating: 2
       }
     ]
   }
@@ -158,6 +267,15 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
     );
   };
 
+  const renderAge = () => {
+    if (!restaurant.age) return null;
+    return (
+      <Badge variant="outline" className="text-xs bg-primary/5 text-primary border-primary/20">
+        {restaurant.age} años
+      </Badge>
+    );
+  };
+
   return (
     <Card className="group hover:shadow-hover transition-all duration-300 bg-gradient-card border-0">
       <CardHeader>
@@ -165,9 +283,12 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
           <CardTitle className="text-foreground group-hover:text-primary transition-colors">
             {restaurant.name}
           </CardTitle>
-          <Badge variant="secondary" className="bg-primary/10 text-primary">
-            {restaurant.price}
-          </Badge>
+          <div className="flex gap-2">
+            {renderAge()}
+            <Badge variant="secondary" className="bg-primary/10 text-primary">
+              {restaurant.price}
+            </Badge>
+          </div>
         </div>
         {renderStars()}
       </CardHeader>

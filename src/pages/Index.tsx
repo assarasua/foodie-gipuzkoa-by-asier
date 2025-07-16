@@ -4,6 +4,12 @@ import { useNavigate } from "react-router-dom";
 
 const foodCategories = [
   {
+    title: "Jóvenes Talentos",
+    emoji: "🌟",
+    description: "Los 100 Jóvenes Talentos de la Gastronomía del Basque Culinary Center. Profesionales menores de 30 años que están transformando la gastronomía vasca.",
+    slug: "jovenes-talentos"
+  },
+  {
     title: "Pintxos Donosti",
     emoji: "🍤",
     description: "Lo mejor de una ruta de pintxos es ir a 3-4 lugares diferentes y probar los diferentes estilos de la cocina vasca.",
