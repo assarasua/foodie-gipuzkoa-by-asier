@@ -4,12 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 const foodCategories = [
   {
-    title: "Jóvenes Talentos",
-    emoji: "🌟",
-    description: "Los 100 Jóvenes Talentos de la Gastronomía del Basque Culinary Center. Profesionales menores de 30 años que están transformando la gastronomía vasca.",
-    slug: "jovenes-talentos"
-  },
-  {
     title: "Pintxos Donosti",
     emoji: "🍤",
     description: "Lo mejor de una ruta de pintxos es ir a 3-4 lugares diferentes y probar los diferentes estilos de la cocina vasca.",
@@ -96,6 +90,25 @@ const Index = () => {
                 />
               </div>
             ))}
+          </div>
+        </div>
+        
+        {/* Bonus Section */}
+        <div className="mt-20 text-center">
+          <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 rounded-xl p-8 mx-4">
+            <div className="text-5xl mb-4">🌟</div>
+            <h3 className="text-2xl font-bold text-foreground mb-4">
+              Sección Bonus: 100 Jóvenes Talentos 2024
+            </h3>
+            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+              Descubre los 100 profesionales menores de 30 años que están transformando la gastronomía según el Basque Culinary Center
+            </p>
+            <button 
+              onClick={() => navigate('/jovenes-talentos')}
+              className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 rounded-lg font-semibold transition-colors"
+            >
+              Ver los 100 Talentos ✨
+            </button>
           </div>
         </div>
       </div>
