@@ -5,12 +5,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 
-// Import food images
-import chefImage from "@/assets/chef-young-talent.jpg";
-import chefTraditional from "@/assets/chef-traditional.jpg";
-import chefFemale from "@/assets/chef-female.jpg";
-import chefTxakoli from "@/assets/chef-txakoli.jpg";
-import chefVegan from "@/assets/chef-vegan.jpg";
+// Import restaurant logos
+import logoElkano from "@/assets/logo-elkano.png";
+import logoCucharaSanTelmo from "@/assets/logo-cuchara-san-telmo.png";
+import logoBarNestor from "@/assets/logo-bar-nestor.png";
+import logoGandarias from "@/assets/logo-gandarias.png";
+import logoAsadorNicolas from "@/assets/logo-asador-nicolas.png";
+import logoCasaJulian from "@/assets/logo-casa-julian.png";
+import logoArzak from "@/assets/logo-arzak.png";
+import logoTxominEtxaniz from "@/assets/logo-txomin-etxaniz.png";
+import logoAtari from "@/assets/logo-atari.png";
+import logoEtxebarri from "@/assets/logo-etxebarri.png";
 import pintxosImage from "@/assets/pintxos-food.jpg";
 import pintxosBar from "@/assets/pintxos-bar.jpg";
 import carneImage from "@/assets/carne-food.jpg";
@@ -52,7 +57,7 @@ const categoriesData: Record<string, CategoryData> = {
         location: "Tolosa",
         age: 28,
         category: "Chef",
-        imageUrl: chefImage,
+        imageUrl: logoEtxebarri,
         mapUrl: "https://goo.gl/maps/batHyFFoDRaHtHRA9?g_st=ic",
         embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2906.123456789!2d-2.0123456!3d43.1234567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDA3JzI0LjQiTiAywrAwMCc1Mi42Ilc!5e0!3m2!1sen!2ses!4v1234567890123!5m2!1sen!2ses"
       },
@@ -262,7 +267,7 @@ const categoriesData: Record<string, CategoryData> = {
         specialties: "Pintxos creativos, foie micuit",
         description: "Pionero en la renovación del pintxo tradicional. Cada creación es una obra de arte en miniatura con sabores intensos.",
         location: "Donostia - Parte Vieja",
-        imageUrl: pintxosBar,
+        imageUrl: logoCucharaSanTelmo,
         mapUrl: "https://goo.gl/maps/lacucharasantelmo",
         embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d721.5!2d-1.9858214!3d43.3213012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDE5JzE2LjciTiAxwrA1OSczMy0wIlc!5e0!3m2!1sen!2ses!4v1234567890!5m2!1sen!2ses",
         rating: 3
@@ -273,7 +278,7 @@ const categoriesData: Record<string, CategoryData> = {
         specialties: "Tortilla de patatas, tomate con anchoa",
         description: "El templo de la tortilla en la Parte Vieja. Solo abren cuando se acaba la tortilla. Una experiencia única e irrepetible.",
         location: "Donostia - Parte Vieja",
-        imageUrl: chefTraditional,
+        imageUrl: logoBarNestor,
         mapUrl: "https://goo.gl/maps/barnestor",
         embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d721.5!2d-1.9858214!3d43.3213012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDE5JzE2LjciTiAxwrA1OSczMy0wIlc!5e0!3m2!1sen!2ses!4v1234567891!5m2!1sen!2ses",
         rating: 3
@@ -284,7 +289,7 @@ const categoriesData: Record<string, CategoryData> = {
         specialties: "Gilda, jamón ibérico, pintxos tradicionales",
         description: "Ambiente auténtico donostiarra. El mejor jamón ibérico y pintxos tradicionales en el corazón de la Parte Vieja.",
         location: "Donostia - Parte Vieja",
-        imageUrl: pintxosImage,
+        imageUrl: logoGandarias,
         mapUrl: "https://goo.gl/maps/gandarias",
         embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d721.5!2d-1.9858214!3d43.3213012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDE5JzE2LjciTiAxwrA1OSczMy0wIlc!5e0!3m2!1sen!2ses!4v1234567892!5m2!1sen!2ses",
         rating: 2
@@ -295,7 +300,7 @@ const categoriesData: Record<string, CategoryData> = {
         specialties: "Pintxos innovadores, txakoli",
         description: "Pintxos modernos con técnicas vanguardistas. Perfecto maridaje con txakoli en ambiente joven y dinámico.",
         location: "Donostia - Parte Vieja",
-        imageUrl: chefFemale,
+        imageUrl: logoAtari,
         mapUrl: "https://goo.gl/maps/atari",
         embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d721.5!2d-1.9858214!3d43.3213012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDE5JzE2LjciTiAxwrA1OSczMy0wIlc!5e0!3m2!1sen!2ses!4v1234567893!5m2!1sen!2ses",
         rating: 2
@@ -313,7 +318,7 @@ const categoriesData: Record<string, CategoryData> = {
         specialties: "Rodaballo a la brasa, pescados del Cantábrico",
         description: "El templo del rodaballo en Getaria. Pedro Arregui ha perfeccionado la técnica de la brasa para pescados. Una experiencia única frente al mar.",
         location: "Getaria",
-        imageUrl: seafoodImage,
+        imageUrl: logoElkano,
         mapUrl: "https://goo.gl/maps/elkanogetaria",
         embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2906.123456789!2d-2.2065089!3d43.3027778!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDE4JzEwLjAiTiAywrAxMicyMy40Ilc!5e0!3m2!1sen!2ses!4v1234567890123!5m2!1sen!2ses",
         rating: 3
@@ -506,29 +511,29 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
     const random = Math.random();
     switch (category?.toLowerCase()) {
       case 'chef':
-        return random > 0.5 ? chefImage : chefFemale;
+        return random > 0.5 ? logoArzak : logoEtxebarri;
       case 'joven talento':
-        return chefImage;
+        return logoEtxebarri;
       case 'tradicional':
-        return chefTraditional;
+        return logoBarNestor;
       case 'txakoli':
       case 'viticultor':
-        return chefTxakoli;
+        return logoTxominEtxaniz;
       case 'vegetariano':
       case 'vegano':
-        return chefVegan;
+        return logoAtari;
       case 'pintxos':
-        return random > 0.5 ? pintxosImage : pintxosBar;
+        return random > 0.5 ? logoGandarias : logoAtari;
       case 'carne':
       case 'carnes':
-        return carneImage;
+        return random > 0.5 ? logoAsadorNicolas : logoCasaJulian;
       case 'pescado':
       case 'mariscos':
-        return seafoodImage;
+        return logoElkano;
       case 'sidreria':
-        return sidreriaImage;
+        return logoBarNestor;
       default:
-        return random > 0.6 ? chefImage : random > 0.3 ? chefFemale : chefTraditional;
+        return random > 0.6 ? logoArzak : random > 0.3 ? logoEtxebarri : logoBarNestor;
     }
   };
 
