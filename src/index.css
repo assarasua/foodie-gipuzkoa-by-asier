@@ -8,43 +8,45 @@ All colors MUST be HSL.
 
 @layer base {
 :root {
-    --background: 20 20% 98%;
-    --foreground: 24 25% 12%;
+    /* Gen Z Color Palette - Modern and Vibrant */
+    --background: 16 16 20;
+    --foreground: 250 250 250;
 
-    --card: 0 0% 100%;
-    --card-foreground: 24 25% 12%;
+    --card: 24 24 27;
+    --card-foreground: 250 250 250;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 24 25% 12%;
+    --popover: 24 24 27;
+    --popover-foreground: 250 250 250;
 
-    --primary: 14 89% 55%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 142 102 255; /* Vibrant purple */
+    --primary-foreground: 16 16 20;
 
-    --secondary: 195 75% 35%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 39 39 42;
+    --secondary-foreground: 250 250 250;
 
-    --muted: 20 15% 95%;
-    --muted-foreground: 24 10% 40%;
+    --muted: 39 39 42;
+    --muted-foreground: 161 161 170;
 
-    --accent: 40 85% 60%;
-    --accent-foreground: 24 25% 12%;
+    --accent: 255 107 107; /* Coral accent */
+    --accent-foreground: 16 16 20;
 
-    /* Basque-inspired colors */
-    --basque-red: 0 75% 55%;
-    --basque-green: 120 45% 30%;
-    --ocean-blue: 195 75% 35%;
-    --golden-yellow: 45 95% 65%;
-    --warm-orange: 14 89% 55%;
+    /* Gen Z Vibrant Colors */
+    --neon-pink: 322 100% 70%;
+    --electric-blue: 195 100% 60%;
+    --cyber-green: 120 100% 50%;
+    --sunset-orange: 25 100% 60%;
     
-    /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(var(--ocean-blue)), hsl(var(--basque-green)));
-    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(var(--muted)));
-    --gradient-accent: linear-gradient(90deg, hsl(var(--warm-orange)), hsl(var(--golden-yellow)));
+    /* Gen Z Gradients and Effects */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(27 27 30));
+    --gradient-accent: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--accent)), hsl(280 100% 70%));
     
-    /* Shadows */
-    --shadow-elegant: 0 20px 50px -12px hsl(var(--ocean-blue) / 0.25);
-    --shadow-card: 0 8px 30px -8px hsl(24 25% 12% / 0.1);
-    --shadow-hover: 0 25px 60px -12px hsl(var(--warm-orange) / 0.3);
+    /* Modern Shadows */
+    --shadow-hover: 0 20px 40px -12px hsl(var(--primary) / 0.25);
+    --shadow-glow: 0 0 30px hsl(var(--accent) / 0.5);
+    
+    /* Animation Variables */
+    --animate-duration: 0.6s;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
@@ -73,43 +75,42 @@ All colors MUST be HSL.
   }
 
 .dark {
-    --background: 24 15% 8%;
-    --foreground: 20 20% 95%;
+    /* Keep the same Gen Z colors for dark mode consistency */
+    --background: 16 16 20;
+    --foreground: 250 250 250;
 
-    --card: 24 15% 10%;
-    --card-foreground: 20 20% 95%;
+    --card: 24 24 27;
+    --card-foreground: 250 250 250;
 
-    --popover: 24 15% 10%;
-    --popover-foreground: 20 20% 95%;
+    --popover: 24 24 27;
+    --popover-foreground: 250 250 250;
 
-    --primary: 14 89% 55%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 142 102 255;
+    --primary-foreground: 16 16 20;
 
-    --secondary: 195 75% 35%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 39 39 42;
+    --secondary-foreground: 250 250 250;
 
-    --muted: 24 10% 15%;
-    --muted-foreground: 20 15% 65%;
+    --muted: 39 39 42;
+    --muted-foreground: 161 161 170;
 
-    --accent: 40 85% 60%;
-    --accent-foreground: 24 15% 8%;
+    --accent: 255 107 107;
+    --accent-foreground: 16 16 20;
 
-    /* Dark mode Basque colors */
-    --basque-red: 0 75% 55%;
-    --basque-green: 120 45% 35%;
-    --ocean-blue: 195 75% 40%;
-    --golden-yellow: 45 95% 70%;
-    --warm-orange: 14 89% 60%;
+    /* Dark mode Gen Z colors */
+    --neon-pink: 322 100% 70%;
+    --electric-blue: 195 100% 60%;
+    --cyber-green: 120 100% 50%;
+    --sunset-orange: 25 100% 60%;
     
     /* Dark gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(var(--ocean-blue)), hsl(var(--basque-green)));
-    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(var(--muted)));
-    --gradient-accent: linear-gradient(90deg, hsl(var(--warm-orange)), hsl(var(--golden-yellow)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(27 27 30));
+    --gradient-accent: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--accent)), hsl(280 100% 70%));
     
     /* Dark shadows */
-    --shadow-elegant: 0 20px 50px -12px hsl(0 0% 0% / 0.5);
-    --shadow-card: 0 8px 30px -8px hsl(0 0% 0% / 0.3);
-    --shadow-hover: 0 25px 60px -12px hsl(var(--warm-orange) / 0.4);
+    --shadow-hover: 0 20px 40px -12px hsl(var(--primary) / 0.3);
+    --shadow-glow: 0 0 30px hsl(var(--accent) / 0.6);
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
@@ -135,5 +136,62 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Gen Z Keyframes */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  @keyframes fade-in-up {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px hsl(var(--primary) / 0.3); }
+    50% { box-shadow: 0 0 40px hsl(var(--primary) / 0.6); }
+  }
+
+  @keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Gen Z Utility Classes */
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up var(--animate-duration) ease-out forwards;
+    opacity: 0;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient-shift 3s ease infinite;
+  }
+
+  .glassmorphism {
+    background: hsl(var(--card) / 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid hsl(var(--border) / 0.3);
+  }
+
+  .neon-text {
+    text-shadow: 0 0 10px hsl(var(--primary) / 0.8);
   }
 }

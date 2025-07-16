@@ -100,6 +100,136 @@ const categoriesData: Record<string, CategoryData> = {
         location: "Bilbao",
         age: 27,
         category: "Innovación"
+      },
+      {
+        name: "CookPlay Design",
+        price: "€€",
+        specialties: "Menaje innovador",
+        description: "Marca vasca de menaje con propuestas innovadoras presentes en restaurantes de alto nivel. Diseño sostenible con libertad creativa, responsable del desarrollo de nuevos productos.",
+        location: "Bizkaia",
+        age: 26,
+        category: "Diseño"
+      },
+      {
+        name: "Chocolate Academy Barcelona",
+        price: "€€€",
+        specialties: "Pastelería de élite",
+        description: "Chef pastelero donostiarra que trabaja en Chocolate Academy de Barcelona. Ha trabajado con la élite de la pastelería mundial y realiza proyectos en medios y demostraciones.",
+        location: "Barcelona (origen Donostia)",
+        age: 28,
+        category: "Pastelería"
+      },
+      {
+        name: "Bodega Área - Pequeños Viticultores",
+        price: "€€€",
+        specialties: "Vinos autóctonos",
+        description: "Viticultor nacido en Labastida. Elaboraciones que reflejan filosofía de respeto al carácter autóctono. Vinos reconocidos por críticos importantes del mundo del vino.",
+        location: "Labastida",
+        age: 29,
+        category: "Viticultor"
+      },
+      {
+        name: "Bodegas Artadi",
+        price: "€€€",
+        specialties: "Coordinación vinícola",
+        description: "Coordinadora y gestora en Laguardia. Empezó en finanzas y asumió mercados de exportación. Ejerce como coordinadora mientras continúa con labores comerciales.",
+        location: "Laguardia",
+        age: 27,
+        category: "Gestión Vinícola"
+      },
+      {
+        name: "Bodegas Quintana",
+        price: "€€€",
+        specialties: "Enología artesanal",
+        description: "Viticultor, cosechero y enólogo. Tras formarse en el extranjero, regresó en 2020 con nuevas referencias y la culminación de su proyecto vitivinícola con parcelario exclusivo.",
+        location: "Rioja Alavesa",
+        age: 28,
+        category: "Enólogo"
+      },
+      {
+        name: "El Paladar by Zuriñe García",
+        price: "€€€",
+        specialties: "Cocina creativa",
+        description: "Cocinera en hotel Puente Colgante de Portugalete. Trabaja con un equipo que le permite experimentar libremente. Ha encontrado su segunda casa en la cocina.",
+        location: "Portugalete",
+        age: 26,
+        category: "Chef"
+      },
+      {
+        name: "Rodrigo Gallego - Martín Berasategui",
+        price: "€€€€",
+        specialties: "Servicio de sala premium",
+        description: "Segundo maitre de Martín Berasategui en Lasarte. Licenciado en Gastronomía por Universidad de las Américas, con prácticas internacionales en Estados Unidos en cocina y servicio.",
+        location: "Lasarte",
+        age: 29,
+        category: "Maitre"
+      }
+    ]
+  },
+  "vegetarianos": {
+    title: "Vegetarianos",
+    emoji: "🌱",
+    description: "Opciones vegetarianas y veganas innovadoras en Gipuzkoa. Cocina verde de alta calidad.",
+    restaurants: [
+      {
+        name: "Green Garden",
+        price: "€€",
+        specialties: "Cocina vegana creativa",
+        description: "Restaurante 100% vegano con propuestas innovadoras usando productos locales y de temporada. Menú que cambia semanalmente.",
+        location: "Donostia"
+      },
+      {
+        name: "Verdura & Co",
+        price: "€€",
+        specialties: "Vegetariano gourmet",
+        description: "Cocina vegetariana de alta calidad con influencias mediterráneas y vascas. Especialistas en verduras de proximidad.",
+        location: "Tolosa"
+      },
+      {
+        name: "Plant Based Pintxos",
+        price: "€",
+        specialties: "Pintxos veganos",
+        description: "Los mejores pintxos vegetarianos y veganos de la Parte Vieja. Innovación en cada bocado sin renunciar al sabor.",
+        location: "Donostia - Parte Vieja"
+      }
+    ]
+  },
+  "txakolindegis": {
+    title: "Txakolindegis",
+    emoji: "🍇",
+    description: "Las mejores txakolindegis de Gipuzkoa. Vinos blancos frescos con denominación de origen Getariako Txakolina.",
+    restaurants: [
+      {
+        name: "Txomin Etxaniz",
+        price: "€€",
+        specialties: "Txakoli tradicional",
+        description: "Una de las txakolindegis más prestigiosas de Getaria. Txakoli elaborado con uvas Hondarrabi Zuri siguiendo métodos tradicionales.",
+        location: "Getaria",
+        mapUrl: "https://goo.gl/maps/txominexample"
+      },
+      {
+        name: "Gaintza",
+        price: "€€",
+        specialties: "Txakoli premium",
+        description: "Txakolindegia familiar en las colinas de Getaria. Vinos frescos y afrutados con carácter atlántico único.",
+        location: "Getaria",
+        mapUrl: "https://goo.gl/maps/gaintzaexample"
+      },
+      {
+        name: "Ameztoi",
+        price: "€€",
+        specialties: "Txakoli ecológico",
+        description: "Producción ecológica de txakoli con métodos sostenibles. Uno de los txakolis más reconocidos internacionalmente.",
+        location: "Getaria",
+        mapUrl: "https://goo.gl/maps/ameztoiexample"
+      },
+      {
+        name: "Rezabal",
+        price: "€€",
+        specialties: "Txakoli artesanal",
+        description: "Pequeña txakolindegia artesanal que mantiene la tradición familiar. Txakoli con personalidad propia y carácter único.",
+        location: "Zarauz",
+        mapUrl: "https://goo.gl/maps/rezabalexample"
       }
     ]
   },

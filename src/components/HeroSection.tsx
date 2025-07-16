@@ -19,7 +19,7 @@ export const HeroSection = () => {
             <span className="text-6xl animate-float" style={{ animationDelay: '1s' }}>🍤</span>
           </div>
           
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-accent bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-accent bg-clip-text text-transparent animate-gradient neon-text">
             Gipuzkoa Foodie
           </h1>
           
