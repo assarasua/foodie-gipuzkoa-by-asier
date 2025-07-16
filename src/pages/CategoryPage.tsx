@@ -33,7 +33,7 @@ interface Restaurant {
   age?: number;
   category?: string;
   imageUrl?: string;
-  embedMapUrl?: string;
+  
 }
 
 interface CategoryData {
@@ -54,21 +54,24 @@ const categoriesData: Record<string, CategoryData> = {
         price: "€€",
         specialties: "Cocina vegana creativa",
         description: "Restaurante 100% vegano con propuestas innovadoras usando productos locales y de temporada. Menú que cambia semanalmente.",
-        location: "Donostia"
+        location: "Donostia",
+        mapUrl: "https://maps.google.com/?q=Green+Garden+Donostia"
       },
       {
         name: "Verdura & Co",
         price: "€€",
         specialties: "Vegetariano gourmet",
         description: "Cocina vegetariana de alta calidad con influencias mediterráneas y vascas. Especialistas en verduras de proximidad.",
-        location: "Tolosa"
+        location: "Tolosa",
+        mapUrl: "https://maps.google.com/?q=Verdura+Co+Tolosa"
       },
       {
         name: "Plant Based Pintxos",
         price: "€",
         specialties: "Pintxos veganos",
         description: "Los mejores pintxos vegetarianos y veganos de la Parte Vieja. Innovación en cada bocado sin renunciar al sabor.",
-        location: "Donostia - Parte Vieja"
+        location: "Donostia - Parte Vieja",
+        mapUrl: "https://maps.google.com/?q=Plant+Based+Pintxos+Donostia"
       }
     ]
   },
@@ -83,7 +86,9 @@ const categoriesData: Record<string, CategoryData> = {
         specialties: "Txakoli tradicional",
         description: "Una de las txakolindegis más prestigiosas de Getaria. Txakoli elaborado con uvas Hondarrabi Zuri siguiendo métodos tradicionales.",
         location: "Getaria",
-        mapUrl: "https://goo.gl/maps/txominexample"
+        mapUrl: "https://maps.google.com/?q=Txomin+Etxaniz+Getaria",
+        imageUrl: logoTxominEtxaniz,
+        rating: 2
       },
       {
         name: "Gaintza",
@@ -91,7 +96,7 @@ const categoriesData: Record<string, CategoryData> = {
         specialties: "Txakoli premium",
         description: "Txakolindegia familiar en las colinas de Getaria. Vinos frescos y afrutados con carácter atlántico único.",
         location: "Getaria",
-        mapUrl: "https://goo.gl/maps/gaintzaexample"
+        mapUrl: "https://maps.google.com/?q=Gaintza+Getaria"
       },
       {
         name: "Ameztoi",
@@ -99,7 +104,7 @@ const categoriesData: Record<string, CategoryData> = {
         specialties: "Txakoli ecológico",
         description: "Producción ecológica de txakoli con métodos sostenibles. Uno de los txakolis más reconocidos internacionalmente.",
         location: "Getaria",
-        mapUrl: "https://goo.gl/maps/ameztoiexample"
+        mapUrl: "https://maps.google.com/?q=Ameztoi+Getaria"
       },
       {
         name: "Rezabal",
@@ -107,7 +112,7 @@ const categoriesData: Record<string, CategoryData> = {
         specialties: "Txakoli artesanal",
         description: "Pequeña txakolindegia artesanal que mantiene la tradición familiar. Txakoli con personalidad propia y carácter único.",
         location: "Zarauz",
-        mapUrl: "https://goo.gl/maps/rezabalexample"
+        mapUrl: "https://maps.google.com/?q=Rezabal+Zarauz"
       }
     ]
   },
@@ -123,8 +128,7 @@ const categoriesData: Record<string, CategoryData> = {
         description: "Pionero en la renovación del pintxo tradicional. Cada creación es una obra de arte en miniatura con sabores intensos.",
         location: "Donostia - Parte Vieja",
         imageUrl: logoCucharaSanTelmo,
-        mapUrl: "https://goo.gl/maps/lacucharasantelmo",
-        embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d721.5!2d-1.9858214!3d43.3213012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDE5JzE2LjciTiAxwrA1OSczMy0wIlc!5e0!3m2!1sen!2ses!4v1234567890!5m2!1sen!2ses",
+        mapUrl: "https://maps.google.com/?q=La+Cuchara+de+San+Telmo+Donostia",
         rating: 3
       },
       {
@@ -134,8 +138,7 @@ const categoriesData: Record<string, CategoryData> = {
         description: "El templo de la tortilla en la Parte Vieja. Solo abren cuando se acaba la tortilla. Una experiencia única e irrepetible.",
         location: "Donostia - Parte Vieja",
         imageUrl: logoBarNestor,
-        mapUrl: "https://goo.gl/maps/barnestor",
-        embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d721.5!2d-1.9858214!3d43.3213012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDE5JzE2LjciTiAxwrA1OSczMy0wIlc!5e0!3m2!1sen!2ses!4v1234567891!5m2!1sen!2ses",
+        mapUrl: "https://maps.google.com/?q=Bar+Nestor+Donostia",
         rating: 3
       },
       {
@@ -145,8 +148,7 @@ const categoriesData: Record<string, CategoryData> = {
         description: "Ambiente auténtico donostiarra. El mejor jamón ibérico y pintxos tradicionales en el corazón de la Parte Vieja.",
         location: "Donostia - Parte Vieja",
         imageUrl: logoGandarias,
-        mapUrl: "https://goo.gl/maps/gandarias",
-        embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d721.5!2d-1.9858214!3d43.3213012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDE5JzE2LjciTiAxwrA1OSczMy0wIlc!5e0!3m2!1sen!2ses!4v1234567892!5m2!1sen!2ses",
+        mapUrl: "https://maps.google.com/?q=Gandarias+Donostia",
         rating: 2
       },
       {
@@ -156,8 +158,7 @@ const categoriesData: Record<string, CategoryData> = {
         description: "Pintxos modernos con técnicas vanguardistas. Perfecto maridaje con txakoli en ambiente joven y dinámico.",
         location: "Donostia - Parte Vieja",
         imageUrl: logoAtari,
-        mapUrl: "https://goo.gl/maps/atari",
-        embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d721.5!2d-1.9858214!3d43.3213012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDE5JzE2LjciTiAxwrA1OSczMy0wIlc!5e0!3m2!1sen!2ses!4v1234567893!5m2!1sen!2ses",
+        mapUrl: "https://maps.google.com/?q=Atari+Donostia",
         rating: 2
       }
     ]
@@ -174,8 +175,7 @@ const categoriesData: Record<string, CategoryData> = {
         description: "El templo del rodaballo en Getaria. Pedro Arregui ha perfeccionado la técnica de la brasa para pescados. Una experiencia única frente al mar.",
         location: "Getaria",
         imageUrl: logoElkano,
-        mapUrl: "https://goo.gl/maps/elkanogetaria",
-        embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2906.123456789!2d-2.2065089!3d43.3027778!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDE4JzEwLjAiTiAywrAxMicyMy40Ilc!5e0!3m2!1sen!2ses!4v1234567890123!5m2!1sen!2ses",
+        mapUrl: "https://maps.google.com/?q=Elkano+Getaria",
         rating: 3
       },
       {
@@ -185,8 +185,7 @@ const categoriesData: Record<string, CategoryData> = {
         description: "En el puerto de Getaria, pescado fresco directo de las barcas. Ambiente marinero auténtico con vistas al Cantábrico.",
         location: "Getaria",
         imageUrl: seafoodImage,
-        mapUrl: "https://goo.gl/maps/kaiakaipe",
-        embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2906.123456789!2d-2.2065089!3d43.3027778!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDE4JzEwLjAiTiAywrAxMicyMy40Ilc!5e0!3m2!1sen!2ses!4v1234567890123!5m2!1sen!2ses",
+        mapUrl: "https://maps.google.com/?q=Kaia+Kaipe+Getaria",
         rating: 3
       },
       {
@@ -196,8 +195,7 @@ const categoriesData: Record<string, CategoryData> = {
         description: "Restaurante familiar en el puerto de San Sebastián. Especialistas en kokotxas al pil pil y pescados frescos de la bahía.",
         location: "Donostia",
         imageUrl: seafoodImage,
-        mapUrl: "https://goo.gl/maps/mayflowerdonostia",
-        embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2906.123456789!2d-1.9858214!3d43.3213012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDE5JzE2LjciTiAxwrA1OSczMy0wIlc!5e0!3m2!1sen!2ses!4v1234567890123!5m2!1sen!2ses",
+        mapUrl: "https://maps.google.com/?q=Mayflower+Donostia",
         rating: 2
       },
       {
@@ -207,8 +205,7 @@ const categoriesData: Record<string, CategoryData> = {
         description: "En el casco viejo de San Sebastián. Pescados selectos y mariscos de primera calidad en ambiente tradicional vasco.",
         location: "Donostia - Parte Vieja",
         imageUrl: seafoodImage,
-        mapUrl: "https://goo.gl/maps/txuletadonostia",
-        embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2906.123456789!2d-1.9858214!3d43.3213012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDE5JzE2LjciTiAxwrA1OSczMy0wIlc!5e0!3m2!1sen!2ses!4v1234567890123!5m2!1sen!2ses",
+        mapUrl: "https://maps.google.com/?q=Txuleta+Donostia",
         rating: 2
       },
       {
@@ -218,8 +215,7 @@ const categoriesData: Record<string, CategoryData> = {
         description: "Alta cocina marinera en Hondarribia. Mikel Gallo transforma los pescados del Cantábrico en obras de arte culinarias.",
         location: "Hondarribia",
         imageUrl: seafoodImage,
-        mapUrl: "https://goo.gl/maps/nineu",
-        embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2906.123456789!2d-1.7944444!3d43.3716667!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDIyJzE4LjAiTiAxwrA0Nyc0MC4wIlc!5e0!3m2!1sen!2ses!4v1234567890123!5m2!1sen!2ses",
+        mapUrl: "https://maps.google.com/?q=Ni+Neu+Hondarribia",
         rating: 3
       }
     ]
@@ -235,7 +231,8 @@ const categoriesData: Record<string, CategoryData> = {
         specialties: "Pimientos de piquillo y chuleton",
         description: "Dos de los templos de carne en España se encuentran en Tolosa y la tradición y calidad se unen en este lugar espectacular donde la carne se encuentra siempre en la maduración idonea, un manjar",
         location: "Tolosa",
-        mapUrl: "https://goo.gl/maps/8k6REkhgQf4nzSqF8",
+        mapUrl: "https://maps.google.com/?q=Asador+Nicolas+Tolosa",
+        imageUrl: logoAsadorNicolas,
         rating: 3
       },
       {
@@ -244,7 +241,8 @@ const categoriesData: Record<string, CategoryData> = {
         specialties: "Pimientos de piquillo y chuleton",
         description: "El segundo de los templos de la carne y una parada obligatoria",
         location: "Tolosa",
-        mapUrl: "https://goo.gl/maps/gtarmBfgXEeeprmdA",
+        mapUrl: "https://maps.google.com/?q=Casa+Julian+Tolosa",
+        imageUrl: logoCasaJulian,
         rating: 3
       },
       {
@@ -253,8 +251,8 @@ const categoriesData: Record<string, CategoryData> = {
         specialties: "Chuleta",
         description: "Una buena chuleta en el mercado de san martin de san sebastian",
         location: "Donostia",
-        mapUrl: "https://goo.gl/maps/xoaNQDFM8SD4r1S89",
-        rating: 3
+        mapUrl: "https://maps.google.com/?q=Maun+Grill+Bar+Donostia",
+        rating: 2
       },
       {
         name: "David Yarnoz - Martín Berasategui",
@@ -395,15 +393,29 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
   const restaurantImage = restaurant.imageUrl || getDefaultImage(restaurant.category || '');
   
   const renderStars = () => {
-    if (!restaurant.rating) return null;
+    if (restaurant.rating === undefined) {
+      return (
+        <div className="flex items-center gap-1 mb-2">
+          <span className="text-sm font-medium text-primary mr-2">Valoración Asier Sarasua:</span>
+          <span className="text-lg">❓</span>
+          <span className="text-xs text-muted-foreground ml-2 italic">
+            (Unknown - No probado aún)
+          </span>
+        </div>
+      );
+    }
+    if (restaurant.rating === 0) return null;
     return (
       <div className="flex items-center gap-1 mb-2">
         <span className="text-sm font-medium text-primary mr-2">Valoración Asier Sarasua:</span>
-        {Array.from({ length: restaurant.rating }, (_, i) => (
-          <span key={i} className="text-primary text-lg">🥄</span>
-        ))}
+        <span className="text-xs text-muted-foreground ml-1 italic">(Calidad-Precio-Sabor)</span>
+        <div className="flex gap-1 ml-2">
+          {Array.from({ length: restaurant.rating }, (_, i) => (
+            <span key={i} className="text-primary text-lg">🥄</span>
+          ))}
+        </div>
         <span className="text-xs text-muted-foreground ml-2 italic">
-          ({restaurant.rating}/3 cucharas de palo)
+          ({restaurant.rating}/3 cucharas)
         </span>
       </div>
     );
@@ -500,19 +512,19 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
           )}
         </div>
 
-        {/* Embedded Google Map - Always Visible */}
-        {restaurant.embedMapUrl && (
-          <div className="mt-4 rounded-lg overflow-hidden border border-border/20 shadow-md">
-            <iframe
-              src={restaurant.embedMapUrl}
-              width="100%"
-              height="180"
-              style={{ border: 0 }}
-              allowFullScreen={true}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="w-full"
-            />
+        {/* Google Maps Link */}
+        {restaurant.mapUrl && (
+          <div className="mt-4">
+            <a 
+              href={restaurant.mapUrl} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-3 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-lg transition-colors text-sm font-medium"
+            >
+              <MapPin className="h-4 w-4" />
+              Ver en Google Maps
+              <ExternalLink className="h-3 w-3" />
+            </a>
           </div>
         )}
       </CardContent>
