@@ -7,7 +7,12 @@ import { useState } from "react";
 
 // Import food images
 import chefImage from "@/assets/chef-young-talent.jpg";
+import chefTraditional from "@/assets/chef-traditional.jpg";
+import chefFemale from "@/assets/chef-female.jpg";
+import chefTxakoli from "@/assets/chef-txakoli.jpg";
+import chefVegan from "@/assets/chef-vegan.jpg";
 import pintxosImage from "@/assets/pintxos-food.jpg";
+import pintxosBar from "@/assets/pintxos-bar.jpg";
 import carneImage from "@/assets/carne-food.jpg";
 import seafoodImage from "@/assets/seafood-food.jpg";
 import sidreriaImage from "@/assets/sidreria-food.jpg";
@@ -250,7 +255,52 @@ const categoriesData: Record<string, CategoryData> = {
     title: "Pintxos Donosti",
     emoji: "🍤",
     description: "Lo mejor de una ruta de pintxos es ir a 3-4 lugares diferentes y probar los diferentes estilos de la cocina vasca.",
-    restaurants: []
+    restaurants: [
+      {
+        name: "La Cuchara de San Telmo",
+        price: "€€",
+        specialties: "Pintxos creativos, foie micuit",
+        description: "Pionero en la renovación del pintxo tradicional. Cada creación es una obra de arte en miniatura con sabores intensos.",
+        location: "Donostia - Parte Vieja",
+        imageUrl: pintxosBar,
+        mapUrl: "https://goo.gl/maps/lacucharasantelmo",
+        embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d721.5!2d-1.9858214!3d43.3213012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDE5JzE2LjciTiAxwrA1OSczMy0wIlc!5e0!3m2!1sen!2ses!4v1234567890!5m2!1sen!2ses",
+        rating: 3
+      },
+      {
+        name: "Bar Nestor",
+        price: "€",
+        specialties: "Tortilla de patatas, tomate con anchoa",
+        description: "El templo de la tortilla en la Parte Vieja. Solo abren cuando se acaba la tortilla. Una experiencia única e irrepetible.",
+        location: "Donostia - Parte Vieja",
+        imageUrl: chefTraditional,
+        mapUrl: "https://goo.gl/maps/barnestor",
+        embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d721.5!2d-1.9858214!3d43.3213012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDE5JzE2LjciTiAxwrA1OSczMy0wIlc!5e0!3m2!1sen!2ses!4v1234567891!5m2!1sen!2ses",
+        rating: 3
+      },
+      {
+        name: "Gandarias",
+        price: "€€",
+        specialties: "Gilda, jamón ibérico, pintxos tradicionales",
+        description: "Ambiente auténtico donostiarra. El mejor jamón ibérico y pintxos tradicionales en el corazón de la Parte Vieja.",
+        location: "Donostia - Parte Vieja",
+        imageUrl: pintxosImage,
+        mapUrl: "https://goo.gl/maps/gandarias",
+        embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d721.5!2d-1.9858214!3d43.3213012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDE5JzE2LjciTiAxwrA1OSczMy0wIlc!5e0!3m2!1sen!2ses!4v1234567892!5m2!1sen!2ses",
+        rating: 2
+      },
+      {
+        name: "Atari",
+        price: "€€",
+        specialties: "Pintxos innovadores, txakoli",
+        description: "Pintxos modernos con técnicas vanguardistas. Perfecto maridaje con txakoli en ambiente joven y dinámico.",
+        location: "Donostia - Parte Vieja",
+        imageUrl: chefFemale,
+        mapUrl: "https://goo.gl/maps/atari",
+        embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d721.5!2d-1.9858214!3d43.3213012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDE5JzE2LjciTiAxwrA1OSczMy0wIlc!5e0!3m2!1sen!2ses!4v1234567893!5m2!1sen!2ses",
+        rating: 2
+      }
+    ]
   },
   "pescados-mariscos": {
     title: "Pescados & Mariscos",
@@ -452,15 +502,23 @@ const categoriesData: Record<string, CategoryData> = {
 };
 
 const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
-  const [showMap, setShowMap] = useState(false);
-  
   const getDefaultImage = (category: string) => {
+    const random = Math.random();
     switch (category?.toLowerCase()) {
       case 'chef':
+        return random > 0.5 ? chefImage : chefFemale;
       case 'joven talento':
         return chefImage;
+      case 'tradicional':
+        return chefTraditional;
+      case 'txakoli':
+      case 'viticultor':
+        return chefTxakoli;
+      case 'vegetariano':
+      case 'vegano':
+        return chefVegan;
       case 'pintxos':
-        return pintxosImage;
+        return random > 0.5 ? pintxosImage : pintxosBar;
       case 'carne':
       case 'carnes':
         return carneImage;
@@ -470,11 +528,12 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
       case 'sidreria':
         return sidreriaImage;
       default:
-        return chefImage;
+        return random > 0.6 ? chefImage : random > 0.3 ? chefFemale : chefTraditional;
     }
   };
 
   const restaurantImage = restaurant.imageUrl || getDefaultImage(restaurant.category || '');
+  
   const renderStars = () => {
     if (!restaurant.rating) return null;
     return (
@@ -541,16 +600,6 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
               </div>
             )}
           </div>
-          {restaurant.embedMapUrl && (
-            <Button 
-              variant="ghost" 
-              size="sm"
-              onClick={() => setShowMap(!showMap)}
-              className="text-primary hover:text-primary-foreground hover:bg-primary"
-            >
-              {showMap ? 'Ocultar Mapa' : 'Ver Mapa'}
-            </Button>
-          )}
         </div>
         {renderStars()}
       </CardHeader>
@@ -591,13 +640,13 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
           )}
         </div>
 
-        {/* Embedded Google Map */}
-        {showMap && restaurant.embedMapUrl && (
-          <div className="mt-4 rounded-lg overflow-hidden border border-border/20">
+        {/* Embedded Google Map - Always Visible */}
+        {restaurant.embedMapUrl && (
+          <div className="mt-4 rounded-lg overflow-hidden border border-border/20 shadow-md">
             <iframe
               src={restaurant.embedMapUrl}
               width="100%"
-              height="200"
+              height="180"
               style={{ border: 0 }}
               allowFullScreen={true}
               loading="lazy"
