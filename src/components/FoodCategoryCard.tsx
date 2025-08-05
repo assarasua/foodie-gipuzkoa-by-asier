@@ -20,8 +20,8 @@ export const FoodCategoryCard = ({
   return (
     <Card 
       className={cn(
-        "group cursor-pointer glassmorphism border border-border/30 overflow-hidden relative",
-        "transition-all duration-300 hover:shadow-hover hover:-translate-y-2 hover:scale-[1.01]",
+        "group cursor-pointer transition-all duration-300 glassmorphism hover:shadow-hover border border-border/30 overflow-hidden relative",
+        "transform hover:-translate-y-2 hover:scale-[1.01]",
         "before:absolute before:inset-0 before:bg-gradient-accent before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-5",
         className
       )}
