@@ -1,4 +1,5 @@
 import { HeroSection } from "@/components/HeroSection";
+import { AboutSection } from "@/components/AboutSection";
 import { FoodCategoryCard } from "@/components/FoodCategoryCard";
 import { useNavigate } from "react-router-dom";
 
@@ -63,14 +64,16 @@ const Index = () => {
       
       <HeroSection />
       
+      <AboutSection />
+      
       {/* Categories Section */}
       <div className="py-20 px-4 relative">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 bg-gradient-accent bg-clip-text text-transparent">
-              Explora Nuestras Categorías ✨
+            <h2 className="font-heading text-4xl md:text-5xl font-semibold text-primary mb-6 traditional-text">
+              Explora Nuestras Categorías
             </h2>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            <p className="font-body text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               Cada categoría te llevará a un viaje gastronómico único por los sabores más auténticos de Gipuzkoa con valoración personal
             </p>
           </div>

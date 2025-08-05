@@ -1,12 +1,12 @@
-import heroImage from "@/assets/hero-donostia.jpg";
+import sanSebastianImage from "@/assets/san-sebastian-concha.jpg";
 
 export const HeroSection = () => {
   return (
-    <div className="relative h-screen flex items-center justify-center overflow-hidden">
+    <div className="relative h-[70vh] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${heroImage})` }}
+        style={{ backgroundImage: `url(${sanSebastianImage})` }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
       </div>
