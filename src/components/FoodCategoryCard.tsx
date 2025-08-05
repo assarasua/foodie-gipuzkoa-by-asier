@@ -20,9 +20,9 @@ export const FoodCategoryCard = ({
   return (
     <Card 
       className={cn(
-        "group cursor-pointer transition-all duration-500 glassmorphism hover:shadow-glow border-0 overflow-hidden relative",
-        "transform hover:-translate-y-3 hover:scale-[1.02] hover:rotate-1",
-        "before:absolute before:inset-0 before:bg-gradient-accent before:opacity-0 before:transition-opacity before:duration-500 hover:before:opacity-10",
+        "group cursor-pointer transition-all duration-300 glassmorphism hover:shadow-hover border border-border/30 overflow-hidden relative",
+        "transform hover:-translate-y-2 hover:scale-[1.01]",
+        "before:absolute before:inset-0 before:bg-gradient-accent before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-5",
         className
       )}
       onClick={onClick}
@@ -33,19 +33,19 @@ export const FoodCategoryCard = ({
             {emoji}
           </div>
           
-          <h3 className="text-lg md:text-2xl font-bold text-foreground mb-3 group-hover:text-primary group-hover:neon-text transition-all duration-300">
+          <h3 className="text-lg md:text-2xl font-semibold text-foreground mb-3 group-hover:text-primary traditional-text transition-all duration-300">
             {title}
           </h3>
           
-          <p className="text-muted-foreground text-sm md:text-lg leading-relaxed mb-4 min-h-[60px] md:min-h-[80px] flex items-center justify-center">
+          <p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-4 min-h-[60px] md:min-h-[70px] flex items-center justify-center">
             {description}
           </p>
           
           <Badge 
             variant="secondary" 
-            className="bg-gradient-accent text-white border-0 group-hover:animate-gradient transition-all duration-300 px-3 md:px-4 py-1 md:py-2 text-xs md:text-sm font-semibold"
+            className="bg-primary text-primary-foreground border-0 group-hover:bg-accent group-hover:text-accent-foreground transition-all duration-300 px-3 md:px-4 py-1 md:py-2 text-xs md:text-sm font-medium"
           >
-            Explorar ✨
+            Descubrir
           </Badge>
         </div>
       </CardContent>

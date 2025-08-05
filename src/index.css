@@ -8,42 +8,43 @@ All colors MUST be HSL.
 
 @layer base {
 :root {
-    /* Gen Z Color Palette - Modern and Vibrant */
-    --background: 16 16 20;
-    --foreground: 250 250 250;
+    /* Traditional Basque Color Palette - Warm and Earthy */
+    --background: 42 20% 96%;
+    --foreground: 25 15% 20%;
 
-    --card: 24 24 27;
-    --card-foreground: 250 250 250;
+    --card: 0 0% 100%;
+    --card-foreground: 25 15% 20%;
 
-    --popover: 24 24 27;
-    --popover-foreground: 250 250 250;
+    --popover: 0 0% 100%;
+    --popover-foreground: 25 15% 20%;
 
-    --primary: 200 100% 60%; /* Azul neón brillante 💙 */
-    --primary-foreground: 16 16 20;
+    --primary: 355 65% 50%; /* Traditional Basque Red */
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 39 39 42;
-    --secondary-foreground: 250 250 250;
+    --secondary: 40 30% 90%;
+    --secondary-foreground: 25 15% 20%;
 
-    --muted: 39 39 42;
-    --muted-foreground: 161 161 170;
+    --muted: 40 15% 92%;
+    --muted-foreground: 25 10% 50%;
 
-    --accent: 280 100% 70%; /* Púrpura neón como acento */
-    --accent-foreground: 16 16 20;
+    --accent: 145 55% 40%; /* Forest Green */
+    --accent-foreground: 0 0% 98%;
 
-    /* Gen Z Azul Neón Colors */
-    --neon-blue: 200 100% 60%;
-    --electric-cyan: 180 100% 50%;
-    --cyber-purple: 280 100% 70%;
-    --sunset-pink: 320 100% 60%;
+    /* Traditional Basque Colors */
+    --basque-red: 355 65% 50%;
+    --basque-green: 145 55% 40%;
+    --ocean-blue: 210 70% 55%;
+    --warm-cream: 40 30% 90%;
+    --earth-brown: 25 25% 35%;
     
-    /* Gradientes con azul neón */
-    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--cyber-purple)));
-    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(27 27 30));
-    --gradient-accent: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--electric-cyan)), hsl(var(--cyber-purple)));
+    /* Traditional gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--basque-red)), hsl(var(--earth-brown)));
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(var(--warm-cream)));
+    --gradient-accent: linear-gradient(90deg, hsl(var(--basque-red)), hsl(var(--basque-green)));
     
-    /* Sombras azul neón */
-    --shadow-hover: 0 20px 40px -12px hsl(var(--primary) / 0.4);
-    --shadow-glow: 0 0 30px hsl(var(--primary) / 0.6);
+    /* Subtle shadows */
+    --shadow-hover: 0 8px 25px -8px hsl(var(--primary) / 0.25);
+    --shadow-glow: 0 4px 15px hsl(var(--primary) / 0.15);
     
     /* Animation Variables */
     --animate-duration: 0.6s;
@@ -75,42 +76,43 @@ All colors MUST be HSL.
   }
 
 .dark {
-    /* Keep the same Gen Z colors for dark mode consistency */
-    --background: 16 16 20;
-    --foreground: 250 250 250;
+    /* Traditional Basque Dark Mode - Warm and Cozy */
+    --background: 25 20% 8%;
+    --foreground: 40 15% 95%;
 
-    --card: 24 24 27;
-    --card-foreground: 250 250 250;
+    --card: 25 15% 12%;
+    --card-foreground: 40 15% 95%;
 
-    --popover: 24 24 27;
-    --popover-foreground: 250 250 250;
+    --popover: 25 15% 12%;
+    --popover-foreground: 40 15% 95%;
 
-    --primary: 200 100% 60%; /* Mismo azul neón */
-    --primary-foreground: 16 16 20;
+    --primary: 355 70% 60%; /* Warmer Basque Red for dark mode */
+    --primary-foreground: 25 20% 8%;
 
-    --secondary: 39 39 42;
-    --secondary-foreground: 250 250 250;
+    --secondary: 25 10% 18%;
+    --secondary-foreground: 40 15% 95%;
 
-    --muted: 39 39 42;
-    --muted-foreground: 161 161 170;
+    --muted: 25 10% 15%;
+    --muted-foreground: 40 10% 65%;
 
-    --accent: 280 100% 70%; /* Púrpura neón */
-    --accent-foreground: 16 16 20;
+    --accent: 145 60% 45%; /* Brighter forest green for dark mode */
+    --accent-foreground: 25 20% 8%;
 
-    /* Dark mode azul neón colors */
-    --neon-blue: 200 100% 60%;
-    --electric-cyan: 180 100% 50%;
-    --cyber-purple: 280 100% 70%;
-    --sunset-pink: 320 100% 60%;
+    /* Traditional dark mode colors */
+    --basque-red: 355 70% 60%;
+    --basque-green: 145 60% 45%;
+    --ocean-blue: 210 75% 65%;
+    --warm-cream: 40 25% 85%;
+    --earth-brown: 25 30% 25%;
     
-    /* Gradientes oscuros con azul neón */
-    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--cyber-purple)));
-    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(27 27 30));
-    --gradient-accent: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--electric-cyan)), hsl(var(--cyber-purple)));
+    /* Dark traditional gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--basque-red)), hsl(var(--earth-brown)));
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(25 15% 16%));
+    --gradient-accent: linear-gradient(90deg, hsl(var(--basque-red)), hsl(var(--basque-green)));
     
-    /* Sombras oscuras azul neón */
-    --shadow-hover: 0 20px 40px -12px hsl(var(--primary) / 0.4);
-    --shadow-glow: 0 0 30px hsl(var(--primary) / 0.8);
+    /* Warmer dark shadows */
+    --shadow-hover: 0 8px 25px -8px hsl(var(--primary) / 0.3);
+    --shadow-glow: 0 4px 15px hsl(var(--primary) / 0.25);
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
@@ -138,16 +140,16 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 
-  /* Gen Z Keyframes */
-  @keyframes float {
+  /* Traditional Basque Keyframes */
+  @keyframes gentle-float {
     0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
+    50% { transform: translateY(-5px); }
   }
   
   @keyframes fade-in-up {
     0% {
       opacity: 0;
-      transform: translateY(30px);
+      transform: translateY(20px);
     }
     100% {
       opacity: 1;
@@ -155,43 +157,44 @@ All colors MUST be HSL.
     }
   }
 
-  @keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 0 20px hsl(var(--primary) / 0.3); }
-    50% { box-shadow: 0 0 40px hsl(var(--primary) / 0.6); }
+  @keyframes subtle-glow {
+    0%, 100% { box-shadow: 0 2px 8px hsl(var(--primary) / 0.15); }
+    50% { box-shadow: 0 4px 16px hsl(var(--primary) / 0.25); }
   }
 
-  @keyframes gradient-shift {
+  @keyframes traditional-gradient {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
   }
 
-  /* Gen Z Utility Classes */
+  /* Traditional Utility Classes */
   .animate-float {
-    animation: float 3s ease-in-out infinite;
+    animation: gentle-float 4s ease-in-out infinite;
   }
 
   .animate-fade-in-up {
     animation: fade-in-up var(--animate-duration) ease-out forwards;
-    opacity: 1; /* Cambié de 0 a 1 para evitar que el texto desaparezca */
+    opacity: 1;
   }
 
   .animate-pulse-glow {
-    animation: pulse-glow 2s ease-in-out infinite;
+    animation: subtle-glow 3s ease-in-out infinite;
   }
 
   .animate-gradient {
     background-size: 200% 200%;
-    animation: gradient-shift 3s ease infinite;
+    animation: traditional-gradient 4s ease infinite;
   }
 
   .glassmorphism {
-    background: hsl(var(--card) / 0.7);
-    backdrop-filter: blur(20px);
-    border: 1px solid hsl(var(--border) / 0.3);
+    background: hsl(var(--card) / 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid hsl(var(--border) / 0.2);
+    box-shadow: var(--shadow-glow);
   }
 
-  .neon-text {
-    text-shadow: 0 0 10px hsl(var(--primary) / 0.8);
+  .traditional-text {
+    text-shadow: 0 1px 2px hsl(var(--primary) / 0.1);
   }
 }

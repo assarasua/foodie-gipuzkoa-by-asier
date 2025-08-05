@@ -19,15 +19,15 @@ export const HeroSection = () => {
             <span className="text-6xl animate-float" style={{ animationDelay: '1s' }}>🍤</span>
           </div>
           
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-accent bg-clip-text text-transparent animate-gradient neon-text">
+          <h1 className="font-heading text-5xl md:text-7xl font-semibold mb-6 text-white traditional-text">
             Gipuzkoa Foodie
           </h1>
           
-          <h2 className="text-2xl md:text-3xl font-light mb-8 text-white/90">
+          <h2 className="font-heading text-2xl md:text-3xl font-normal italic mb-8 text-white/90">
             by Asier Sarasua
           </h2>
           
-          <p className="text-xl md:text-2xl text-white/80 max-w-2xl mx-auto leading-relaxed">
+          <p className="font-body text-lg md:text-xl text-white/85 max-w-2xl mx-auto leading-relaxed">
             Descubre los mejores sabores del País Vasco. 
             Una guía gastronómica auténtica por Gipuzkoa.
           </p>
