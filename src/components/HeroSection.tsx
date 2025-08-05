@@ -1,6 +1,9 @@
+import { useTranslation } from '@/contexts/TranslationContext';
+
 const sanSebastianImage = "/lovable-uploads/7c182f6b-c1b0-4ee0-96b1-8b702df96d01.png";
 
 export const HeroSection = () => {
+  const { t } = useTranslation();
   return (
     <div className="relative h-[70vh] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
@@ -28,8 +31,7 @@ export const HeroSection = () => {
           </h2>
           
           <p className="font-body text-lg md:text-xl text-white/85 max-w-2xl mx-auto leading-relaxed">
-            Descubre los mejores sabores del País Vasco. 
-            Una guía gastronómica auténtica por Gipuzkoa.
+            {t('hero.subtitle')} {t('hero.description')}
           </p>
         </div>
       </div>

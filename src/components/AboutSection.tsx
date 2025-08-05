@@ -1,6 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { useTranslation } from '@/contexts/TranslationContext';
 
 export const AboutSection = () => {
+  const { t } = useTranslation();
   return (
     <section className="py-16 px-4 bg-background">
       <div className="max-w-4xl mx-auto">
@@ -20,36 +22,32 @@ export const AboutSection = () => {
               
               <div className="flex-1 text-center md:text-left">
                 <h2 className="font-heading text-3xl md:text-4xl font-semibold text-primary mb-4 traditional-text">
-                  Sobre Asier Sarasua
+                  {t('about.title')}
                 </h2>
                 
                 <div className="space-y-4 text-muted-foreground font-body">
                   <p className="text-base md:text-lg leading-relaxed">
-                    <strong className="text-foreground">Asier Sarasua</strong> es un gastronómico de paladar refinado con una experiencia excepcional en la degustación y análisis culinario. 
-                    Ha visitado y evaluado los mejores restaurantes de Euskadi, Gipuzkoa y Madrid, desarrollando un conocimiento profundo de la alta gastronomía.
+                    <strong className="text-foreground">Asier Sarasua</strong> {t('about.description1')}
                   </p>
                   
                   <p className="text-base md:text-lg leading-relaxed">
-                    Su experiencia trasciende fronteras: con <strong className="text-foreground">51 países visitados</strong>, Asier ha explorado y degustado la gastronomía mundial, 
-                    lo que le permite ofrecer una perspectiva única sobre la cocina vasca en el contexto gastronómico internacional. Esta experiencia global 
-                    enriquece su comprensión de los sabores locales y su capacidad para identificar la excelencia culinaria.
+                    {t('about.description2')}
                   </p>
                   
                   <p className="text-base md:text-lg leading-relaxed">
-                    "La gastronomía vasca no es solo comida, es cultura, tradición y pasión", dice Asier. 
-                    "Cada pintxo, cada plato, cuenta una historia de nuestro pueblo y nuestra tierra. Mi misión es compartir estos tesoros con el paladar más exigente."
+                    {t('about.quote')}
                   </p>
                 </div>
                 
                 <div className="mt-6 flex flex-wrap gap-3 justify-center md:justify-start">
                   <span className="px-3 py-1 bg-accent/10 text-accent rounded-full text-sm font-medium">
-                    Paladar Refinado
+                    {t('about.badge1')}
                   </span>
                   <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
-                    51 Países Visitados
+                    {t('about.badge2')}
                   </span>
                   <span className="px-3 py-1 bg-basque-green/10 text-basque-green rounded-full text-sm font-medium">
-                    Experto en Degustación
+                    {t('about.badge3')}
                   </span>
                 </div>
               </div>

@@ -2,6 +2,7 @@ import { HeroSection } from "@/components/HeroSection";
 import { AboutSection } from "@/components/AboutSection";
 import { FoodCategoryCard } from "@/components/FoodCategoryCard";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from '@/contexts/TranslationContext';
 
 const foodCategories = [
   {
@@ -50,6 +51,7 @@ const foodCategories = [
 
 const Index = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   
   const handleCategoryClick = (slug: string) => {
     navigate(`/category/${slug}`);
@@ -71,10 +73,10 @@ const Index = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="font-heading text-4xl md:text-5xl font-semibold text-primary mb-6 traditional-text">
-              Explora Nuestras Categorías
+              {t('categories.title')}
             </h2>
             <p className="font-body text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Cada categoría te llevará a un viaje gastronómico único por los sabores más auténticos de Gipuzkoa con valoración personal
+              {t('categories.subtitle')}
             </p>
           </div>
           
@@ -86,9 +88,9 @@ const Index = () => {
                 style={{ animationDelay: `${index * 0.2}s` }}
               >
                 <FoodCategoryCard
-                  title={category.title}
+                  title={t(`category.${category.slug}.title`)}
                   emoji={category.emoji}
-                  description={category.description}
+                  description={t(`category.${category.slug}.description`)}
                   onClick={() => handleCategoryClick(category.slug)}
                 />
               </div>
@@ -101,16 +103,16 @@ const Index = () => {
           <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 rounded-xl p-6 md:p-8 mx-4 max-w-4xl mx-auto">
             <div className="text-5xl mb-4">🌟</div>
             <h3 className="text-xl md:text-2xl font-bold text-foreground mb-4">
-              Sección Bonus: 100 Jóvenes Talentos 2024
+              {t('bonus.title')}
             </h3>
             <p className="text-muted-foreground mb-6 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
-              Descubre los 100 profesionales menores de 30 años que están transformando la gastronomía según el Basque Culinary Center en toda España
+              {t('bonus.description')}
             </p>
             <button 
               onClick={() => navigate('/jovenes-talentos')}
               className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 md:px-8 py-3 rounded-lg font-semibold transition-colors text-sm md:text-base"
             >
-              Ver los 100 Talentos ✨
+              {t('bonus.button')}
             </button>
           </div>
         </div>
@@ -128,10 +130,10 @@ const Index = () => {
             <h3 className="text-2xl font-bold">Asier Sarasua</h3>
           </div>
           <p className="text-white/80 text-lg">
-            Guía gastronómica apasionada por los sabores auténticos del País Vasco 🇪🇸
+            {t('footer.description')}
           </p>
           <p className="text-white/60 mt-4">
-            © 2024 Gipuzkoa Foodie. Hecho con ❤️ en Euskadi
+            {t('footer.copyright')}
           </p>
         </div>
       </footer>
