@@ -108,7 +108,7 @@ const Index = () => {
             </p>
             <button 
               onClick={() => navigate('/jovenes-talentos')}
-              className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 md:px-8 py-3 rounded-lg font-semibold transition-colors text-sm md:text-base"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 md:px-8 py-3 rounded-lg font-semibold transition-colors"
             >
               Ver los 100 Talentos ✨
             </button>

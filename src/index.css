@@ -140,51 +140,20 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 
-  /* Traditional Basque Keyframes */
-  @keyframes gentle-float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-5px); }
-  }
-  
-  @keyframes fade-in-up {
-    0% {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes subtle-glow {
-    0%, 100% { box-shadow: 0 2px 8px hsl(var(--primary) / 0.15); }
-    50% { box-shadow: 0 4px 16px hsl(var(--primary) / 0.25); }
-  }
-
-  @keyframes traditional-gradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  /* Traditional Utility Classes */
+  /* Performance Optimized Utility Classes */
   .animate-float {
-    animation: gentle-float 4s ease-in-out infinite;
+    animation: float 3s ease-in-out infinite;
+    will-change: transform;
   }
 
   .animate-fade-in-up {
     animation: fade-in-up var(--animate-duration) ease-out forwards;
-    opacity: 1;
+    will-change: opacity, transform;
   }
 
   .animate-pulse-glow {
     animation: subtle-glow 3s ease-in-out infinite;
-  }
-
-  .animate-gradient {
-    background-size: 200% 200%;
-    animation: traditional-gradient 4s ease infinite;
+    will-change: box-shadow;
   }
 
   .glassmorphism {
@@ -196,5 +165,11 @@ All colors MUST be HSL.
 
   .traditional-text {
     text-shadow: 0 1px 2px hsl(var(--primary) / 0.1);
+  }
+
+  /* Optimized keyframes - reduce redundancy */
+  @keyframes subtle-glow {
+    0%, 100% { box-shadow: 0 2px 8px hsl(var(--primary) / 0.15); }
+    50% { box-shadow: 0 4px 16px hsl(var(--primary) / 0.25); }
   }
 }
