@@ -25,31 +25,31 @@ export const AboutSection = () => {
                 
                 <div className="space-y-4 text-muted-foreground font-body">
                   <p className="text-base md:text-lg leading-relaxed">
-                    <strong className="text-foreground">Asier Sarasua</strong> es un apasionado gastronómico y conocedor profundo de la cultura culinaria vasca. 
-                    Nacido y criado en Gipuzkoa, ha dedicado años a explorar cada rincón de la provincia en busca de los sabores más auténticos.
+                    <strong className="text-foreground">Asier Sarasua</strong> es un gastronómico de paladar refinado con una experiencia excepcional en la degustación y análisis culinario. 
+                    Ha visitado y evaluado los mejores restaurantes de Euskadi, Gipuzkoa y Madrid, desarrollando un conocimiento profundo de la alta gastronomía.
                   </p>
                   
                   <p className="text-base md:text-lg leading-relaxed">
-                    Con más de una década de experiencia en el mundo gastronómico, Asier combina su amor por la tradición vasca 
-                    con una mirada moderna hacia la innovación culinaria. Su misión es compartir las joyas ocultas y los tesoros 
-                    gastronómicos que hacen de Gipuzkoa un destino único para los amantes de la buena mesa.
+                    Su experiencia trasciende fronteras: con <strong className="text-foreground">51 países visitados</strong>, Asier ha explorado y degustado la gastronomía mundial, 
+                    lo que le permite ofrecer una perspectiva única sobre la cocina vasca en el contexto gastronómico internacional. Esta experiencia global 
+                    enriquece su comprensión de los sabores locales y su capacidad para identificar la excelencia culinaria.
                   </p>
                   
                   <p className="text-base md:text-lg leading-relaxed">
                     "La gastronomía vasca no es solo comida, es cultura, tradición y pasión", dice Asier. 
-                    "Cada pintxo, cada plato, cuenta una historia de nuestro pueblo y nuestra tierra."
+                    "Cada pintxo, cada plato, cuenta una historia de nuestro pueblo y nuestra tierra. Mi misión es compartir estos tesoros con el paladar más exigente."
                   </p>
                 </div>
                 
                 <div className="mt-6 flex flex-wrap gap-3 justify-center md:justify-start">
                   <span className="px-3 py-1 bg-accent/10 text-accent rounded-full text-sm font-medium">
-                    Experto Local
+                    Paladar Refinado
                   </span>
                   <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
-                    Cultura Gastronómica
+                    51 Países Visitados
                   </span>
                   <span className="px-3 py-1 bg-basque-green/10 text-basque-green rounded-full text-sm font-medium">
-                    Tradición Vasca
+                    Experto en Degustación
                   </span>
                 </div>
               </div>
