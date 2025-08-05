@@ -1,4 +1,4 @@
-import sanSebastianImage from "@/assets/san-sebastian-concha.jpg";
+const sanSebastianImage = "/lovable-uploads/7c182f6b-c1b0-4ee0-96b1-8b702df96d01.png";
 
 export const HeroSection = () => {
   return (
