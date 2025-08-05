@@ -3,6 +3,7 @@ import { ArrowLeft, MapPin, ChefHat, Target, ExternalLink, Calendar } from "luci
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useTranslation } from '@/contexts/TranslationContext';
 
 interface Talent {
   name: string;
@@ -718,6 +719,7 @@ const jovenesTalentos: Talent[] = [
 ];
 
 const TalentCard = ({ talent }: { talent: Talent }) => {
+  const { t } = useTranslation();
   const getSectorIcon = (sector: string) => {
     switch (sector) {
       case 'restauracion':
@@ -796,7 +798,7 @@ const TalentCard = ({ talent }: { talent: Talent }) => {
         <div className="flex items-center gap-2 pt-2">
           <Badge variant="outline" className="text-xs bg-primary/5 text-primary border-primary/20">
             <Calendar className="h-3 w-3 mr-1" />
-            ≤ 30 años
+            ≤ 30 {t('category.years')}
           </Badge>
           <div className="flex items-center gap-1">
             <span className="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded-md">
@@ -811,6 +813,7 @@ const TalentCard = ({ talent }: { talent: Talent }) => {
 
 export const JovenesTalentos = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   // Group talents by sector for better organization
   const groupedTalents = jovenesTalentos.reduce((acc, talent) => {
@@ -847,17 +850,16 @@ export const JovenesTalentos = () => {
             className="mb-6 text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Volver al inicio
+            {t('talents.backButton')}
           </Button>
           
           <div className="text-center">
             <div className="text-6xl mb-4">🌟</div>
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              100 Jóvenes Talentos 2024
+              {t('talents.title')}
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-6">
-              Los profesionales menores de 30 años que están transformando la gastronomía. 
-              Reconocidos por el Basque Culinary Center por su contribución positiva a la cadena de valor gastronómica.
+              {t('talents.description')}
             </p>
             
             {/* Stats */}

@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { useTranslation } from '@/contexts/TranslationContext';
 
 interface FoodCategoryCardProps {
   title: string;
@@ -17,6 +18,7 @@ export const FoodCategoryCard = ({
   onClick,
   className 
 }: FoodCategoryCardProps) => {
+  const { t } = useTranslation();
   return (
     <Card 
       className={cn(
@@ -45,7 +47,7 @@ export const FoodCategoryCard = ({
             variant="secondary" 
             className="bg-primary text-primary-foreground border-0 group-hover:bg-accent group-hover:text-accent-foreground transition-all duration-300 px-3 md:px-4 py-1 md:py-2 text-xs md:text-sm font-medium"
           >
-            Descubrir
+            {t('category.card.discover')}
           </Badge>
         </div>
       </CardContent>

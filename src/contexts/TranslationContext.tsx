@@ -51,6 +51,57 @@ const translations = {
     'category.estrellas-desconocidas.title': 'Estrellas Desconocidas',
     'category.estrellas-desconocidas.description': 'Restaurantes con estrella Michelin y propuestas gastronómicas únicas en Gipuzkoa. Alta cocina y jóvenes talentos en un mismo lugar.',
     
+    
+    // Food Category Card
+    'category.card.discover': 'Descubrir',
+    
+    // Category Page
+    'category.back': 'Volver al Inicio',
+    'category.asierRating': 'Valoración Asier Sarasua:',
+    'category.qualityPrice': '(Calidad-Precio-Sabor)',
+    'category.spoons': 'cucharas',
+    'category.unknownRating': '(Unknown - No probado aún)',
+    'category.youngTalent': 'Joven Talento',
+    'category.years': 'años',
+    'category.viewLocation': 'Ver Ubicación',
+    'category.viewWebsite': 'Visitar Web',
+    'category.price': 'Precio',
+    'category.specialties': 'Especialidades',
+    'category.location': 'Ubicación',
+    
+    // NotFound Page
+    'notFound.title': '404',
+    'notFound.message': '¡Ops! Página no encontrada',
+    'notFound.returnHome': 'Volver al Inicio',
+    
+    // Young Talents Page
+    'talents.title': '100 Jóvenes Talentos de la Gastronomía Española 2024',
+    'talents.subtitle': 'Seleccionados por el Basque Culinary Center',
+    'talents.description': 'Descubre a los 100 profesionales menores de 30 años que están transformando la gastronomía española según el prestigioso Basque Culinary Center. Una nueva generación de talento que marca el futuro de nuestra cocina.',
+    'talents.filterAll': 'Todos',
+    'talents.filterRestaurant': 'Restauración',
+    'talents.filterWine': 'Sector del Vino',
+    'talents.filterBakery': 'Pastelería/Panadería',
+    'talents.filterProducer': 'Productores',
+    'talents.filterCommunication': 'Comunicación',
+    'talents.filterStartups': 'Start-ups',
+    'talents.filterResearch': 'Investigación',
+    'talents.filterOthers': 'Otros Perfiles',
+    'talents.searchPlaceholder': 'Buscar por nombre, empresa o ubicación...',
+    'talents.clearSearch': 'Limpiar búsqueda',
+    'talents.resultsFound': 'talentos encontrados',
+    'talents.noResults': 'No se encontraron talentos que coincidan con tu búsqueda.',
+    'talents.backButton': 'Volver al Inicio',
+    
+    // Restaurant Categories Translations
+    'restaurant.vegetarians': 'Vegetarianos',
+    'restaurant.txakolindegis': 'Txakolindegis',
+    'restaurant.pintxos': 'Pintxos Donosti',
+    'restaurant.fishSeafood': 'Pescados & Mariscos',
+    'restaurant.meats': 'Carnes',
+    'restaurant.ciderHouse': 'Sidrería',
+    'restaurant.unknownStars': 'Estrellas Desconocidas',
+    
     // Bonus Section
     'bonus.title': 'Sección Bonus: 100 Jóvenes Talentos 2024',
     'bonus.description': 'Descubre los 100 profesionales menores de 30 años que están transformando la gastronomía según el Basque Culinary Center en toda España',
@@ -99,6 +150,57 @@ const translations = {
     
     'category.estrellas-desconocidas.title': 'Unknown Stars',
     'category.estrellas-desconocidas.description': 'Michelin-starred restaurants and unique gastronomic proposals in Gipuzkoa. Haute cuisine and young talent in one place.',
+    
+    
+    // Food Category Card
+    'category.card.discover': 'Discover',
+    
+    // Category Page
+    'category.back': 'Back to Home',
+    'category.asierRating': 'Asier Sarasua Rating:',
+    'category.qualityPrice': '(Quality-Price-Flavor)',
+    'category.spoons': 'spoons',
+    'category.unknownRating': '(Unknown - Not tried yet)',
+    'category.youngTalent': 'Young Talent',
+    'category.years': 'years old',
+    'category.viewLocation': 'View Location',
+    'category.viewWebsite': 'Visit Website',
+    'category.price': 'Price',
+    'category.specialties': 'Specialties',
+    'category.location': 'Location',
+    
+    // NotFound Page
+    'notFound.title': '404',
+    'notFound.message': 'Oops! Page not found',
+    'notFound.returnHome': 'Return to Home',
+    
+    // Young Talents Page
+    'talents.title': '100 Young Talents of Spanish Gastronomy 2024',
+    'talents.subtitle': 'Selected by the Basque Culinary Center',
+    'talents.description': 'Discover the 100 professionals under 30 who are transforming Spanish gastronomy according to the prestigious Basque Culinary Center. A new generation of talent that marks the future of our cuisine.',
+    'talents.filterAll': 'All',
+    'talents.filterRestaurant': 'Restaurant',
+    'talents.filterWine': 'Wine Sector',
+    'talents.filterBakery': 'Bakery/Pastry',
+    'talents.filterProducer': 'Producers',
+    'talents.filterCommunication': 'Communication',
+    'talents.filterStartups': 'Start-ups',
+    'talents.filterResearch': 'Research',
+    'talents.filterOthers': 'Other Profiles',
+    'talents.searchPlaceholder': 'Search by name, company, or location...',
+    'talents.clearSearch': 'Clear search',
+    'talents.resultsFound': 'talents found',
+    'talents.noResults': 'No talents found matching your search.',
+    'talents.backButton': 'Back to Home',
+    
+    // Restaurant Categories Translations
+    'restaurant.vegetarians': 'Vegetarian',
+    'restaurant.txakolindegis': 'Txakolindegis',
+    'restaurant.pintxos': 'Pintxos Donosti',
+    'restaurant.fishSeafood': 'Fish & Seafood',
+    'restaurant.meats': 'Meats',
+    'restaurant.ciderHouse': 'Cider House',
+    'restaurant.unknownStars': 'Unknown Stars',
     
     // Bonus Section
     'bonus.title': 'Bonus Section: 100 Young Talents 2024',

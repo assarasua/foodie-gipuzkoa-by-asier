@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
+import { useTranslation } from '@/contexts/TranslationContext';
 
 // Import restaurant logos
 import logoElkano from "@/assets/logo-elkano.png";
@@ -360,6 +361,7 @@ const categoriesData: Record<string, CategoryData> = {
 };
 
 const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
+  const { t } = useTranslation();
   const getDefaultImage = (category: string) => {
     const random = Math.random();
     switch (category?.toLowerCase()) {
@@ -396,10 +398,10 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
     if (restaurant.rating === undefined) {
       return (
         <div className="flex items-center gap-1 mb-2">
-          <span className="text-sm font-medium text-primary mr-2">Valoración Asier Sarasua:</span>
+          <span className="text-sm font-medium text-primary mr-2">{t('category.asierRating')}</span>
           <span className="text-lg">❓</span>
           <span className="text-xs text-muted-foreground ml-2 italic">
-            (Unknown - No probado aún)
+            {t('category.unknownRating')}
           </span>
         </div>
       );
@@ -407,15 +409,15 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
     if (restaurant.rating === 0) return null;
     return (
       <div className="flex items-center gap-1 mb-2">
-        <span className="text-sm font-medium text-primary mr-2">Valoración Asier Sarasua:</span>
-        <span className="text-xs text-muted-foreground ml-1 italic">(Calidad-Precio-Sabor)</span>
+        <span className="text-sm font-medium text-primary mr-2">{t('category.asierRating')}</span>
+        <span className="text-xs text-muted-foreground ml-1 italic">{t('category.qualityPrice')}</span>
         <div className="flex gap-1 ml-2">
           {Array.from({ length: restaurant.rating }, (_, i) => (
             <span key={i} className="text-primary text-lg">🥄</span>
           ))}
         </div>
         <span className="text-xs text-muted-foreground ml-2 italic">
-          ({restaurant.rating}/3 cucharas)
+          ({restaurant.rating}/3 {t('category.spoons')})
         </span>
       </div>
     );
@@ -425,7 +427,7 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
     if (!restaurant.age) return null;
     return (
       <Badge variant="outline" className="text-xs bg-primary/5 text-primary border-primary/20">
-        {restaurant.age} años
+        {restaurant.age} {t('category.years')}
       </Badge>
     );
   };
@@ -511,7 +513,7 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
               className="inline-flex items-center gap-2 px-3 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-lg transition-colors text-sm font-medium"
             >
               <MapPin className="h-4 w-4" />
-              Ver en Google Maps
+              {t('category.viewLocation')}
               <ExternalLink className="h-3 w-3" />
             </a>
           </div>
@@ -524,6 +526,7 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
 export const CategoryPage = () => {
   const { category } = useParams<{ category: string }>();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   
   const categoryData = category ? categoriesData[category] : null;
   
@@ -531,9 +534,9 @@ export const CategoryPage = () => {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-foreground mb-4">Categoría no encontrada</h1>
+          <h1 className="text-2xl font-bold text-foreground mb-4">{t('notFound.message')}</h1>
           <Button onClick={() => navigate('/')}>
-            Volver al inicio
+            {t('category.back')}
           </Button>
         </div>
       </div>
@@ -551,16 +554,16 @@ export const CategoryPage = () => {
             className="mb-6 text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Volver al inicio
+            {t('category.back')}
           </Button>
           
           <div className="text-center">
             <div className="text-6xl mb-4">{categoryData.emoji}</div>
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              {categoryData.title}
+              {t(`category.${category}.title`)}
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              {categoryData.description}
+              {t(`category.${category}.description`)}
             </p>
           </div>
         </div>
