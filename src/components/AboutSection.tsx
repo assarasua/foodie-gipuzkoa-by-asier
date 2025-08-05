@@ -8,8 +8,13 @@ export const AboutSection = () => {
           <CardContent className="p-8 md:p-12">
             <div className="flex flex-col md:flex-row items-center gap-8">
               <div className="flex-shrink-0">
-                <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-hero flex items-center justify-center text-6xl md:text-7xl">
-                  👨‍🍳
+                <div className="relative">
+                  <img 
+                    src="/lovable-uploads/a6d93fda-c011-458a-8b81-fe144a606939.png"
+                    alt="Asier Sarasua"
+                    className="w-32 h-32 md:w-40 md:h-40 object-cover rounded-full border-4 border-primary/20 shadow-elegant"
+                  />
+                  <div className="absolute -bottom-1 -right-1 text-2xl md:text-3xl">👨‍🍳</div>
                 </div>
               </div>
               
