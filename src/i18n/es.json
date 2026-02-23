@@ -1,0 +1,114 @@
+{
+  "brand": {
+    "region": "Gipuzkoa",
+    "name": "Foodie Guide"
+  },
+  "nav": {
+    "home": "Inicio",
+    "categories": "Categorías",
+    "talents": "Talentos",
+    "explore": "Explorar",
+    "filters": "Filtros",
+    "map": "Mapa"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Ha ocurrido un error.",
+    "viewAll": "Ver todo",
+    "openMap": "Abrir mapa",
+    "viewDetails": "Ver detalle",
+    "backHome": "Volver al inicio",
+    "allCities": "Todas las ciudades",
+    "allPrices": "Todos los precios",
+    "allRatings": "Todas las valoraciones",
+    "allLocations": "Todas las ubicaciones",
+    "fallbackBanner": "Mostrando datos de contingencia por incidencia temporal en la API."
+  },
+  "home": {
+    "kicker": "Guía editorial",
+    "title": "Descubre la nueva escena gastronómica de Gipuzkoa",
+    "subtitle": "Selecciones premium pero accesibles, con foco en dónde comer hoy y cómo llegar rápido.",
+    "ctaPrimary": "Abrir selección destacada en el mapa",
+    "ctaSecondary": "Explorar categorías",
+    "categoriesTitle": "Categorías",
+    "categoriesSubtitle": "Explora por estilo culinario con una interfaz pensada para decidir más rápido.",
+    "trending": "Tendencia en Gipuzkoa",
+    "byMood": "Por momento",
+    "topRated": "Mejor valorados",
+    "talents": "Ver talentos",
+    "quickPaths": "Atajos para decidir más rápido.",
+    "loadingHighlights": "Cargando destacados...",
+    "errorHighlights": "No se han podido cargar los destacados.",
+    "loadingCategories": "Cargando categorías...",
+    "errorCategories": "No se han podido cargar las categorías.",
+    "spots": "sitios"
+  },
+  "moods": {
+    "casual": "Casual",
+    "dateNight": "Cita",
+    "seafood": "Mar",
+    "vegetarian": "Vegetariano",
+    "michelin": "Michelin"
+  },
+  "category": {
+    "label": "Categoría",
+    "loadingTitle": "Cargando...",
+    "card": {
+      "discover": "Descubrir"
+    },
+    "searchPlaceholder": "Buscar por nombre, especialidad o ciudad...",
+    "sort": "Ordenar",
+    "sortRecommended": "Recomendado",
+    "sortHighestRated": "Mejor valorados",
+    "sortPriceLow": "Precio ascendente",
+    "sortPriceHigh": "Precio descendente",
+    "ratingMin": "Valoración",
+    "loadingRestaurants": "Cargando restaurantes...",
+    "errorRestaurants": "No se han podido cargar los restaurantes.",
+    "noResults": "No hay resultados para los filtros actuales.",
+    "noResultsHint": "Prueba a limpiar filtros o cambiar la búsqueda.",
+    "specialty": "Especialidad",
+    "city": "Ciudad",
+    "stars": "estrellas"
+  },
+  "hero": {
+    "subtitle": "Las mejores recomendaciones gastronómicas de Gipuzkoa.",
+    "description": "Seleccionadas con criterio local y enfoque gourmet."
+  },
+  "about": {
+    "title": "Sobre Asier",
+    "description1": "comparte recomendaciones gastronómicas con enfoque en producto, técnica y experiencia.",
+    "description2": "Esta guía reúne restaurantes, categorías y perfiles emergentes para descubrir Gipuzkoa con una mirada editorial.",
+    "quote": "Comer bien es también entender el territorio y su gente.",
+    "badge1": "Curación local",
+    "badge2": "Selección gourmet",
+    "badge3": "Identidad vasca"
+  },
+  "talents": {
+    "kicker": "Basque Culinary Center",
+    "title": "100 Jóvenes Talentos de la Gastronomía Española",
+    "subtitle": "Catálogo de búsqueda y filtros para descubrir perfiles emergentes en restauración, vino, investigación e innovación gastronómica.",
+    "searchPlaceholder": "Buscar por nombre, empresa o puesto...",
+    "sector": "Sector",
+    "location": "Ubicación",
+    "loading": "Cargando talentos...",
+    "error": "No se han podido cargar los talentos.",
+    "noResults": "No se han encontrado talentos para los filtros actuales.",
+    "sectors": {
+      "all": "Todos los sectores",
+      "restauracion": "Restauración",
+      "sector-del-vino": "Sector del vino",
+      "pasteleria-panaderia": "Panadería y pastelería",
+      "productor": "Productores",
+      "comunicacion": "Comunicación",
+      "start-ups": "Startups",
+      "investigacion": "Investigación",
+      "otros-perfiles": "Otros perfiles"
+    }
+  },
+  "notFound": {
+    "title": "404",
+    "message": "La página que buscas no existe.",
+    "returnHome": "Volver al inicio"
+  }
+}

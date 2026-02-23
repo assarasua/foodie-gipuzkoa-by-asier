@@ -1,0 +1,114 @@
+{
+  "brand": {
+    "region": "Gipuzkoa",
+    "name": "Foodie Guide"
+  },
+  "nav": {
+    "home": "Home",
+    "categories": "Categories",
+    "talents": "Talents",
+    "explore": "Explore",
+    "filters": "Filters",
+    "map": "Map"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong.",
+    "viewAll": "See all",
+    "openMap": "Open map",
+    "viewDetails": "View details",
+    "backHome": "Back to home",
+    "allCities": "All cities",
+    "allPrices": "All prices",
+    "allRatings": "All ratings",
+    "allLocations": "All locations",
+    "fallbackBanner": "Showing contingency data due to a temporary API issue."
+  },
+  "home": {
+    "kicker": "Editorial guide",
+    "title": "Discover Gipuzkoa's new gourmet scene",
+    "subtitle": "Premium yet approachable picks focused on where to eat today and how to get there quickly.",
+    "ctaPrimary": "Open featured picks on map",
+    "ctaSecondary": "Explore categories",
+    "categoriesTitle": "Categories",
+    "categoriesSubtitle": "Browse by culinary style with an interface built for faster decisions.",
+    "trending": "Trending in Gipuzkoa",
+    "byMood": "By mood",
+    "topRated": "Top rated",
+    "talents": "View talents",
+    "quickPaths": "Quick paths to decide faster.",
+    "loadingHighlights": "Loading highlights...",
+    "errorHighlights": "Highlights could not be loaded.",
+    "loadingCategories": "Loading categories...",
+    "errorCategories": "Categories could not be loaded.",
+    "spots": "spots"
+  },
+  "moods": {
+    "casual": "Casual",
+    "dateNight": "Date night",
+    "seafood": "Seafood",
+    "vegetarian": "Vegetarian",
+    "michelin": "Michelin"
+  },
+  "category": {
+    "label": "Category",
+    "loadingTitle": "Loading...",
+    "card": {
+      "discover": "Discover"
+    },
+    "searchPlaceholder": "Search by name, specialty, or city...",
+    "sort": "Sort",
+    "sortRecommended": "Recommended",
+    "sortHighestRated": "Highest rated",
+    "sortPriceLow": "Price low to high",
+    "sortPriceHigh": "Price high to low",
+    "ratingMin": "Rating",
+    "loadingRestaurants": "Loading restaurants...",
+    "errorRestaurants": "Restaurants could not be loaded.",
+    "noResults": "No results for current filters.",
+    "noResultsHint": "Try clearing filters or changing the query.",
+    "specialty": "Specialty",
+    "city": "City",
+    "stars": "stars"
+  },
+  "hero": {
+    "subtitle": "The best gourmet recommendations in Gipuzkoa.",
+    "description": "Curated with local criteria and an editorial perspective."
+  },
+  "about": {
+    "title": "About Asier",
+    "description1": "shares gastronomic recommendations focused on product, technique, and overall experience.",
+    "description2": "This guide brings together restaurants, categories, and emerging profiles to discover Gipuzkoa through an editorial lens.",
+    "quote": "Great dining is also about understanding the territory and its people.",
+    "badge1": "Local curation",
+    "badge2": "Gourmet selection",
+    "badge3": "Basque identity"
+  },
+  "talents": {
+    "kicker": "Basque Culinary Center",
+    "title": "100 Young Talents of Spanish Gastronomy",
+    "subtitle": "Search and filter catalog to discover rising profiles in restaurants, wine, research, and food innovation.",
+    "searchPlaceholder": "Search by name, company, or role...",
+    "sector": "Sector",
+    "location": "Location",
+    "loading": "Loading talents...",
+    "error": "Talents could not be loaded.",
+    "noResults": "No talents found for current filters.",
+    "sectors": {
+      "all": "All sectors",
+      "restauracion": "Restaurant",
+      "sector-del-vino": "Wine",
+      "pasteleria-panaderia": "Bakery & Pastry",
+      "productor": "Producers",
+      "comunicacion": "Communication",
+      "start-ups": "Startups",
+      "investigacion": "Research",
+      "otros-perfiles": "Other profiles"
+    }
+  },
+  "notFound": {
+    "title": "404",
+    "message": "The page you are looking for does not exist.",
+    "returnHome": "Back to home"
+  }
+}

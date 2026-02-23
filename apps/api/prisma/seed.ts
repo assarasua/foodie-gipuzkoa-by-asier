@@ -563,7 +563,9 @@ async function main() {
   const categoriesInDb = await prisma.category.findMany({
     select: { id: true, slug: true }
   });
-  const categoryBySlug = new Map(categoriesInDb.map((category) => [category.slug, category.id]));
+  const categoryBySlug = new Map(
+    categoriesInDb.map((category: { id: string; slug: string }) => [category.slug, category.id])
+  );
 
   for (const restaurant of restaurants) {
     const categoryId = categoryBySlug.get(restaurant.categorySlug);

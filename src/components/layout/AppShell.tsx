@@ -3,22 +3,24 @@ import { ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { cn } from "@/lib/utils";
-
-const navItems = [
-  { label: "Home", to: "/" },
-  { label: "Categories", to: "/#categories" },
-  { label: "Talents", to: "/jovenes-talentos" }
-];
-
-const mobileActions = [
-  { label: "Explore", icon: Compass, to: "/" },
-  { label: "Filters", icon: Filter, to: "/" },
-  { label: "Map", icon: MapPinned, to: "/" },
-  { label: "Categories", icon: UtensilsCrossed, to: "/#categories" }
-];
+import { useTranslation } from "@/contexts/TranslationContext";
 
 export const AppShell = ({ children }: { children: ReactNode }) => {
   const location = useLocation();
+  const { t } = useTranslation();
+
+  const navItems = [
+    { label: t("nav.home"), to: "/" },
+    { label: t("nav.categories"), to: "/#categories" },
+    { label: t("nav.talents"), to: "/jovenes-talentos" }
+  ];
+
+  const mobileActions = [
+    { label: t("nav.explore"), icon: Compass, to: "/" },
+    { label: t("nav.filters"), icon: Filter, to: "/" },
+    { label: t("nav.map"), icon: MapPinned, to: "/" },
+    { label: t("nav.categories"), icon: UtensilsCrossed, to: "/#categories" }
+  ];
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -29,8 +31,8 @@ export const AppShell = ({ children }: { children: ReactNode }) => {
               <Sparkles className="h-4 w-4" />
             </div>
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Gipuzkoa</p>
-              <p className="text-sm font-semibold sm:text-base">Foodie Guide</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">{t("brand.region")}</p>
+              <p className="text-sm font-semibold sm:text-base">{t("brand.name")}</p>
             </div>
           </Link>
 

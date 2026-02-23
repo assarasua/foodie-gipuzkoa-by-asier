@@ -2,6 +2,18 @@ const API_BASE_URL = import.meta.env.VITE_API_URL ?? "https://api.gipuzkoafoodie
 
 export type ApiLocale = "es" | "en";
 
+export class ApiError extends Error {
+  status: number;
+  body?: unknown;
+
+  constructor(message: string, status: number, body?: unknown) {
+    super(message);
+    this.name = "ApiError";
+    this.status = status;
+    this.body = body;
+  }
+}
+
 export interface CategoryListItem {
   slug: string;
   emoji: string;
@@ -69,12 +81,35 @@ function toQuery(params: Record<string, string | number | undefined>) {
   return value ? `?${value}` : "";
 }
 
-async function apiGet<T>(path: string): Promise<T> {
-  const response = await fetch(`${API_BASE_URL}${path}`);
-  if (!response.ok) {
-    throw new Error(`API request failed with status ${response.status}`);
+async function parseResponseBody(response: Response): Promise<unknown> {
+  const text = await response.text();
+  if (!text) return null;
+  try {
+    return JSON.parse(text);
+  } catch {
+    return text;
   }
-  return (await response.json()) as T;
+}
+
+async function apiGet<T>(path: string): Promise<T> {
+  let response: Response;
+  try {
+    response = await fetch(`${API_BASE_URL}${path}`);
+  } catch {
+    throw new ApiError("Network error while contacting API", 0);
+  }
+
+  const body = await parseResponseBody(response);
+
+  if (!response.ok) {
+    const message =
+      typeof body === "object" && body && "error" in body
+        ? String((body as { error: string }).error)
+        : `API request failed with status ${response.status}`;
+    throw new ApiError(message, response.status, body);
+  }
+
+  return body as T;
 }
 
 export const api = {

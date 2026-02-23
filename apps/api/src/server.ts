@@ -4,6 +4,10 @@ import express, { type Request, type Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import { z } from "zod";
 
+if (!process.env.DATABASE_URL && process.env.DATABASE_PUBLIC_URL) {
+  process.env.DATABASE_URL = process.env.DATABASE_PUBLIC_URL;
+}
+
 const prisma = new PrismaClient();
 const app = express();
 
@@ -27,8 +31,14 @@ app.use(express.json());
 
 const localeSchema = z.enum(["es", "en"]).default("es");
 const numberSchema = z.preprocess((value) => Number(value), z.number().int().positive());
+const sortSchema = z.enum(["recommended", "highest-rated", "price-low", "price-high"]).default("recommended");
 
-app.get("/v1/health", async (_req: Request, res: Response) => {
+const asyncHandler =
+  (handler: (req: Request, res: Response) => Promise<void>) =>
+  (req: Request, res: Response, next: express.NextFunction) =>
+    Promise.resolve(handler(req, res)).catch(next);
+
+app.get("/v1/health", asyncHandler(async (_req: Request, res: Response) => {
   let db = "ok";
   try {
     await prisma.$queryRaw`SELECT 1`;
@@ -42,9 +52,9 @@ app.get("/v1/health", async (_req: Request, res: Response) => {
     service: API_BASE_URL,
     timestamp: new Date().toISOString()
   });
-});
+}));
 
-app.get("/v1/categories", async (req: Request, res: Response) => {
+app.get("/v1/categories", asyncHandler(async (req: Request, res: Response) => {
   const locale = localeSchema.parse(req.query.locale);
 
   const categories = await prisma.category.findMany({
@@ -61,23 +71,30 @@ app.get("/v1/categories", async (req: Request, res: Response) => {
   });
 
   res.json({
-    data: categories.map((category) => ({
+    data: categories.map((category: {
+      slug: string;
+      emoji: string;
+      titleEs: string;
+      titleEn: string;
+      descriptionEs: string;
+      descriptionEn: string;
+    }) => ({
       slug: category.slug,
       emoji: category.emoji,
       title: locale === "en" ? category.titleEn : category.titleEs,
       description: locale === "en" ? category.descriptionEn : category.descriptionEs
     }))
   });
-});
+}));
 
-app.get("/v1/restaurants", async (req: Request, res: Response) => {
+app.get("/v1/restaurants", asyncHandler(async (req: Request, res: Response) => {
   const locale = localeSchema.parse(req.query.locale);
   const categorySlug = typeof req.query.categorySlug === "string" ? req.query.categorySlug : undefined;
   const search = typeof req.query.search === "string" ? req.query.search.trim() : "";
   const city = typeof req.query.city === "string" ? req.query.city.trim() : "";
   const priceTierRaw = typeof req.query.priceTier === "string" ? req.query.priceTier : undefined;
   const ratingMinRaw = typeof req.query.ratingMin === "string" ? req.query.ratingMin : undefined;
-  const sort = typeof req.query.sort === "string" ? req.query.sort : "recommended";
+  const sort = sortSchema.parse(req.query.sort);
   const pageRaw = typeof req.query.page === "string" ? req.query.page : "1";
   const limitRaw = typeof req.query.limit === "string" ? req.query.limit : "100";
 
@@ -136,7 +153,25 @@ app.get("/v1/restaurants", async (req: Request, res: Response) => {
   });
 
   res.json({
-    data: restaurants.map((restaurant) => ({
+    data: restaurants.map((restaurant: {
+      slug: string;
+      nameEs: string;
+      nameEn: string;
+      specialtyEs: string;
+      specialtyEn: string;
+      descriptionEs: string;
+      descriptionEn: string;
+      city: string;
+      locationLabel: string;
+      priceTier: number;
+      ratingAsier: number | null;
+      isYoungTalent: boolean;
+      age: number | null;
+      mapUrl: string | null;
+      websiteUrl: string | null;
+      imageUrl: string | null;
+      category: { slug: string; titleEs: string; titleEn: string };
+    }) => ({
       slug: restaurant.slug,
       name: locale === "en" ? restaurant.nameEn : restaurant.nameEs,
       specialty: locale === "en" ? restaurant.specialtyEn : restaurant.specialtyEs,
@@ -157,9 +192,9 @@ app.get("/v1/restaurants", async (req: Request, res: Response) => {
     page,
     limit
   });
-});
+}));
 
-app.get("/v1/talents", async (req: Request, res: Response) => {
+app.get("/v1/talents", asyncHandler(async (req: Request, res: Response) => {
   const search = typeof req.query.search === "string" ? req.query.search.trim() : "";
   const sector = typeof req.query.sector === "string" ? req.query.sector.trim() : "";
   const location = typeof req.query.location === "string" ? req.query.location.trim() : "";
@@ -194,11 +229,27 @@ app.get("/v1/talents", async (req: Request, res: Response) => {
     page,
     limit
   });
-});
+}));
 
 app.use((_req, res) => {
   res.status(404).json({
     error: "Not Found"
+  });
+});
+
+app.use((error: unknown, _req: Request, res: Response, _next: express.NextFunction) => {
+  if (error instanceof z.ZodError) {
+    res.status(400).json({
+      error: "Invalid request parameters",
+      details: error.issues
+    });
+    return;
+  }
+
+  const message = error instanceof Error ? error.message : "Internal Server Error";
+  console.error("Unhandled API error:", error);
+  res.status(500).json({
+    error: message
   });
 });
 

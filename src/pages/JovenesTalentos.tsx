@@ -7,23 +7,27 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { api } from "@/lib/api";
+import { useTranslation } from "@/contexts/TranslationContext";
 
-const sectorLabels: Record<string, string> = {
-  all: "All sectors",
-  restauracion: "Restaurant",
-  "sector-del-vino": "Wine",
-  "pasteleria-panaderia": "Bakery & Pastry",
-  productor: "Producer",
-  comunicacion: "Communication",
-  "start-ups": "Startups",
-  investigacion: "Research",
-  "otros-perfiles": "Other"
-};
+const sectorValues = [
+  "all",
+  "restauracion",
+  "sector-del-vino",
+  "pasteleria-panaderia",
+  "productor",
+  "comunicacion",
+  "start-ups",
+  "investigacion",
+  "otros-perfiles"
+] as const;
+
+type SectorValue = (typeof sectorValues)[number];
 
 export const JovenesTalentos = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [search, setSearch] = useState("");
-  const [sector, setSector] = useState("all");
+  const [sector, setSector] = useState<SectorValue>("all");
   const [location, setLocation] = useState("");
 
   const talentsQuery = useQuery({
@@ -48,17 +52,16 @@ export const JovenesTalentos = () => {
     <div className="mx-auto w-full max-w-7xl space-y-6 px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
       <Button variant="ghost" className="min-h-11 rounded-xl" onClick={() => navigate("/")}>
         <ArrowLeft className="mr-2 h-4 w-4" />
-        Back to home
+        {t("common.backHome")}
       </Button>
 
       <section className="rounded-2xl border border-border/70 bg-card/85 p-6 sm:p-8">
-        <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">Basque Culinary Center</p>
+        <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">{t("talents.kicker")}</p>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-          100 Young Talents of Spanish Gastronomy
+          {t("talents.title")}
         </h1>
         <p className="mt-3 max-w-3xl text-sm text-muted-foreground sm:text-base">
-          Search-first catalog with sector and location filters to explore rising leaders in restaurants, wine,
-          research, startups, and food innovation.
+          {t("talents.subtitle")}
         </p>
       </section>
 
@@ -69,19 +72,19 @@ export const JovenesTalentos = () => {
             <Input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder="Search by name, company, role..."
+              placeholder={t("talents.searchPlaceholder")}
               className="min-h-11 rounded-xl pl-9"
             />
           </div>
 
           <Select value={sector} onValueChange={setSector}>
             <SelectTrigger className="min-h-11 rounded-xl">
-              <SelectValue placeholder="Sector" />
+              <SelectValue placeholder={t("talents.sector")} />
             </SelectTrigger>
             <SelectContent>
-              {Object.entries(sectorLabels).map(([value, label]) => (
+              {sectorValues.map((value) => (
                 <SelectItem key={value} value={value}>
-                  {label}
+                  {t(`talents.sectors.${value}`)}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -89,10 +92,10 @@ export const JovenesTalentos = () => {
 
           <Select value={location || "all"} onValueChange={(value) => setLocation(value === "all" ? "" : value)}>
             <SelectTrigger className="min-h-11 rounded-xl">
-              <SelectValue placeholder="Location" />
+              <SelectValue placeholder={t("talents.location")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All locations</SelectItem>
+              <SelectItem value="all">{t("common.allLocations")}</SelectItem>
               {locations.map((item) => (
                 <SelectItem key={item} value={item}>
                   {item}
@@ -103,8 +106,8 @@ export const JovenesTalentos = () => {
         </div>
       </section>
 
-      {talentsQuery.isLoading && <p className="text-sm text-muted-foreground">Loading talents...</p>}
-      {talentsQuery.isError && <p className="text-sm text-destructive">Failed to load talents.</p>}
+      {talentsQuery.isLoading && <p className="text-sm text-muted-foreground">{t("talents.loading")}</p>}
+      {talentsQuery.isError && <p className="text-sm text-destructive">{t("talents.error")}</p>}
 
       <section className="grid grid-cols-1 gap-3 lg:grid-cols-2">
         {(talentsQuery.data ?? []).map((talent) => (
@@ -117,7 +120,9 @@ export const JovenesTalentos = () => {
                 </div>
                 <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">
                   <Sparkles className="h-3 w-3" />
-                  {sectorLabels[talent.sector] ?? talent.sector}
+                  {sectorValues.includes(talent.sector as SectorValue)
+                    ? t(`talents.sectors.${talent.sector as SectorValue}`)
+                    : talent.sector}
                 </span>
               </div>
               <p className="text-sm text-foreground">{talent.company}</p>
@@ -130,7 +135,7 @@ export const JovenesTalentos = () => {
 
       {!talentsQuery.isLoading && (talentsQuery.data ?? []).length === 0 && (
         <Card className="border-border/70 bg-card/90">
-          <CardContent className="p-6 text-sm text-muted-foreground">No talents found for the current filters.</CardContent>
+          <CardContent className="p-6 text-sm text-muted-foreground">{t("talents.noResults")}</CardContent>
         </Card>
       )}
     </div>
