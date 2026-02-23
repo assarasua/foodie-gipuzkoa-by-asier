@@ -12,8 +12,6 @@ import { useTranslation } from "@/contexts/TranslationContext";
 import { getFallbackCategories, getFallbackRestaurants } from "@/lib/fallbackData";
 
 const priceLabel = (priceTier: number) => "€".repeat(Math.max(1, Math.min(4, priceTier)));
-const asierSelectionNames = ["asador nicolas", "ganbara", "ama", "elkano", "arrea"] as const;
-const normalizeName = (value: string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
 
 const ratingStars = (rating?: number | null) => {
   const safe = Math.max(0, Math.min(5, rating ?? 0));
@@ -86,7 +84,7 @@ export const CategoryPage = () => {
   const [city, setCity] = useState("all");
   const [priceTier, setPriceTier] = useState("all");
   const [ratingMin, setRatingMin] = useState("all");
-  const [sort, setSort] = useState<RestaurantFilterState["sort"]>("recommended");
+  const [sort, setSort] = useState<RestaurantFilterState["sort"]>("highest-rated");
   const [selected, setSelected] = useState<RestaurantListItem | null>(null);
   const categoryFromQuery = searchParams.get("category") ?? "all";
   const categoryFilter = categoryParam ?? categoryFromQuery;
@@ -100,7 +98,7 @@ export const CategoryPage = () => {
       priceTier: priceTier === "all" ? undefined : Number(priceTier),
       ratingMin: ratingMin === "all" ? undefined : Number(ratingMin),
       sort,
-      limit: 100
+      limit: 500
     }),
     [search, city, priceTier, ratingMin, sort]
   );
@@ -142,9 +140,6 @@ export const CategoryPage = () => {
   const currentCategory = categories.find((item) => item.slug === activeCategorySlug);
   const cities = Array.from(new Set(restaurants.map((item) => item.city))).sort();
   const isFallback = Boolean(categoryQuery.data?.isFallback || restaurantsQuery.data?.isFallback);
-  const asierSelection = asierSelectionNames
-    .map((target) => restaurants.find((item) => normalizeName(item.name).includes(target)))
-    .filter((item): item is RestaurantListItem => Boolean(item));
 
   const handleCategoryChange = (value: string) => {
     if (!isRestaurantsHub) return;
@@ -188,44 +183,6 @@ export const CategoryPage = () => {
           </div>
         </div>
       </section>
-
-      {isRestaurantsHub && asierSelection.length > 0 && (
-        <section className="editorial-card space-y-4 p-5 sm:p-6">
-          <div className="flex items-center justify-between gap-3">
-            <p className="editorial-kicker">{t("common.curatedByAsier")}</p>
-            <Badge variant="outline" className="rounded-full border-primary/40 bg-primary/10 text-primary">
-              Top 5
-            </Badge>
-          </div>
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4">
-            {asierSelection.map((item) => (
-              <Card key={item.slug} className="border-border/70 bg-background/70">
-                <CardContent className="space-y-2 p-4">
-                  <p className="text-base font-semibold text-foreground">{item.name}</p>
-                  <p className="text-xs text-muted-foreground">{item.city}</p>
-                  <div className="flex items-center justify-between text-xs text-muted-foreground">
-                    <span>{priceLabel(item.priceTier)}</span>
-                    <span className="inline-flex items-center gap-1">
-                      <Star className="h-3.5 w-3.5 text-amber-500" />
-                      {item.ratingAsier ?? "-"}
-                    </span>
-                  </div>
-                  {item.mapUrl && (
-                    <a
-                      href={item.mapUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex min-h-10 w-full items-center justify-center rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground transition hover:brightness-95"
-                    >
-                      {t("common.openMap")}
-                    </a>
-                  )}
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </section>
-      )}
 
       <section className="sticky top-20 z-30 rounded-2xl border border-border/70 bg-background/95 p-4 backdrop-blur-lg">
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-6">
@@ -325,31 +282,30 @@ export const CategoryPage = () => {
         {restaurants.map((item) => (
           <Card key={item.slug} className="editorial-card">
             <CardContent className="space-y-4 p-5">
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <p className="text-2xl font-semibold text-foreground">{item.name}</p>
-                  <p className="text-sm text-muted-foreground">{item.specialty}</p>
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className="rounded-lg border border-border/60 bg-background/70 px-2 py-1.5">
+                  <p className="font-semibold text-foreground">{t("category.rating")}</p>
+                  <p className="mt-1 inline-flex items-center gap-1 text-muted-foreground">
+                    <Star className="h-3.5 w-3.5 text-amber-500" />
+                    {ratingStars(item.ratingAsier)}
+                  </p>
                 </div>
-                <Badge variant="secondary" className="rounded-full bg-muted text-muted-foreground">
-                  {priceLabel(item.priceTier)}
-                </Badge>
+                <div className="rounded-lg border border-border/60 bg-background/70 px-2 py-1.5">
+                  <p className="font-semibold text-foreground">{t("category.price")}</p>
+                  <p className="mt-1 text-muted-foreground">{priceLabel(item.priceTier)}</p>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-2xl font-semibold text-foreground">{item.name}</p>
+                <p className="text-sm text-muted-foreground">{item.specialty}</p>
               </div>
 
               <p className="line-clamp-2 text-sm text-muted-foreground">{item.description}</p>
 
-              <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
-                <div className="rounded-lg bg-muted/50 px-2 py-1.5">
-                  <p className="font-semibold text-foreground">{t("category.rating")}</p>
-                  <p>{ratingStars(item.ratingAsier)}</p>
-                </div>
-                <div className="rounded-lg bg-muted/50 px-2 py-1.5">
-                  <p className="font-semibold text-foreground">{t("category.price")}</p>
-                  <p>{priceLabel(item.priceTier)}</p>
-                </div>
-                <div className="col-span-2 rounded-lg bg-muted/50 px-2 py-1.5">
-                  <p className="font-semibold text-foreground">{t("category.city")}</p>
-                  <p>{item.city}</p>
-                </div>
+              <div className="rounded-lg bg-muted/50 px-2 py-1.5 text-xs text-muted-foreground">
+                <p className="font-semibold text-foreground">{t("category.city")}</p>
+                <p>{item.city}</p>
               </div>
 
               <div className="flex flex-wrap gap-2">
