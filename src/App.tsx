@@ -27,6 +27,8 @@ const App = () => (
                 <Route path="/restaurants" element={<CategoryPage />} />
                 <Route path="/category/:category" element={<CategoryPage />} />
                 <Route path="/jovenes-talentos" element={<JovenesTalentos />} />
+                <Route path="/talents" element={<JovenesTalentos />} />
+                <Route path="/young-talents" element={<JovenesTalentos />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </AppShell>
@@ -36,6 +38,8 @@ const App = () => (
               <Route path="/restaurants" element={<CategoryPage />} />
               <Route path="/category/:category" element={<CategoryPage />} />
               <Route path="/jovenes-talentos" element={<JovenesTalentos />} />
+              <Route path="/talents" element={<JovenesTalentos />} />
+              <Route path="/young-talents" element={<JovenesTalentos />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           )}
