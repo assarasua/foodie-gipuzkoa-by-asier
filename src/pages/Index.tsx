@@ -1,6 +1,7 @@
 import { ArrowRight, Compass, MapPinned, Star, TriangleAlert } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { api, ApiError } from "@/lib/api";
@@ -11,6 +12,7 @@ const moodKeys = ["moods.casual", "moods.dateNight", "moods.seafood", "moods.veg
 
 const Index = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { language, t } = useTranslation();
 
   const categoriesQuery = useQuery({
@@ -45,9 +47,43 @@ const Index = () => {
     }
   });
 
+  const restaurantsCountQuery = useQuery({
+    queryKey: ["restaurants", "counts", language],
+    queryFn: async () => {
+      try {
+        const response = await api.getRestaurants(language, undefined, { limit: 300 });
+        return { data: response.data, isFallback: false, error: null as ApiError | null };
+      } catch (error) {
+        return {
+          data: getFallbackRestaurants(language),
+          isFallback: true,
+          error: error instanceof ApiError ? error : new ApiError(t("common.error"), 0)
+        };
+      }
+    }
+  });
+
   const categories = categoriesQuery.data?.data ?? [];
   const restaurants = restaurantsQuery.data?.data ?? [];
-  const isFallback = Boolean(categoriesQuery.data?.isFallback || restaurantsQuery.data?.isFallback);
+  const restaurantsForCount = restaurantsCountQuery.data?.data ?? [];
+  const isFallback = Boolean(
+    categoriesQuery.data?.isFallback || restaurantsQuery.data?.isFallback || restaurantsCountQuery.data?.isFallback
+  );
+
+  useEffect(() => {
+    if (location.hash === "#categories") {
+      const timer = window.setTimeout(() => {
+        document.getElementById("categories")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 60);
+      return () => window.clearTimeout(timer);
+    }
+    return undefined;
+  }, [location.hash]);
+
+  const categoryCountMap = restaurantsForCount.reduce<Record<string, number>>((acc, item) => {
+    acc[item.categorySlug] = (acc[item.categorySlug] ?? 0) + 1;
+    return acc;
+  }, {});
 
   const topPicks = restaurants.filter((item) => item.mapUrl).slice(0, 3);
   const featuredMapUrl = topPicks[0]?.mapUrl ?? "https://maps.google.com/?q=Donostia";
@@ -143,7 +179,7 @@ const Index = () => {
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {categories.map((category) => {
-            const count = restaurants.filter((item) => item.categorySlug === category.slug).length;
+            const count = categoryCountMap[category.slug] ?? 0;
 
             return (
               <button
