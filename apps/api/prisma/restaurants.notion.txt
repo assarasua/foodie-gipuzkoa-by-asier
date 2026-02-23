@@ -1,0 +1,6 @@
+# Formato por línea:
+# Categoria (estrellas) Nombre, Precio, Especialidad, Comentario, Google maps
+# Ejemplo:
+# Pintxos (3) La Cuchara de San Telmo, €€, Pintxos creativos, Producto top en Parte Vieja, https://maps.google.com/?q=La+Cuchara+de+San+Telmo+Donostia
+# También válido:
+# Pintxos (⭐⭐⭐) La Cuchara de San Telmo, €€€, Pintxos creativos, Producto top en Parte Vieja, https://maps.google.com/?q=La+Cuchara+de+San+Telmo+Donostia

@@ -32,6 +32,30 @@ npm run api:seed
 npm run dev:api
 ```
 
+## Notion import format for restaurants
+
+To seed from a Notion text export, fill:
+
+- `apps/api/prisma/restaurants.notion.txt`
+
+One restaurant per line with this format:
+
+- `Categoria (estrellas) Nombre, Precio, Especialidad, Comentario, Google maps`
+
+Example:
+
+```txt
+Pintxos (3) La Cuchara de San Telmo, €€, Pintxos creativos, Producto top en Parte Vieja, https://maps.google.com/?q=La+Cuchara+de+San+Telmo+Donostia
+```
+
+Then run:
+
+```bash
+npm run api:seed
+```
+
+If valid lines exist, seed will use Notion data to rebuild categories and restaurants.
+
 ## Validation checklist
 
 ```bash

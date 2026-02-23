@@ -186,7 +186,7 @@ const Index = () => {
             <p className="editorial-kicker">{t("home.weeklyTitle")}</p>
             <h2 className="editorial-section-title">{t("home.weeklySubtitle")}</h2>
           </div>
-          <Link to="/jovenes-talentos" className="text-sm font-semibold text-primary hover:underline">
+          <Link to="/#categories" className="text-sm font-semibold text-primary hover:underline">
             {t("home.talents")}
           </Link>
         </div>
@@ -233,10 +233,15 @@ const Index = () => {
             <h2 className="editorial-section-title">{t("home.categoriesTitle")}</h2>
             <p className="max-w-2xl text-sm text-muted-foreground sm:text-base">{t("home.categoriesSubtitle")}</p>
           </div>
-          <Button variant="ghost" className="min-h-11 rounded-xl" onClick={() => navigate("/jovenes-talentos")}>
-            {t("common.viewAll")}
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
+          <a
+            href={featuredMapUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-border/70 bg-card px-3.5 text-sm font-semibold text-foreground transition hover:bg-muted/60"
+          >
+            {t("common.openMap")}
+            <ArrowRight className="h-4 w-4" />
+          </a>
         </div>
 
         {categoriesQuery.isLoading && <p className="text-sm text-muted-foreground">{t("home.loadingCategories")}</p>}

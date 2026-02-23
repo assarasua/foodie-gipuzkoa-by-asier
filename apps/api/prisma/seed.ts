@@ -1,6 +1,9 @@
 import "dotenv/config";
 import { PrismaClient } from "@prisma/client";
 import talentsSeed from "./talents.seed.json" with { type: "json" };
+import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const prisma = new PrismaClient();
 
@@ -41,7 +44,175 @@ type SeedTalent = {
   description?: string;
 };
 
-const categories: SeedCategory[] = [
+const categoryEmojiByKeyword: Array<{ keyword: string; emoji: string }> = [
+  { keyword: "pintxo", emoji: "🍤" },
+  { keyword: "marisc", emoji: "🌊" },
+  { keyword: "pescad", emoji: "🌊" },
+  { keyword: "carne", emoji: "🐄" },
+  { keyword: "sidr", emoji: "🍎" },
+  { keyword: "txakoli", emoji: "🍇" },
+  { keyword: "veg", emoji: "🌱" },
+  { keyword: "estrella", emoji: "⭐" }
+];
+
+const cityKeywords = [
+  "donostia",
+  "san sebastian",
+  "getaria",
+  "tolosa",
+  "zarautz",
+  "hondarribia",
+  "irun",
+  "errenteria",
+  "rentaria",
+  "usurbil",
+  "orio",
+  "pasaia",
+  "lasarte",
+  "hernani",
+  "oiartzun"
+];
+
+function normalizeText(value: string) {
+  return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+function slugify(value: string) {
+  return normalizeText(value)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 80);
+}
+
+function parsePriceTier(value: string) {
+  const trimmed = value.trim();
+  const euroCount = (trimmed.match(/€/g) ?? []).length;
+  if (euroCount > 0) return Math.max(1, Math.min(4, euroCount));
+
+  const numeric = Number(trimmed.replace(/[^\d]/g, ""));
+  if (Number.isFinite(numeric) && numeric > 0) return Math.max(1, Math.min(4, numeric));
+
+  return 2;
+}
+
+function parseStars(raw: string) {
+  const trimmed = raw.trim();
+  const starGlyphs = (trimmed.match(/[★⭐]/g) ?? []).length;
+  if (starGlyphs > 0) return Math.max(1, Math.min(5, starGlyphs));
+
+  const numericMatch = trimmed.match(/\d+/);
+  if (numericMatch) {
+    const numeric = Number(numericMatch[0]);
+    if (Number.isFinite(numeric) && numeric > 0) {
+      return Math.max(1, Math.min(5, numeric));
+    }
+  }
+
+  return 3;
+}
+
+function inferCity(input: string) {
+  const source = normalizeText(decodeURIComponent(input)).toLowerCase();
+  const found = cityKeywords.find((keyword) => source.includes(keyword));
+  if (!found) return "Gipuzkoa";
+
+  return found
+    .split(" ")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
+function categoryEmoji(categoryName: string) {
+  const source = normalizeText(categoryName).toLowerCase();
+  const match = categoryEmojiByKeyword.find((entry) => source.includes(entry.keyword));
+  return match?.emoji ?? "🍽️";
+}
+
+function parseNotionRestaurants(raw: string): { categories: SeedCategory[]; restaurants: SeedRestaurant[] } {
+  const lines = raw
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0 && !line.startsWith("#"));
+
+  const categoryBySlug = new Map<string, SeedCategory>();
+  const restaurants: SeedRestaurant[] = [];
+  const slugCounter = new Map<string, number>();
+
+  for (const line of lines) {
+    const parts = line.split(",").map((part) => part.trim()).filter(Boolean);
+    if (parts.length < 5) continue;
+
+    const head = parts[0];
+    const priceRaw = parts[1];
+    const specialty = parts[2];
+    const mapUrl = parts[parts.length - 1];
+    const comment = parts.slice(3, parts.length - 1).join(", ").trim();
+
+    const match = head.match(/^(.+?)\s*\(([^)]+)\)\s*(.+)$/);
+    if (!match) continue;
+
+    const categoryName = match[1].trim();
+    const stars = parseStars(match[2]);
+    const restaurantName = match[3].trim();
+
+    const categorySlug = slugify(categoryName);
+    if (!categoryBySlug.has(categorySlug)) {
+      categoryBySlug.set(categorySlug, {
+        slug: categorySlug,
+        emoji: categoryEmoji(categoryName),
+        sortOrder: categoryBySlug.size + 1,
+        titleEs: categoryName,
+        titleEn: categoryName,
+        descriptionEs: `Selección de ${categoryName} en Gipuzkoa.`,
+        descriptionEn: `${categoryName} selection in Gipuzkoa.`
+      });
+    }
+
+    const baseSlug = slugify(restaurantName) || `restaurant-${restaurants.length + 1}`;
+    const currentCount = slugCounter.get(baseSlug) ?? 0;
+    slugCounter.set(baseSlug, currentCount + 1);
+    const restaurantSlug = currentCount === 0 ? baseSlug : `${baseSlug}-${currentCount + 1}`;
+
+    const city = inferCity(`${restaurantName} ${comment} ${mapUrl}`);
+
+    restaurants.push({
+      slug: restaurantSlug,
+      categorySlug,
+      nameEs: restaurantName,
+      nameEn: restaurantName,
+      specialtyEs: specialty,
+      specialtyEn: specialty,
+      descriptionEs: comment || specialty,
+      descriptionEn: comment || specialty,
+      city,
+      locationLabel: city,
+      priceTier: parsePriceTier(priceRaw),
+      ratingAsier: stars,
+      mapUrl
+    });
+  }
+
+  return {
+    categories: [...categoryBySlug.values()],
+    restaurants
+  };
+}
+
+const __dirname = fileURLToPath(new URL(".", import.meta.url));
+const notionInputPath = join(__dirname, "restaurants.notion.txt");
+
+function loadNotionSeedData() {
+  if (!existsSync(notionInputPath)) return null;
+  const raw = readFileSync(notionInputPath, "utf8");
+  const parsed = parseNotionRestaurants(raw);
+  if (parsed.categories.length === 0 || parsed.restaurants.length === 0) return null;
+  return parsed;
+}
+
+const notionSeedData = loadNotionSeedData();
+
+const defaultCategories: SeedCategory[] = [
   {
     slug: "pintxos",
     emoji: "🍤",
@@ -107,7 +278,7 @@ const categories: SeedCategory[] = [
   }
 ];
 
-const restaurants: SeedRestaurant[] = [
+const defaultRestaurants: SeedRestaurant[] = [
   {
     slug: "green-garden",
     categorySlug: "vegetarianos",
@@ -551,7 +722,18 @@ const restaurants: SeedRestaurant[] = [
   }
 ];
 
+const categories: SeedCategory[] = notionSeedData?.categories ?? defaultCategories;
+const restaurants: SeedRestaurant[] = notionSeedData?.restaurants ?? defaultRestaurants;
+
 async function main() {
+  if (notionSeedData) {
+    console.log(
+      `Using Notion seed source: ${notionSeedData.categories.length} categories, ${notionSeedData.restaurants.length} restaurants.`
+    );
+  } else {
+    console.log("Using default seed source from seed.ts.");
+  }
+
   await prisma.talent.deleteMany();
   await prisma.restaurant.deleteMany();
   await prisma.category.deleteMany();
