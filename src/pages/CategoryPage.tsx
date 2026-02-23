@@ -20,7 +20,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 const PAGE_SIZE = 24;
 const priceLabel = (priceTier: number) => "€".repeat(Math.max(1, Math.min(4, priceTier)));
-const ratingValue = (rating?: number | null) => Math.max(1, Math.min(5, rating ?? 3));
+const ratingValue = (rating?: number | null) => Math.max(1, Math.min(3, rating ?? 3));
 const ratingStars = (rating?: number | null) => "★".repeat(ratingValue(rating));
 
 type RestaurantsPage = PaginatedResponse<RestaurantListItem> & {
@@ -183,15 +183,7 @@ export const CategoryPage = () => {
         <section className="editorial-card space-y-4 p-5 sm:p-6">
           <p className="editorial-kicker">{t("category.ratingLegendTitle")}</p>
           <p className="text-sm text-muted-foreground">{t("category.ratingLegendIntro")}</p>
-          <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-5">
-            <div className="rounded-xl border border-border/60 bg-background/70 px-3 py-2 text-xs">
-              <p className="font-semibold text-foreground">5★</p>
-              <p className="text-muted-foreground">{t("category.ratingLegend5")}</p>
-            </div>
-            <div className="rounded-xl border border-border/60 bg-background/70 px-3 py-2 text-xs">
-              <p className="font-semibold text-foreground">4★</p>
-              <p className="text-muted-foreground">{t("category.ratingLegend4")}</p>
-            </div>
+          <div className="grid gap-2 sm:grid-cols-3">
             <div className="rounded-xl border border-border/60 bg-background/70 px-3 py-2 text-xs">
               <p className="font-semibold text-foreground">3★</p>
               <p className="text-muted-foreground">{t("category.ratingLegend3")}</p>
@@ -269,7 +261,7 @@ export const CategoryPage = () => {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">{t("common.allRatings")}</SelectItem>
-              {[1, 2, 3, 4, 5].map((value) => (
+              {[1, 2, 3].map((value) => (
                 <SelectItem key={value} value={String(value)}>
                   {value}+ {t("category.stars")}
                 </SelectItem>
@@ -315,7 +307,7 @@ export const CategoryPage = () => {
               <div className="rounded-xl border border-border/60 bg-background/70 px-3 py-3">
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{t("category.rating")}</p>
                 <p className="mt-2 text-xl leading-none text-amber-500">{ratingStars(item.ratingAsier)}</p>
-                <p className="mt-2 text-sm font-semibold text-foreground">{ratingValue(item.ratingAsier)}/5</p>
+                <p className="mt-2 text-sm font-semibold text-foreground">{ratingValue(item.ratingAsier)}/3</p>
                 {item.ratingAsier == null && (
                   <p className="mt-1 text-xs text-muted-foreground">{t("category.provisional")}</p>
                 )}
@@ -387,7 +379,7 @@ export const CategoryPage = () => {
               <div className="rounded-xl border border-border/60 bg-background/70 px-3 py-3">
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{t("category.rating")}</p>
                 <p className="mt-2 text-xl leading-none text-amber-500">{ratingStars(selected.ratingAsier)}</p>
-                <p className="mt-2 text-sm font-semibold text-foreground">{ratingValue(selected.ratingAsier)}/5</p>
+                <p className="mt-2 text-sm font-semibold text-foreground">{ratingValue(selected.ratingAsier)}/3</p>
               </div>
 
               <div className="rounded-xl border border-border/60 bg-background/70 px-3 py-3">

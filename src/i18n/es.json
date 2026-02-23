@@ -21,7 +21,7 @@
     "allCities": "Todas las ciudades",
     "allCategories": "Todas las categorías",
     "allPrices": "Todos los precios",
-    "allRatings": "Todas las valoraciones",
+    "allRatings": "Todas las valoraciones (1-3)",
     "allLocations": "Todas las ubicaciones",
     "fallbackBanner": "Mostrando datos de contingencia por una incidencia temporal de la API.",
     "curatedByAsier": "Curado por Asier Sarasua"
@@ -122,13 +122,13 @@
     "price": "Precio",
     "rating": "Valoración Asier",
     "ratingLegendTitle": "Cómo leer la valoración",
-    "ratingLegendIntro": "La escala es editorial y se centra en experiencia global: producto, ejecución y consistencia.",
+    "ratingLegendIntro": "La escala editorial va de 1 a 3 y se centra en experiencia global: producto, ejecución y consistencia.",
     "ratingLegend5": "Excepcional y muy consistente.",
     "ratingLegend4": "Sobresaliente, altamente recomendable.",
-    "ratingLegend3": "Muy recomendable para la mayoría.",
-    "ratingLegend2": "Correcto, con margen de mejora.",
-    "ratingLegend1": "Perfil muy específico o pendiente de revisión.",
-    "ratingLegendNote": "Si falta valoración, se asigna 3 de forma provisional hasta revisión editorial.",
+    "ratingLegend3": "Máximo nivel: excepcional y muy consistente.",
+    "ratingLegend2": "Muy recomendable y sólido.",
+    "ratingLegend1": "Correcto o de nicho, pendiente de mayor validación.",
+    "ratingLegendNote": "Si falta valoración, se asigna 3 de forma provisional en escala 3/3 hasta revisión editorial.",
     "mapUnavailable": "Mapa no disponible"
   },
   "hero": {

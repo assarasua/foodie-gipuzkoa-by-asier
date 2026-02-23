@@ -100,13 +100,13 @@ function parsePriceTier(value: string) {
 function parseStars(raw: string) {
   const trimmed = raw.trim();
   const starGlyphs = (trimmed.match(/[★⭐]/g) ?? []).length;
-  if (starGlyphs > 0) return Math.max(1, Math.min(5, starGlyphs));
+  if (starGlyphs > 0) return Math.max(1, Math.min(3, starGlyphs));
 
   const numericMatch = trimmed.match(/\d+/);
   if (numericMatch) {
     const numeric = Number(numericMatch[0]);
     if (Number.isFinite(numeric) && numeric > 0) {
-      return Math.max(1, Math.min(5, numeric));
+      return Math.max(1, Math.min(3, numeric));
     }
   }
 

@@ -21,7 +21,7 @@
     "allCities": "All cities",
     "allCategories": "All categories",
     "allPrices": "All prices",
-    "allRatings": "All ratings",
+    "allRatings": "All ratings (1-3)",
     "allLocations": "All locations",
     "fallbackBanner": "Showing contingency data due to a temporary API incident.",
     "curatedByAsier": "Curated by Asier Sarasua"
@@ -122,13 +122,13 @@
     "price": "Price",
     "rating": "Asier rating",
     "ratingLegendTitle": "How to read the rating",
-    "ratingLegendIntro": "This is an editorial scale focused on the full experience: product, execution, and consistency.",
+    "ratingLegendIntro": "The editorial scale goes from 1 to 3 and focuses on full experience: product, execution, and consistency.",
     "ratingLegend5": "Exceptional and highly consistent.",
     "ratingLegend4": "Outstanding and strongly recommended.",
-    "ratingLegend3": "Very recommendable for most people.",
-    "ratingLegend2": "Correct, with room for improvement.",
-    "ratingLegend1": "Very specific profile or pending review.",
-    "ratingLegendNote": "If a rating is missing, a provisional value of 3 is assigned until editorial review.",
+    "ratingLegend3": "Top tier: exceptional and highly consistent.",
+    "ratingLegend2": "Strong and very recommendable.",
+    "ratingLegend1": "Correct or niche profile, pending broader validation.",
+    "ratingLegendNote": "If a rating is missing, a provisional 3 is assigned on the 3/3 scale until editorial review.",
     "mapUnavailable": "Map unavailable"
   },
   "hero": {
