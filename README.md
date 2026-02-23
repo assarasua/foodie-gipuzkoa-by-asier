@@ -77,6 +77,18 @@ Railway deployment/environment details are documented in:
 
 Simply open [Lovable](https://lovable.dev/projects/aa6f91cd-9ae2-442b-aa5b-5e4083306698) and click on Share -> Publish.
 
+## Cloudflare Workers deploy
+
+This repository includes `wrangler.jsonc` with static assets configured:
+
+- `assets.directory = "./dist"`
+
+Deploy command:
+
+```sh
+npm run deploy:cf
+```
+
 ## Can I connect a custom domain to my Lovable project?
 
 Yes, you can!
