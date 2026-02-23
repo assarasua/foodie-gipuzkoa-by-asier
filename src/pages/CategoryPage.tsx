@@ -1,78 +1,32 @@
-import { useMemo, useState } from "react";
-import { ArrowLeft, MapPin, Search, SlidersHorizontal, Star, TriangleAlert } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { ArrowLeft, MapPin, Search, TriangleAlert } from "lucide-react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { api, ApiError, RestaurantFilterState, type RestaurantListItem } from "@/lib/api";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { api, ApiError, PaginatedResponse, RestaurantFilterState, type RestaurantListItem } from "@/lib/api";
 import { useTranslation } from "@/contexts/TranslationContext";
 import { getFallbackCategories, getFallbackRestaurants } from "@/lib/fallbackData";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
+const PAGE_SIZE = 24;
 const priceLabel = (priceTier: number) => "€".repeat(Math.max(1, Math.min(4, priceTier)));
+const ratingValue = (rating?: number | null) => Math.max(1, Math.min(5, rating ?? 3));
+const ratingStars = (rating?: number | null) => "★".repeat(ratingValue(rating));
 
-const ratingStars = (rating?: number | null) => {
-  const safe = Math.max(0, Math.min(5, rating ?? 0));
-  return "★".repeat(safe) || "-";
+type RestaurantsPage = PaginatedResponse<RestaurantListItem> & {
+  isFallback: boolean;
+  error: ApiError | null;
 };
-
-const RestaurantDetail = ({
-  item,
-  openMapLabel,
-  specialtyLabel,
-  cityLabel,
-  priceLabelText,
-  ratingLabel
-}: {
-  item: RestaurantListItem;
-  openMapLabel: string;
-  specialtyLabel: string;
-  cityLabel: string;
-  priceLabelText: string;
-  ratingLabel: string;
-}) => (
-  <Card className="editorial-card">
-    <CardContent className="space-y-4 p-5">
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <div>
-          <h3 className="text-3xl font-semibold text-foreground">{item.name}</h3>
-          <p className="text-sm text-muted-foreground">{item.locationLabel}</p>
-        </div>
-        <Badge variant="outline" className="rounded-full border-primary/30 bg-primary/10 text-primary">
-          {priceLabel(item.priceTier)}
-        </Badge>
-      </div>
-      <p className="text-sm text-muted-foreground">{item.description}</p>
-      <div className="grid gap-2 text-sm text-muted-foreground sm:grid-cols-2">
-        <p>
-          <span className="font-semibold text-foreground">{specialtyLabel}:</span> {item.specialty}
-        </p>
-        <p>
-          <span className="font-semibold text-foreground">{cityLabel}:</span> {item.city}
-        </p>
-        <p>
-          <span className="font-semibold text-foreground">{priceLabelText}:</span> {priceLabel(item.priceTier)}
-        </p>
-        <p>
-          <span className="font-semibold text-foreground">{ratingLabel}:</span> {ratingStars(item.ratingAsier)}
-        </p>
-      </div>
-      {item.mapUrl && (
-        <a
-          href={item.mapUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:brightness-95"
-        >
-          <MapPin className="h-4 w-4" />
-          {openMapLabel}
-        </a>
-      )}
-    </CardContent>
-  </Card>
-);
 
 export const CategoryPage = () => {
   const navigate = useNavigate();
@@ -86,19 +40,22 @@ export const CategoryPage = () => {
   const [ratingMin, setRatingMin] = useState("all");
   const [sort, setSort] = useState<RestaurantFilterState["sort"]>("highest-rated");
   const [selected, setSelected] = useState<RestaurantListItem | null>(null);
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+
   const categoryFromQuery = searchParams.get("category") ?? "all";
   const categoryFilter = categoryParam ?? categoryFromQuery;
   const activeCategorySlug = categoryFilter === "all" ? undefined : categoryFilter;
   const isRestaurantsHub = !categoryParam;
 
-  const filters = useMemo<RestaurantFilterState>(
+  const baseFilters = useMemo<RestaurantFilterState>(
     () => ({
-      search,
+      search: search || undefined,
       city: city === "all" ? undefined : city,
       priceTier: priceTier === "all" ? undefined : Number(priceTier),
       ratingMin: ratingMin === "all" ? undefined : Number(ratingMin),
       sort,
-      limit: 500
+      includeYoungTalents: false,
+      limit: PAGE_SIZE
     }),
     [search, city, priceTier, ratingMin, sort]
   );
@@ -119,27 +76,65 @@ export const CategoryPage = () => {
     }
   });
 
-  const restaurantsQuery = useQuery({
-    queryKey: ["restaurants", activeCategorySlug ?? "all", language, filters],
-    queryFn: async () => {
+  const restaurantsQuery = useInfiniteQuery<RestaurantsPage>({
+    queryKey: ["restaurants", "infinite", activeCategorySlug ?? "all", language, baseFilters],
+    initialPageParam: 1,
+    queryFn: async ({ pageParam }) => {
       try {
-        const response = await api.getRestaurants(language, activeCategorySlug, filters);
-        return { data: response.data, isFallback: false, error: null as ApiError | null };
+        const response = await api.getRestaurants(language, activeCategorySlug, {
+          ...baseFilters,
+          page: Number(pageParam),
+          limit: PAGE_SIZE
+        });
+        return { ...response, isFallback: false, error: null };
       } catch (error) {
+        const fallbackData = getFallbackRestaurants(language, activeCategorySlug, baseFilters);
+        const page = Number(pageParam);
+        const start = (page - 1) * PAGE_SIZE;
+        const end = start + PAGE_SIZE;
+        const data = fallbackData.slice(start, end);
+
         return {
-          data: getFallbackRestaurants(language, activeCategorySlug, filters),
+          data,
+          count: data.length,
+          total: fallbackData.length,
+          page,
+          limit: PAGE_SIZE,
+          hasMore: end < fallbackData.length,
           isFallback: true,
           error: error instanceof ApiError ? error : new ApiError(t("common.error"), 0)
         };
       }
-    }
+    },
+    getNextPageParam: (lastPage) => (lastPage.hasMore ? lastPage.page + 1 : undefined)
   });
 
+  const restaurants = restaurantsQuery.data?.pages.flatMap((page) => page.data) ?? [];
+  const total = restaurantsQuery.data?.pages[0]?.total ?? restaurants.length;
   const categories = categoryQuery.data?.data ?? [];
-  const restaurants = restaurantsQuery.data?.data ?? [];
   const currentCategory = categories.find((item) => item.slug === activeCategorySlug);
   const cities = Array.from(new Set(restaurants.map((item) => item.city))).sort();
-  const isFallback = Boolean(categoryQuery.data?.isFallback || restaurantsQuery.data?.isFallback);
+  const isFallback = Boolean(
+    categoryQuery.data?.isFallback || restaurantsQuery.data?.pages.some((page) => page.isFallback)
+  );
+  const { hasNextPage, isFetchingNextPage, fetchNextPage } = restaurantsQuery;
+
+  useEffect(() => {
+    const node = loadMoreRef.current;
+    if (!node || !hasNextPage || isFetchingNextPage) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          void fetchNextPage();
+        }
+      },
+      { rootMargin: "500px 0px" }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   const handleCategoryChange = (value: string) => {
     if (!isRestaurantsHub) return;
@@ -174,15 +169,45 @@ export const CategoryPage = () => {
             <p className="max-w-2xl text-sm text-muted-foreground sm:text-base">
               {currentCategory?.description ?? t("category.allDescription")}
             </p>
+            <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
+              {total} {t("category.totalResults")}
+            </p>
           </div>
           <Badge variant="outline" className="rounded-full border-primary/40 bg-primary/10 px-3 py-1.5 text-primary">
             {t("category.editorialTag")}
           </Badge>
-          <div className="rounded-2xl bg-primary/10 px-4 py-3 text-primary">
-            <SlidersHorizontal className="h-5 w-5" />
-          </div>
         </div>
       </section>
+
+      {isRestaurantsHub && (
+        <section className="editorial-card space-y-4 p-5 sm:p-6">
+          <p className="editorial-kicker">{t("category.ratingLegendTitle")}</p>
+          <p className="text-sm text-muted-foreground">{t("category.ratingLegendIntro")}</p>
+          <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-5">
+            <div className="rounded-xl border border-border/60 bg-background/70 px-3 py-2 text-xs">
+              <p className="font-semibold text-foreground">5★</p>
+              <p className="text-muted-foreground">{t("category.ratingLegend5")}</p>
+            </div>
+            <div className="rounded-xl border border-border/60 bg-background/70 px-3 py-2 text-xs">
+              <p className="font-semibold text-foreground">4★</p>
+              <p className="text-muted-foreground">{t("category.ratingLegend4")}</p>
+            </div>
+            <div className="rounded-xl border border-border/60 bg-background/70 px-3 py-2 text-xs">
+              <p className="font-semibold text-foreground">3★</p>
+              <p className="text-muted-foreground">{t("category.ratingLegend3")}</p>
+            </div>
+            <div className="rounded-xl border border-border/60 bg-background/70 px-3 py-2 text-xs">
+              <p className="font-semibold text-foreground">2★</p>
+              <p className="text-muted-foreground">{t("category.ratingLegend2")}</p>
+            </div>
+            <div className="rounded-xl border border-border/60 bg-background/70 px-3 py-2 text-xs">
+              <p className="font-semibold text-foreground">1★</p>
+              <p className="text-muted-foreground">{t("category.ratingLegend1")}</p>
+            </div>
+          </div>
+          <p className="text-xs text-muted-foreground">{t("category.ratingLegendNote")}</p>
+        </section>
+      )}
 
       <section className="sticky top-20 z-30 rounded-2xl border border-border/70 bg-background/95 p-4 backdrop-blur-lg">
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-6">
@@ -266,10 +291,15 @@ export const CategoryPage = () => {
         </div>
       </section>
 
-      {restaurantsQuery.isLoading && <p className="text-sm text-muted-foreground">{t("category.loadingRestaurants")}</p>}
-      {restaurantsQuery.isError && <p className="text-sm text-destructive">{t("category.errorRestaurants")}</p>}
+      {restaurantsQuery.isPending && restaurants.length === 0 && (
+        <p className="text-sm text-muted-foreground">{t("category.loadingRestaurants")}</p>
+      )}
 
-      {!restaurantsQuery.isLoading && restaurants.length === 0 && (
+      {restaurantsQuery.isError && restaurants.length === 0 && (
+        <p className="text-sm text-destructive">{t("category.errorRestaurants")}</p>
+      )}
+
+      {!restaurantsQuery.isPending && restaurants.length === 0 && (
         <Card className="editorial-card">
           <CardContent className="p-6 text-sm text-muted-foreground">
             <p>{t("category.noResults")}</p>
@@ -278,66 +308,122 @@ export const CategoryPage = () => {
         </Card>
       )}
 
-      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <section className="space-y-4">
         {restaurants.map((item) => (
-          <Card key={item.slug} className="editorial-card">
-            <CardContent className="space-y-4 p-5">
-              <div className="grid grid-cols-2 gap-2 text-xs">
-                <div className="rounded-lg border border-border/60 bg-background/70 px-2 py-1.5">
-                  <p className="font-semibold text-foreground">{t("category.rating")}</p>
-                  <p className="mt-1 inline-flex items-center gap-1 text-muted-foreground">
-                    <Star className="h-3.5 w-3.5 text-amber-500" />
-                    {ratingStars(item.ratingAsier)}
-                  </p>
-                </div>
-                <div className="rounded-lg border border-border/60 bg-background/70 px-2 py-1.5">
-                  <p className="font-semibold text-foreground">{t("category.price")}</p>
-                  <p className="mt-1 text-muted-foreground">{priceLabel(item.priceTier)}</p>
-                </div>
+          <article key={item.slug} className="editorial-card p-5 sm:p-6">
+            <div className="grid gap-4 lg:grid-cols-[220px_120px_minmax(0,1fr)_210px]">
+              <div className="rounded-xl border border-border/60 bg-background/70 px-3 py-3">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{t("category.rating")}</p>
+                <p className="mt-2 text-xl leading-none text-amber-500">{ratingStars(item.ratingAsier)}</p>
+                <p className="mt-2 text-sm font-semibold text-foreground">{ratingValue(item.ratingAsier)}/5</p>
+                {item.ratingAsier == null && (
+                  <p className="mt-1 text-xs text-muted-foreground">{t("category.provisional")}</p>
+                )}
               </div>
 
-              <div>
-                <p className="text-2xl font-semibold text-foreground">{item.name}</p>
-                <p className="text-sm text-muted-foreground">{item.specialty}</p>
+              <div className="rounded-xl border border-border/60 bg-background/70 px-3 py-3">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{t("category.price")}</p>
+                <p className="mt-2 text-lg font-semibold text-foreground">{priceLabel(item.priceTier)}</p>
               </div>
 
-              <p className="line-clamp-2 text-sm text-muted-foreground">{item.description}</p>
-
-              <div className="rounded-lg bg-muted/50 px-2 py-1.5 text-xs text-muted-foreground">
-                <p className="font-semibold text-foreground">{t("category.city")}</p>
-                <p>{item.city}</p>
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold text-foreground">{item.name}</h2>
+                <p className="text-sm font-medium text-foreground">{item.specialty}</p>
+                <p className="text-sm text-muted-foreground">{item.description}</p>
+                <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground">
+                  {t("category.city")}: {item.city}
+                </p>
               </div>
 
-              <div className="flex flex-wrap gap-2">
-                {item.mapUrl && (
+              <div className="flex flex-col gap-2 sm:flex-row lg:flex-col lg:justify-end">
+                {item.mapUrl ? (
                   <a
                     href={item.mapUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex min-h-11 flex-1 items-center justify-center rounded-xl bg-primary px-3 text-sm font-semibold text-primary-foreground transition hover:brightness-95"
+                    className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:brightness-95"
+                    aria-label={`${t("common.openMap")}: ${item.name}`}
                   >
+                    <MapPin className="h-4 w-4" />
                     {t("common.openMap")}
                   </a>
+                ) : (
+                  <span className="inline-flex min-h-11 items-center justify-center rounded-xl border border-border/70 px-4 text-sm text-muted-foreground">
+                    {t("category.mapUnavailable")}
+                  </span>
                 )}
-                <Button variant="outline" className="min-h-11 flex-1 rounded-xl" onClick={() => setSelected(item)}>
+
+                <Button variant="outline" className="min-h-11 rounded-xl" onClick={() => setSelected(item)}>
                   {t("common.viewDetails")}
                 </Button>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </article>
         ))}
       </section>
 
-      {selected && (
-        <RestaurantDetail
-          item={selected}
-          openMapLabel={t("common.openMap")}
-          specialtyLabel={t("category.specialty")}
-          cityLabel={t("category.city")}
-          priceLabelText={t("category.price")}
-          ratingLabel={t("category.rating")}
-        />
+      {restaurantsQuery.hasNextPage && <div ref={loadMoreRef} className="h-12 w-full" aria-hidden />}
+      {restaurantsQuery.isFetchingNextPage && (
+        <p className="text-center text-sm text-muted-foreground">{t("category.loadingMore")}</p>
       )}
+      {!restaurantsQuery.hasNextPage && restaurants.length > 0 && (
+        <p className="text-center text-sm text-muted-foreground">{t("category.endOfList")}</p>
+      )}
+
+      <Dialog
+        open={Boolean(selected)}
+        onOpenChange={(open) => {
+          if (!open) setSelected(null);
+        }}
+      >
+        {selected && (
+          <DialogContent className="max-h-[88vh] overflow-y-auto rounded-2xl border border-border/70 p-6 sm:max-w-2xl">
+            <DialogHeader>
+              <DialogTitle className="text-2xl text-foreground">{selected.name}</DialogTitle>
+              <DialogDescription className="text-sm text-muted-foreground">{selected.specialty}</DialogDescription>
+            </DialogHeader>
+
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div className="rounded-xl border border-border/60 bg-background/70 px-3 py-3">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{t("category.rating")}</p>
+                <p className="mt-2 text-xl leading-none text-amber-500">{ratingStars(selected.ratingAsier)}</p>
+                <p className="mt-2 text-sm font-semibold text-foreground">{ratingValue(selected.ratingAsier)}/5</p>
+              </div>
+
+              <div className="rounded-xl border border-border/60 bg-background/70 px-3 py-3">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{t("category.price")}</p>
+                <p className="mt-2 text-lg font-semibold text-foreground">{priceLabel(selected.priceTier)}</p>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <p className="text-sm font-semibold text-foreground">{t("category.specialty")}</p>
+              <p className="text-sm text-muted-foreground">{selected.specialty}</p>
+            </div>
+
+            <div className="space-y-2">
+              <p className="text-sm font-semibold text-foreground">{t("common.curatedByAsier")}</p>
+              <p className="text-sm text-muted-foreground">{selected.description}</p>
+            </div>
+
+            <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground">
+              {t("category.city")}: {selected.city}
+            </p>
+
+            {selected.mapUrl && (
+              <a
+                href={selected.mapUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:brightness-95"
+              >
+                <MapPin className="h-4 w-4" />
+                {t("common.openMap")}
+              </a>
+            )}
+          </DialogContent>
+        )}
+      </Dialog>
     </div>
   );
 };

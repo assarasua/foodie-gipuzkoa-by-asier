@@ -55,6 +55,7 @@ export interface RestaurantFilterState {
   priceTier?: number;
   ratingMin?: number;
   sort?: "recommended" | "highest-rated" | "price-low" | "price-high";
+  includeYoungTalents?: boolean;
   page?: number;
   limit?: number;
 }
@@ -62,6 +63,8 @@ export interface RestaurantFilterState {
 export interface PaginatedResponse<T> {
   data: T[];
   count: number;
+  total: number;
+  hasMore: boolean;
   page: number;
   limit: number;
 }
@@ -70,7 +73,7 @@ export interface ListResponse<T> {
   data: T[];
 }
 
-function toQuery(params: Record<string, string | number | undefined>) {
+function toQuery(params: Record<string, string | number | boolean | undefined>) {
   const query = new URLSearchParams();
   Object.entries(params).forEach(([key, value]) => {
     if (value !== undefined && value !== "") {
@@ -126,6 +129,7 @@ export const api = {
       priceTier: filters.priceTier,
       ratingMin: filters.ratingMin,
       sort: filters.sort,
+      includeYoungTalents: filters.includeYoungTalents,
       page: filters.page,
       limit: filters.limit
     });

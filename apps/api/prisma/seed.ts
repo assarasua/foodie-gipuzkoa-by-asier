@@ -4,6 +4,7 @@ import talentsSeed from "./talents.seed.json" with { type: "json" };
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { loadNotionRestaurantsSeed } from "./import-notion-restaurants.js";
 
 const prisma = new PrismaClient();
 
@@ -210,7 +211,7 @@ function loadNotionSeedData() {
   return parsed;
 }
 
-const notionSeedData = loadNotionSeedData();
+const notionSeedData = loadNotionRestaurantsSeed(__dirname) ?? loadNotionSeedData();
 
 const defaultCategories: SeedCategory[] = [
   {
@@ -735,14 +736,27 @@ async function main() {
   }
 
   await prisma.talent.deleteMany();
-  await prisma.restaurant.deleteMany();
-  await prisma.category.deleteMany();
 
   for (const category of categories) {
-    await prisma.category.create({ data: category });
+    await prisma.category.upsert({
+      where: { slug: category.slug },
+      update: {
+        emoji: category.emoji,
+        sortOrder: category.sortOrder,
+        titleEs: category.titleEs,
+        titleEn: category.titleEn,
+        descriptionEs: category.descriptionEs,
+        descriptionEn: category.descriptionEn,
+        isActive: true
+      },
+      create: category
+    });
   }
 
   const categoriesInDb = await prisma.category.findMany({
+    where: {
+      slug: { in: categories.map((category) => category.slug) }
+    },
     select: { id: true, slug: true }
   });
   const categoryBySlug = new Map(
@@ -755,8 +769,26 @@ async function main() {
       throw new Error(`Category not found for slug: ${restaurant.categorySlug}`);
     }
 
-    await prisma.restaurant.create({
-      data: {
+    await prisma.restaurant.upsert({
+      where: { slug: restaurant.slug },
+      update: {
+        categoryId,
+        nameEs: restaurant.nameEs,
+        nameEn: restaurant.nameEn,
+        specialtyEs: restaurant.specialtyEs,
+        specialtyEn: restaurant.specialtyEn,
+        descriptionEs: restaurant.descriptionEs,
+        descriptionEn: restaurant.descriptionEn,
+        city: restaurant.city,
+        locationLabel: restaurant.locationLabel,
+        priceTier: restaurant.priceTier,
+        ratingAsier: restaurant.ratingAsier ?? 3,
+        isYoungTalent: restaurant.isYoungTalent ?? false,
+        age: restaurant.age,
+        mapUrl: restaurant.mapUrl,
+        isPublished: true
+      },
+      create: {
         slug: restaurant.slug,
         categoryId,
         nameEs: restaurant.nameEs,
@@ -768,10 +800,34 @@ async function main() {
         city: restaurant.city,
         locationLabel: restaurant.locationLabel,
         priceTier: restaurant.priceTier,
-        ratingAsier: restaurant.ratingAsier,
+        ratingAsier: restaurant.ratingAsier ?? 3,
         isYoungTalent: restaurant.isYoungTalent ?? false,
         age: restaurant.age,
-        mapUrl: restaurant.mapUrl
+        mapUrl: restaurant.mapUrl,
+        isPublished: true
+      }
+    });
+  }
+
+  if (notionSeedData) {
+    const importedRestaurantSlugs = restaurants.map((restaurant) => restaurant.slug);
+    const importedCategorySlugs = categories.map((category) => category.slug);
+
+    await prisma.restaurant.updateMany({
+      where: {
+        slug: { notIn: importedRestaurantSlugs }
+      },
+      data: {
+        isPublished: false
+      }
+    });
+
+    await prisma.category.updateMany({
+      where: {
+        slug: { notIn: importedCategorySlugs }
+      },
+      data: {
+        isActive: false
       }
     });
   }

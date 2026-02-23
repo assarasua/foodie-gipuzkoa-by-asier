@@ -94,6 +94,7 @@ app.get("/v1/restaurants", asyncHandler(async (req: Request, res: Response) => {
   const city = typeof req.query.city === "string" ? req.query.city.trim() : "";
   const priceTierRaw = typeof req.query.priceTier === "string" ? req.query.priceTier : undefined;
   const ratingMinRaw = typeof req.query.ratingMin === "string" ? req.query.ratingMin : undefined;
+  const includeYoungTalentsRaw = typeof req.query.includeYoungTalents === "string" ? req.query.includeYoungTalents : "";
   const sort = sortSchema.parse(req.query.sort);
   const pageRaw = typeof req.query.page === "string" ? req.query.page : "1";
   const limitRaw = typeof req.query.limit === "string" ? req.query.limit : "100";
@@ -102,55 +103,63 @@ app.get("/v1/restaurants", asyncHandler(async (req: Request, res: Response) => {
   const limit = numberSchema.parse(limitRaw);
   const priceTier = priceTierRaw ? numberSchema.parse(priceTierRaw) : undefined;
   const ratingMin = ratingMinRaw ? numberSchema.parse(ratingMinRaw) : undefined;
+  const includeYoungTalents = ["1", "true", "yes"].includes(includeYoungTalentsRaw.toLowerCase());
 
-  const restaurants = await prisma.restaurant.findMany({
-    where: {
-      isPublished: true,
-      ...(categorySlug
-        ? {
-            category: {
-              slug: categorySlug
-            }
+  const restaurantWhere = {
+    isPublished: true,
+    ...(includeYoungTalents ? {} : { isYoungTalent: false }),
+    ...(categorySlug
+      ? {
+          category: {
+            slug: categorySlug
           }
-        : {})
-      ,
-      ...(city ? { city: { contains: city, mode: "insensitive" } } : {}),
-      ...(priceTier ? { priceTier } : {}),
-      ...(ratingMin ? { ratingAsier: { gte: ratingMin } } : {}),
-      ...(search
-        ? {
-            OR: [
-              { nameEs: { contains: search, mode: "insensitive" } },
-              { nameEn: { contains: search, mode: "insensitive" } },
-              { specialtyEs: { contains: search, mode: "insensitive" } },
-              { specialtyEn: { contains: search, mode: "insensitive" } },
-              { descriptionEs: { contains: search, mode: "insensitive" } },
-              { descriptionEn: { contains: search, mode: "insensitive" } },
-              { city: { contains: search, mode: "insensitive" } }
-            ]
+        }
+      : {}),
+    ...(city ? { city: { contains: city, mode: "insensitive" as const } } : {}),
+    ...(priceTier ? { priceTier } : {}),
+    ...(ratingMin ? { ratingAsier: { gte: ratingMin } } : {}),
+    ...(search
+      ? {
+          OR: [
+            { nameEs: { contains: search, mode: "insensitive" as const } },
+            { nameEn: { contains: search, mode: "insensitive" as const } },
+            { specialtyEs: { contains: search, mode: "insensitive" as const } },
+            { specialtyEn: { contains: search, mode: "insensitive" as const } },
+            { descriptionEs: { contains: search, mode: "insensitive" as const } },
+            { descriptionEn: { contains: search, mode: "insensitive" as const } },
+            { city: { contains: search, mode: "insensitive" as const } }
+          ]
+        }
+      : {})
+  };
+
+  const [total, restaurants] = await prisma.$transaction([
+    prisma.restaurant.count({
+      where: restaurantWhere
+    }),
+    prisma.restaurant.findMany({
+      where: restaurantWhere,
+      orderBy:
+        sort === "highest-rated"
+          ? [{ ratingAsier: "desc" }, { nameEs: "asc" }]
+          : sort === "price-low"
+            ? [{ priceTier: "asc" }, { ratingAsier: "desc" }]
+            : sort === "price-high"
+              ? [{ priceTier: "desc" }, { ratingAsier: "desc" }]
+              : [{ ratingAsier: "desc" }, { nameEs: "asc" }],
+      skip: (page - 1) * limit,
+      take: limit,
+      include: {
+        category: {
+          select: {
+            slug: true,
+            titleEs: true,
+            titleEn: true
           }
-        : {})
-    },
-    orderBy:
-      sort === "highest-rated"
-        ? [{ ratingAsier: "desc" }, { nameEs: "asc" }]
-        : sort === "price-low"
-          ? [{ priceTier: "asc" }, { ratingAsier: "desc" }]
-          : sort === "price-high"
-            ? [{ priceTier: "desc" }, { ratingAsier: "desc" }]
-            : [{ ratingAsier: "desc" }, { nameEs: "asc" }],
-    skip: (page - 1) * limit,
-    take: limit,
-    include: {
-      category: {
-        select: {
-          slug: true,
-          titleEs: true,
-          titleEn: true
         }
       }
-    }
-  });
+    })
+  ]);
 
   res.json({
     data: restaurants.map((restaurant: {
@@ -188,6 +197,8 @@ app.get("/v1/restaurants", asyncHandler(async (req: Request, res: Response) => {
       websiteUrl: restaurant.websiteUrl,
       imageUrl: restaurant.imageUrl
     })),
+    total,
+    hasMore: page * limit < total,
     count: restaurants.length,
     page,
     limit
@@ -203,28 +214,37 @@ app.get("/v1/talents", asyncHandler(async (req: Request, res: Response) => {
   const page = numberSchema.parse(pageRaw);
   const limit = numberSchema.parse(limitRaw);
 
-  const talents = await prisma.talent.findMany({
-    where: {
-      ...(sector ? { sector } : {}),
-      ...(location ? { location: { contains: location, mode: "insensitive" } } : {}),
-      ...(search
-        ? {
-            OR: [
-              { name: { contains: search, mode: "insensitive" } },
-              { company: { contains: search, mode: "insensitive" } },
-              { role: { contains: search, mode: "insensitive" } },
-              { location: { contains: search, mode: "insensitive" } }
-            ]
-          }
-        : {})
-    },
-    orderBy: [{ name: "asc" }],
-    skip: (page - 1) * limit,
-    take: limit
-  });
+  const talentsWhere = {
+    ...(sector ? { sector } : {}),
+    ...(location ? { location: { contains: location, mode: "insensitive" as const } } : {}),
+    ...(search
+      ? {
+          OR: [
+            { name: { contains: search, mode: "insensitive" as const } },
+            { company: { contains: search, mode: "insensitive" as const } },
+            { role: { contains: search, mode: "insensitive" as const } },
+            { location: { contains: search, mode: "insensitive" as const } }
+          ]
+        }
+      : {})
+  };
+
+  const [total, talents] = await prisma.$transaction([
+    prisma.talent.count({
+      where: talentsWhere
+    }),
+    prisma.talent.findMany({
+      where: talentsWhere,
+      orderBy: [{ name: "asc" }],
+      skip: (page - 1) * limit,
+      take: limit
+    })
+  ]);
 
   res.json({
     data: talents,
+    total,
+    hasMore: page * limit < total,
     count: talents.length,
     page,
     limit

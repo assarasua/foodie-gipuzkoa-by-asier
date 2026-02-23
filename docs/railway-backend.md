@@ -19,7 +19,7 @@ Set these variables in Railway for the backend service:
 
 - `GET /v1/health`
 - `GET /v1/categories?locale=es|en`
-- `GET /v1/restaurants?locale=es|en&categorySlug=<slug>`
+- `GET /v1/restaurants?locale=es|en&categorySlug=<slug>&includeYoungTalents=false&page=1&limit=24`
 
 ## Local backend commands
 
@@ -34,19 +34,22 @@ npm run dev:api
 
 ## Notion import format for restaurants
 
-To seed from a Notion text export, fill:
+Preferred source files (in this order):
 
-- `apps/api/prisma/restaurants.notion.txt`
+- `apps/api/prisma/restaurants.notion.csv`
+- `apps/api/prisma/restaurants.notion.json`
+- fallback legacy: `apps/api/prisma/restaurants.notion.txt`
 
-One restaurant per line with this format:
+CSV/JSON columns supported:
 
-- `Categoria (estrellas) Nombre, Precio, Especialidad, Comentario, Google maps`
-
-Example:
-
-```txt
-Pintxos (3) La Cuchara de San Telmo, €€, Pintxos creativos, Producto top en Parte Vieja, https://maps.google.com/?q=La+Cuchara+de+San+Telmo+Donostia
-```
+- `Categoria`
+- `Nombre`
+- `Valoracion` (number or stars)
+- `Precio` (`€`, `€€`, `€€€`, `€€€€`)
+- `🧑‍🍳 especialidad`
+- `🎯 comentario`
+- `Google maps`
+- optional: `Ciudad`
 
 Then run:
 
