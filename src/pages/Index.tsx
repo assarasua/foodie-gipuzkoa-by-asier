@@ -1,142 +1,186 @@
-import { HeroSection } from "@/components/HeroSection";
-import { AboutSection } from "@/components/AboutSection";
-import { FoodCategoryCard } from "@/components/FoodCategoryCard";
-import { useNavigate } from "react-router-dom";
-import { useTranslation } from '@/contexts/TranslationContext';
+import { ArrowRight, Compass, MapPinned, Sparkles, Star } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { api } from "@/lib/api";
+import { useTranslation } from "@/contexts/TranslationContext";
 
-const foodCategories = [
-  {
-    title: "Pintxos Donosti",
-    emoji: "🍤",
-    description: "Lo mejor de una ruta de pintxos es ir a 3-4 lugares diferentes y probar los diferentes estilos de la cocina vasca tradicional y moderna.",
-    slug: "pintxos"
+const HomeCopy = {
+  es: {
+    kicker: "Guía editorial",
+    title: "Descubre la nueva escena gastronómica de Gipuzkoa",
+    subtitle:
+      "Selecciones premium pero accesibles, con foco en dónde comer hoy y cómo llegar rápido.",
+    ctaPrimary: "Abrir top picks en el mapa",
+    ctaSecondary: "Explorar categorías",
+    categories: "Categorías",
+    categoriesSub: "Explora por estilo culinario con una interfaz pensada para decidir más rápido.",
+    trending: "Trending en Gipuzkoa",
+    byMood: "By mood",
+    topRated: "Mejor valorados",
+    seeAll: "Ver todo",
+    talents: "Ver talentos"
   },
-  {
-    title: "Vegetarianos",
-    emoji: "🌱",
-    description: "Opciones vegetarianas y veganas innovadoras en Gipuzkoa. Cocina verde de alta calidad con productos locales y de temporada únicos.",
-    slug: "vegetarianos"
-  },
-  {
-    title: "Txakolindegis",
-    emoji: "🍇",
-    description: "Las mejores txakolindegis de Gipuzkoa. Vinos blancos frescos con denominación de origen Getariako Txakolina y tradición familiar única.",
-    slug: "txakolindegis"
-  },
-  {
-    title: "Pescados & Mariscos",
-    emoji: "🌊",
-    description: "Los mejores sabores del mar cantábrico en Gipuzkoa. Pescados frescos y mariscos de primera calidad en restaurantes excepcionales.",
-    slug: "pescados-mariscos"
-  },
-  {
-    title: "Carnes",
-    emoji: "🐄",
-    description: "Los mejores chuletones y carnes de Gipuzkoa en sus templos gastronómicos. Tradición, calidad y maduración perfecta en cada bocado.",
-    slug: "carnes"
-  },
-  {
-    title: "Sidrería",
-    emoji: "🍎",
-    description: "Auténticas sidrerías donde disfrutar del menú tradicional vasco. Experiencia completa con sidra natural y ambiente familiar acogedor.",
-    slug: "sidreria"
-  },
-  {
-    title: "Estrellas Desconocidas",
-    emoji: "⭐",
-    description: "Restaurantes con estrella Michelin y propuestas gastronómicas únicas en Gipuzkoa. Alta cocina y jóvenes talentos en un mismo lugar.",
-    slug: "estrellas-desconocidas"
+  en: {
+    kicker: "Editorial guide",
+    title: "Discover Gipuzkoa's new gourmet scene",
+    subtitle:
+      "Premium yet mainstream picks, focused on where to eat today and how to get there quickly.",
+    ctaPrimary: "Open top picks on map",
+    ctaSecondary: "Explore categories",
+    categories: "Categories",
+    categoriesSub: "Browse by culinary style with a faster decision-first interface.",
+    trending: "Trending in Gipuzkoa",
+    byMood: "By mood",
+    topRated: "Top rated",
+    seeAll: "See all",
+    talents: "View talents"
   }
-];
+};
+
+const moodChips = ["Casual", "Date night", "Seafood", "Vegetarian", "Michelin"];
 
 const Index = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
-  
-  const handleCategoryClick = (slug: string) => {
-    navigate(`/category/${slug}`);
-  };
+  const { language } = useTranslation();
+  const copy = HomeCopy[language];
+
+  const categoriesQuery = useQuery({
+    queryKey: ["categories", language],
+    queryFn: async () => (await api.getCategories(language)).data
+  });
+
+  const restaurantsQuery = useQuery({
+    queryKey: ["restaurants", "home", language],
+    queryFn: async () => (await api.getRestaurants(language, undefined, { limit: 8, sort: "highest-rated" })).data
+  });
+
+  const topPicks = restaurantsQuery.data?.filter((item) => item.mapUrl).slice(0, 3) ?? [];
+  const featuredMapUrl = topPicks[0]?.mapUrl ?? "https://maps.google.com/?q=Donostia";
 
   return (
-    <div className="min-h-screen bg-background relative">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10"></div>
-      </div>
-      
-      <HeroSection />
-      
-      <AboutSection />
-      
-      {/* Categories Section */}
-      <div className="py-20 px-4 relative">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="font-heading text-4xl md:text-5xl font-semibold text-primary mb-6 traditional-text">
-              {t('categories.title')}
-            </h2>
-            <p className="font-body text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              {t('categories.subtitle')}
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-            {foodCategories.map((category, index) => (
-              <div 
-                key={category.title}
-                className="animate-fade-in-up"
-                style={{ animationDelay: `${index * 0.2}s` }}
+    <div>
+      <section className="relative overflow-hidden border-b border-border/60 bg-[radial-gradient(circle_at_20%_20%,hsl(var(--accent)/0.2),transparent_45%),radial-gradient(circle_at_80%_0%,hsl(var(--primary)/0.18),transparent_42%)]">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1.2fr_0.8fr] lg:px-8 lg:py-20">
+          <div className="space-y-6">
+            <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">{copy.kicker}</p>
+            <h1 className="max-w-2xl text-balance text-4xl font-semibold leading-tight text-foreground sm:text-5xl lg:text-6xl">
+              {copy.title}
+            </h1>
+            <p className="max-w-xl text-base text-muted-foreground sm:text-lg">{copy.subtitle}</p>
+            <div className="flex flex-wrap gap-3">
+              <a
+                href={featuredMapUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:brightness-95"
               >
-                <FoodCategoryCard
-                  title={t(`category.${category.slug}.title`)}
-                  emoji={category.emoji}
-                  description={t(`category.${category.slug}.description`)}
-                  onClick={() => handleCategoryClick(category.slug)}
-                />
+                <MapPinned className="h-4 w-4" />
+                {copy.ctaPrimary}
+              </a>
+              <Button
+                variant="outline"
+                className="min-h-11 rounded-xl"
+                onClick={() => document.getElementById("categories")?.scrollIntoView({ behavior: "smooth" })}
+              >
+                <Compass className="mr-2 h-4 w-4" />
+                {copy.ctaSecondary}
+              </Button>
+            </div>
+            <div className="flex flex-wrap gap-2 pt-2">
+              {moodChips.map((chip) => (
+                <span key={chip} className="rounded-full border border-border/70 bg-card px-3 py-1.5 text-xs text-muted-foreground">
+                  {chip}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <Card className="border-border/70 bg-card/90 shadow-sm">
+            <CardContent className="space-y-4 p-5 sm:p-6">
+              <div className="flex items-center justify-between">
+                <h3 className="text-sm font-semibold text-foreground">{copy.topRated}</h3>
+                <Link to="/jovenes-talentos" className="text-xs font-medium text-primary hover:underline">
+                  {copy.talents}
+                </Link>
               </div>
-            ))}
+              {restaurantsQuery.isLoading && <p className="text-sm text-muted-foreground">Loading...</p>}
+              {restaurantsQuery.isError && <p className="text-sm text-destructive">Failed to load highlights.</p>}
+              <ul className="space-y-3">
+                {(restaurantsQuery.data ?? []).slice(0, 5).map((item) => (
+                  <li key={item.slug} className="flex items-start justify-between gap-3 rounded-xl border border-border/60 p-3">
+                    <div>
+                      <p className="text-sm font-semibold text-foreground">{item.name}</p>
+                      <p className="text-xs text-muted-foreground">{item.locationLabel}</p>
+                    </div>
+                    <div className="flex items-center gap-1 text-amber-500">
+                      <Star className="h-3.5 w-3.5 fill-current" />
+                      <span className="text-xs font-semibold text-foreground">{item.ratingAsier ?? "-"}</span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      <section id="categories" className="mx-auto max-w-7xl space-y-8 px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div className="space-y-2">
+            <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">{copy.categories}</h2>
+            <p className="max-w-2xl text-sm text-muted-foreground sm:text-base">{copy.categoriesSub}</p>
           </div>
+          <Button variant="ghost" className="min-h-11 rounded-xl" onClick={() => navigate("/jovenes-talentos")}>
+            {copy.seeAll}
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
         </div>
-        
-        {/* Bonus Section */}
-        <div className="mt-20 text-center">
-          <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 rounded-xl p-6 md:p-8 mx-4 max-w-4xl mx-auto">
-            <div className="text-5xl mb-4">🌟</div>
-            <h3 className="text-xl md:text-2xl font-bold text-foreground mb-4">
-              {t('bonus.title')}
-            </h3>
-            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
-              {t('bonus.description')}
-            </p>
-            <button 
-              onClick={() => navigate('/jovenes-talentos')}
-              className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 md:px-8 py-3 rounded-lg font-semibold transition-colors text-sm md:text-base"
-            >
-              {t('bonus.button')}
-            </button>
-          </div>
+
+        {categoriesQuery.isLoading && <p className="text-sm text-muted-foreground">Loading categories...</p>}
+        {categoriesQuery.isError && <p className="text-sm text-destructive">Failed to load categories.</p>}
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {(categoriesQuery.data ?? []).map((category) => {
+            const count = (restaurantsQuery.data ?? []).filter((item) => item.categorySlug === category.slug).length;
+
+            return (
+              <button
+                key={category.slug}
+                onClick={() => navigate(`/category/${category.slug}`)}
+                className="group rounded-2xl border border-border/70 bg-card/90 p-5 text-left transition duration-300 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-sm"
+              >
+                <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-lg text-primary">
+                  <span>{category.emoji}</span>
+                </div>
+                <h3 className="text-lg font-semibold text-foreground">{category.title}</h3>
+                <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{category.description}</p>
+                <div className="mt-5 flex items-center justify-between text-xs text-muted-foreground">
+                  <span>{copy.trending}</span>
+                  <span>{count} spots</span>
+                </div>
+              </button>
+            );
+          })}
         </div>
-      </div>
-      
-      {/* Footer */}
-      <footer className="bg-gradient-hero text-white py-12 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 left-1/4 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
-          <div className="absolute bottom-0 right-1/4 w-24 h-24 bg-accent/20 rounded-full blur-xl"></div>
-        </div>
-        <div className="max-w-4xl mx-auto text-center px-4 relative z-10">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <span className="text-3xl animate-float">👨‍🍳</span>
-            <h3 className="text-2xl font-bold">Asier Sarasua</h3>
-          </div>
-          <p className="text-white/80 text-lg">
-            {t('footer.description')}
-          </p>
-          <p className="text-white/60 mt-4">
-            {t('footer.copyright')}
-          </p>
-        </div>
-      </footer>
+
+        <Card className="border-border/70 bg-card/70">
+          <CardContent className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+            <div>
+              <p className="text-sm font-semibold text-foreground">{copy.byMood}</p>
+              <p className="text-xs text-muted-foreground">Quick paths for faster decision making.</p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {moodChips.map((chip) => (
+                <span key={chip} className="rounded-full bg-muted px-3 py-1 text-xs text-muted-foreground">
+                  {chip}
+                </span>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </section>
     </div>
   );
 };

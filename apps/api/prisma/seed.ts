@@ -1,5 +1,6 @@
 import "dotenv/config";
 import { PrismaClient } from "@prisma/client";
+import talentsSeed from "./talents.seed.json" with { type: "json" };
 
 const prisma = new PrismaClient();
 
@@ -29,6 +30,15 @@ type SeedRestaurant = {
   isYoungTalent?: boolean;
   age?: number;
   mapUrl?: string;
+};
+
+type SeedTalent = {
+  name: string;
+  role: string;
+  company: string;
+  location: string;
+  sector: string;
+  description?: string;
 };
 
 const categories: SeedCategory[] = [
@@ -542,6 +552,7 @@ const restaurants: SeedRestaurant[] = [
 ];
 
 async function main() {
+  await prisma.talent.deleteMany();
   await prisma.restaurant.deleteMany();
   await prisma.category.deleteMany();
 
@@ -581,9 +592,26 @@ async function main() {
     });
   }
 
+  const talents = talentsSeed as SeedTalent[];
+  if (talents.length > 0) {
+    await prisma.talent.createMany({
+      data: talents.map((talent) => ({
+        name: talent.name,
+        role: talent.role,
+        company: talent.company,
+        location: talent.location,
+        sector: talent.sector,
+        description: talent.description
+      }))
+    });
+  }
+
   const categoryCount = await prisma.category.count();
   const restaurantCount = await prisma.restaurant.count();
-  console.log(`Seed completed: ${categoryCount} categories, ${restaurantCount} restaurants.`);
+  const talentCount = await prisma.talent.count();
+  console.log(
+    `Seed completed: ${categoryCount} categories, ${restaurantCount} restaurants, ${talentCount} talents.`
+  );
 }
 
 main()

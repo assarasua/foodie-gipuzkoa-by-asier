@@ -2,199 +2,116 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
-:root {
-    /* Traditional Basque Color Palette - Warm and Earthy */
-    --background: 42 20% 96%;
-    --foreground: 25 15% 20%;
+  :root {
+    --background: 36 33% 98%;
+    --foreground: 24 14% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 25 15% 20%;
+    --card-foreground: 24 14% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 25 15% 20%;
+    --popover-foreground: 24 14% 15%;
 
-    --primary: 355 65% 50%; /* Traditional Basque Red */
-    --primary-foreground: 0 0% 98%;
+    --primary: 15 79% 45%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 40 30% 90%;
-    --secondary-foreground: 25 15% 20%;
+    --secondary: 38 27% 93%;
+    --secondary-foreground: 24 14% 20%;
 
-    --muted: 40 15% 92%;
-    --muted-foreground: 25 10% 50%;
+    --muted: 33 20% 92%;
+    --muted-foreground: 26 9% 42%;
 
-    --accent: 145 55% 40%; /* Forest Green */
-    --accent-foreground: 0 0% 98%;
+    --accent: 162 39% 32%;
+    --accent-foreground: 0 0% 100%;
 
-    /* Traditional Basque Colors */
+    --destructive: 0 70% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 30 19% 84%;
+    --input: 30 19% 84%;
+    --ring: 15 79% 45%;
+
+    --radius: 0.85rem;
+
+    --sidebar-background: 36 33% 98%;
+    --sidebar-foreground: 24 14% 15%;
+    --sidebar-primary: 15 79% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 33 20% 92%;
+    --sidebar-accent-foreground: 24 14% 15%;
+    --sidebar-border: 30 19% 84%;
+    --sidebar-ring: 15 79% 45%;
+
     --basque-red: 355 65% 50%;
     --basque-green: 145 55% 40%;
     --ocean-blue: 210 70% 55%;
-    --warm-cream: 40 30% 90%;
-    --earth-brown: 25 25% 35%;
-    
-    /* Traditional gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(var(--basque-red)), hsl(var(--earth-brown)));
-    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(var(--warm-cream)));
-    --gradient-accent: linear-gradient(90deg, hsl(var(--basque-red)), hsl(var(--basque-green)));
-    
-    /* Subtle shadows */
-    --shadow-hover: 0 8px 25px -8px hsl(var(--primary) / 0.25);
-    --shadow-glow: 0 4px 15px hsl(var(--primary) / 0.15);
-    
-    /* Animation Variables */
-    --animate-duration: 0.6s;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --golden-yellow: 44 85% 58%;
+    --warm-orange: 24 80% 54%;
   }
 
-.dark {
-    /* Traditional Basque Dark Mode - Warm and Cozy */
-    --background: 25 20% 8%;
-    --foreground: 40 15% 95%;
-
-    --card: 25 15% 12%;
-    --card-foreground: 40 15% 95%;
-
-    --popover: 25 15% 12%;
-    --popover-foreground: 40 15% 95%;
-
-    --primary: 355 70% 60%; /* Warmer Basque Red for dark mode */
-    --primary-foreground: 25 20% 8%;
-
-    --secondary: 25 10% 18%;
-    --secondary-foreground: 40 15% 95%;
-
-    --muted: 25 10% 15%;
-    --muted-foreground: 40 10% 65%;
-
-    --accent: 145 60% 45%; /* Brighter forest green for dark mode */
-    --accent-foreground: 25 20% 8%;
-
-    /* Traditional dark mode colors */
-    --basque-red: 355 70% 60%;
-    --basque-green: 145 60% 45%;
-    --ocean-blue: 210 75% 65%;
-    --warm-cream: 40 25% 85%;
-    --earth-brown: 25 30% 25%;
-    
-    /* Dark traditional gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(var(--basque-red)), hsl(var(--earth-brown)));
-    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(25 15% 16%));
-    --gradient-accent: linear-gradient(90deg, hsl(var(--basque-red)), hsl(var(--basque-green)));
-    
-    /* Warmer dark shadows */
-    --shadow-hover: 0 8px 25px -8px hsl(var(--primary) / 0.3);
-    --shadow-glow: 0 4px 15px hsl(var(--primary) / 0.25);
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+  .dark {
+    --background: 20 18% 8%;
+    --foreground: 35 24% 94%;
+    --card: 20 18% 11%;
+    --card-foreground: 35 24% 94%;
+    --popover: 20 18% 11%;
+    --popover-foreground: 35 24% 94%;
+    --primary: 15 82% 56%;
+    --primary-foreground: 20 18% 10%;
+    --secondary: 20 14% 16%;
+    --secondary-foreground: 35 24% 94%;
+    --muted: 20 12% 16%;
+    --muted-foreground: 28 10% 66%;
+    --accent: 162 46% 46%;
+    --accent-foreground: 20 18% 10%;
+    --destructive: 0 67% 52%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 20 14% 24%;
+    --input: 20 14% 24%;
+    --ring: 15 82% 56%;
+    --sidebar-background: 20 18% 10%;
+    --sidebar-foreground: 35 24% 94%;
+    --sidebar-primary: 15 82% 56%;
+    --sidebar-primary-foreground: 20 18% 10%;
+    --sidebar-accent: 20 12% 16%;
+    --sidebar-accent-foreground: 35 24% 94%;
+    --sidebar-border: 20 14% 24%;
+    --sidebar-ring: 15 82% 56%;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
 
+  html,
+  body,
+  #root {
+    @apply min-h-screen;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
   }
 
-  /* Traditional Basque Keyframes */
-  @keyframes gentle-float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-5px); }
-  }
-  
-  @keyframes fade-in-up {
-    0% {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
     }
   }
+}
 
-  @keyframes subtle-glow {
-    0%, 100% { box-shadow: 0 2px 8px hsl(var(--primary) / 0.15); }
-    50% { box-shadow: 0 4px 16px hsl(var(--primary) / 0.25); }
+@layer components {
+  .surface-elevated {
+    @apply border border-border/70 bg-card/90 shadow-sm;
   }
 
-  @keyframes traditional-gradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  /* Traditional Utility Classes */
-  .animate-float {
-    animation: gentle-float 4s ease-in-out infinite;
-  }
-
-  .animate-fade-in-up {
-    animation: fade-in-up var(--animate-duration) ease-out forwards;
-    opacity: 1;
-  }
-
-  .animate-pulse-glow {
-    animation: subtle-glow 3s ease-in-out infinite;
-  }
-
-  .animate-gradient {
-    background-size: 200% 200%;
-    animation: traditional-gradient 4s ease infinite;
-  }
-
-  .glassmorphism {
-    background: hsl(var(--card) / 0.95);
-    backdrop-filter: blur(10px);
-    border: 1px solid hsl(var(--border) / 0.2);
-    box-shadow: var(--shadow-glow);
-  }
-
-  .traditional-text {
-    text-shadow: 0 1px 2px hsl(var(--primary) / 0.1);
+  .text-balance {
+    text-wrap: balance;
   }
 }

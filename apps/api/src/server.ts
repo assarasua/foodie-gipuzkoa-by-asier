@@ -26,6 +26,7 @@ app.use(
 app.use(express.json());
 
 const localeSchema = z.enum(["es", "en"]).default("es");
+const numberSchema = z.preprocess((value) => Number(value), z.number().int().positive());
 
 app.get("/v1/health", async (_req: Request, res: Response) => {
   let db = "ok";
@@ -72,6 +73,18 @@ app.get("/v1/categories", async (req: Request, res: Response) => {
 app.get("/v1/restaurants", async (req: Request, res: Response) => {
   const locale = localeSchema.parse(req.query.locale);
   const categorySlug = typeof req.query.categorySlug === "string" ? req.query.categorySlug : undefined;
+  const search = typeof req.query.search === "string" ? req.query.search.trim() : "";
+  const city = typeof req.query.city === "string" ? req.query.city.trim() : "";
+  const priceTierRaw = typeof req.query.priceTier === "string" ? req.query.priceTier : undefined;
+  const ratingMinRaw = typeof req.query.ratingMin === "string" ? req.query.ratingMin : undefined;
+  const sort = typeof req.query.sort === "string" ? req.query.sort : "recommended";
+  const pageRaw = typeof req.query.page === "string" ? req.query.page : "1";
+  const limitRaw = typeof req.query.limit === "string" ? req.query.limit : "100";
+
+  const page = numberSchema.parse(pageRaw);
+  const limit = numberSchema.parse(limitRaw);
+  const priceTier = priceTierRaw ? numberSchema.parse(priceTierRaw) : undefined;
+  const ratingMin = ratingMinRaw ? numberSchema.parse(ratingMinRaw) : undefined;
 
   const restaurants = await prisma.restaurant.findMany({
     where: {
@@ -83,8 +96,34 @@ app.get("/v1/restaurants", async (req: Request, res: Response) => {
             }
           }
         : {})
+      ,
+      ...(city ? { city: { contains: city, mode: "insensitive" } } : {}),
+      ...(priceTier ? { priceTier } : {}),
+      ...(ratingMin ? { ratingAsier: { gte: ratingMin } } : {}),
+      ...(search
+        ? {
+            OR: [
+              { nameEs: { contains: search, mode: "insensitive" } },
+              { nameEn: { contains: search, mode: "insensitive" } },
+              { specialtyEs: { contains: search, mode: "insensitive" } },
+              { specialtyEn: { contains: search, mode: "insensitive" } },
+              { descriptionEs: { contains: search, mode: "insensitive" } },
+              { descriptionEn: { contains: search, mode: "insensitive" } },
+              { city: { contains: search, mode: "insensitive" } }
+            ]
+          }
+        : {})
     },
-    orderBy: [{ ratingAsier: "desc" }, { nameEs: "asc" }],
+    orderBy:
+      sort === "highest-rated"
+        ? [{ ratingAsier: "desc" }, { nameEs: "asc" }]
+        : sort === "price-low"
+          ? [{ priceTier: "asc" }, { ratingAsier: "desc" }]
+          : sort === "price-high"
+            ? [{ priceTier: "desc" }, { ratingAsier: "desc" }]
+            : [{ ratingAsier: "desc" }, { nameEs: "asc" }],
+    skip: (page - 1) * limit,
+    take: limit,
     include: {
       category: {
         select: {
@@ -114,7 +153,46 @@ app.get("/v1/restaurants", async (req: Request, res: Response) => {
       websiteUrl: restaurant.websiteUrl,
       imageUrl: restaurant.imageUrl
     })),
-    count: restaurants.length
+    count: restaurants.length,
+    page,
+    limit
+  });
+});
+
+app.get("/v1/talents", async (req: Request, res: Response) => {
+  const search = typeof req.query.search === "string" ? req.query.search.trim() : "";
+  const sector = typeof req.query.sector === "string" ? req.query.sector.trim() : "";
+  const location = typeof req.query.location === "string" ? req.query.location.trim() : "";
+  const pageRaw = typeof req.query.page === "string" ? req.query.page : "1";
+  const limitRaw = typeof req.query.limit === "string" ? req.query.limit : "100";
+  const page = numberSchema.parse(pageRaw);
+  const limit = numberSchema.parse(limitRaw);
+
+  const talents = await prisma.talent.findMany({
+    where: {
+      ...(sector ? { sector } : {}),
+      ...(location ? { location: { contains: location, mode: "insensitive" } } : {}),
+      ...(search
+        ? {
+            OR: [
+              { name: { contains: search, mode: "insensitive" } },
+              { company: { contains: search, mode: "insensitive" } },
+              { role: { contains: search, mode: "insensitive" } },
+              { location: { contains: search, mode: "insensitive" } }
+            ]
+          }
+        : {})
+    },
+    orderBy: [{ name: "asc" }],
+    skip: (page - 1) * limit,
+    take: limit
+  });
+
+  res.json({
+    data: talents,
+    count: talents.length,
+    page,
+    limit
   });
 });
 

@@ -1,0 +1,702 @@
+[
+  {
+    "name": "Taborda, Catarina",
+    "role": "Senior Food Designer",
+    "company": "REMY Robotics",
+    "location": "Barcelona",
+    "sector": "start-ups"
+  },
+  {
+    "name": "Baccon, Francesca",
+    "role": "Maître",
+    "company": "Quique Dacosta Restaurante",
+    "location": "Alicante",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Bernabé Calderón, Juan Bosco",
+    "role": "Jefe de producción y eventos",
+    "company": "DSTAgE",
+    "location": "Madrid",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Labayru Lavandero, Jasone",
+    "role": "Cocinera",
+    "company": "El Paladar by Zuriñe García",
+    "location": "Bizkaia",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Civettini, Andrea",
+    "role": "Bartender",
+    "company": "Paradiso",
+    "location": "Barcelona",
+    "sector": "sector-del-vino"
+  },
+  {
+    "name": "Moreira, Nacho",
+    "role": "Chef",
+    "company": "La Esquina de Valentina",
+    "location": "A Coruña",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Cantallops, Maira",
+    "role": "Maître",
+    "company": "Montbar",
+    "location": "Barcelona",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Arguinzoniz, Paul",
+    "role": "Equipo de sala y sumiller",
+    "company": "Asador Etxebarri",
+    "location": "Bizkaia",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Príncipe, Juan",
+    "role": "Viticultor y comunicador",
+    "company": "Bodega César Principe",
+    "location": "Valladolid",
+    "sector": "sector-del-vino"
+  },
+  {
+    "name": "Mato, Miguel Ángel",
+    "role": "Fundador",
+    "company": "Bodega Al Galope",
+    "location": "La Rioja",
+    "sector": "sector-del-vino"
+  },
+  {
+    "name": "Clot, Marta",
+    "role": "Creadora de contenido",
+    "company": "La Marta Clot",
+    "location": "Barcelona",
+    "sector": "comunicacion"
+  },
+  {
+    "name": "De Luca, Alba",
+    "role": "Jefa de cocina",
+    "company": "Restaurante Deluca",
+    "location": "Málaga",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Hernández Galarraga, David",
+    "role": "Supervisor",
+    "company": "Smoked Room",
+    "location": "Madrid",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Suárez, Juan Miguel",
+    "role": "Cofundador",
+    "company": "AgroSuárez",
+    "location": "Almería",
+    "sector": "productor"
+  },
+  {
+    "name": "Loza, Álvaro",
+    "role": "Fundador, viticultor y elaborador",
+    "company": "Alvaro Loza Viticultor",
+    "location": "La Rioja",
+    "sector": "sector-del-vino"
+  },
+  {
+    "name": "Mondéjar, Jaime",
+    "role": "Jefe de cocina",
+    "company": "Restaurante Barro",
+    "location": "Ávila",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Fafián, Tania",
+    "role": "Apicultora y fundadora",
+    "company": "Mel Os Catro Ventos",
+    "location": "Pontevedra",
+    "sector": "productor"
+  },
+  {
+    "name": "Sancho, Silvia",
+    "role": "Creadora de contenido",
+    "company": "Foodichii",
+    "location": "Madrid",
+    "sector": "comunicacion"
+  },
+  {
+    "name": "Hidalgo, Alfonso David",
+    "role": "Fundador",
+    "company": "Taller Góngora Cerámica",
+    "location": "Jaén",
+    "sector": "otros-perfiles"
+  },
+  {
+    "name": "Ballesteros Martínez, Ignacio",
+    "role": "International Trade Marketing & Product Specialist",
+    "company": "Europastry",
+    "location": "España",
+    "sector": "otros-perfiles"
+  },
+  {
+    "name": "Fernández Morales, Clara",
+    "role": "Investigadora",
+    "company": "Libre Foods",
+    "location": "Barcelona",
+    "sector": "start-ups"
+  },
+  {
+    "name": "García, Nerea",
+    "role": "Cofundadora",
+    "company": "Mad Wine",
+    "location": "Madrid",
+    "sector": "sector-del-vino"
+  },
+  {
+    "name": "Cabrera, Tomás",
+    "role": "Jefe de I+D y Producción",
+    "company": "Circular Powder",
+    "location": "Barcelona",
+    "sector": "start-ups"
+  },
+  {
+    "name": "Oliva, Frederic",
+    "role": "Head Sommelier",
+    "company": "Enigma",
+    "location": "Barcelona",
+    "sector": "sector-del-vino"
+  },
+  {
+    "name": "Roquero, Sara",
+    "role": "Responsable de desarrollo de producto y comunicación",
+    "company": "CookPlay",
+    "location": "Bizkaia",
+    "sector": "otros-perfiles"
+  },
+  {
+    "name": "Llorens Merelo, Alejandro",
+    "role": "Adjunto a operaciones",
+    "company": "Ricard Camarena Restaurante",
+    "location": "Valencia",
+    "sector": "otros-perfiles"
+  },
+  {
+    "name": "Puigvert Puigdevall, Carlota",
+    "role": "Cocinera y segunda generación",
+    "company": "Les Cols",
+    "location": "Girona",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Sastre, Jorge",
+    "role": "Cocinero y cofundador",
+    "company": "Sartoria Panatieri, Brabo y Molla",
+    "location": "Barcelona",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Villaseca, María Magdalena",
+    "role": "Diseñadora Gastronómica",
+    "company": "MM Studio & Funky Bakers",
+    "location": "Barcelona / Copenhague",
+    "sector": "otros-perfiles"
+  },
+  {
+    "name": "Megías, Cristina",
+    "role": "Head of Production & Development",
+    "company": "Noma Projects",
+    "location": "Copenhague",
+    "sector": "investigacion"
+  },
+  {
+    "name": "Shen, Ken",
+    "role": "Creadora de contenido",
+    "company": "Cocina con Coqui",
+    "location": "Madrid",
+    "sector": "comunicacion"
+  },
+  {
+    "name": "García, Erika",
+    "role": "Ganadera y Quesera",
+    "company": "Dehesa de los Llanos",
+    "location": "Albacete",
+    "sector": "productor"
+  },
+  {
+    "name": "Egea, María",
+    "role": "Jefa de Sala, sumiller y copropietaria",
+    "company": "Frases",
+    "location": "Murcia",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Joher, Dana",
+    "role": "Propietaria",
+    "company": "AVE Pasteleria Artesanal",
+    "location": "Gran Canaria",
+    "sector": "pasteleria-panaderia"
+  },
+  {
+    "name": "Rico, Gorka",
+    "role": "Jefe de Cocina y copropietario",
+    "company": "AMA Tolosa",
+    "location": "Gipuzkoa",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Serra Nilsson, Ingrid",
+    "role": "Pastelera",
+    "company": "I+Desserts",
+    "location": "Barcelona",
+    "sector": "pasteleria-panaderia"
+  },
+  {
+    "name": "Ruiz, Jorge",
+    "role": "Jefe de Cocina y Pastelería",
+    "company": "Vandelvira",
+    "location": "Jaén",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Pagano, Antonia",
+    "role": "Jefa de cocina",
+    "company": "Mediamanga y Montbar",
+    "location": "Barcelona",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Alcaide, Adrián",
+    "role": "Cocreador y copresentador",
+    "company": "Podcast La Picaeta",
+    "location": "Valencia",
+    "sector": "comunicacion"
+  },
+  {
+    "name": "Méndez, Jorge",
+    "role": "Productor y segunda generación",
+    "company": "Bodegas Vinatigo",
+    "location": "Santa Cruz de Tenerife",
+    "sector": "sector-del-vino"
+  },
+  {
+    "name": "Galparsoro, Aitor",
+    "role": "Panadero",
+    "company": "Galparsoro",
+    "location": "Gipuzkoa",
+    "sector": "pasteleria-panaderia"
+  },
+  {
+    "name": "Moreno, Ricard",
+    "role": "Director de marketing",
+    "company": "Bumerang",
+    "location": "Barcelona",
+    "sector": "start-ups"
+  },
+  {
+    "name": "Arenzana, Lucía",
+    "role": "Fundadora",
+    "company": "Luk Beer",
+    "location": "Madrid",
+    "sector": "sector-del-vino"
+  },
+  {
+    "name": "Oyanguren, Ainhoa",
+    "role": "Copropietaria",
+    "company": "Trike Koffee Roasters",
+    "location": "Álava",
+    "sector": "otros-perfiles"
+  },
+  {
+    "name": "Garrido, Juan",
+    "role": "Cofundador y COO",
+    "company": "Breadfree",
+    "location": "Navarra",
+    "sector": "start-ups"
+  },
+  {
+    "name": "De la Rosa, José",
+    "role": "Fundador",
+    "company": "Fermented Freelance",
+    "location": "Huelva",
+    "sector": "investigacion"
+  },
+  {
+    "name": "Aspas, Carlos",
+    "role": "Fundador",
+    "company": "Trufas La finesse",
+    "location": "Teruel",
+    "sector": "pasteleria-panaderia"
+  },
+  {
+    "name": "Misut Molina, Francisco Manuel",
+    "role": "Jefe de partida de postres",
+    "company": "El Celler de Can Roca",
+    "location": "Girona",
+    "sector": "pasteleria-panaderia"
+  },
+  {
+    "name": "Touceda, Alejandra",
+    "role": "Doctoranda",
+    "company": "Basque Culinary Center / Harvard",
+    "location": "Gipuzkoa / Cambridge",
+    "sector": "investigacion"
+  },
+  {
+    "name": "Catalán Cases, Pablo",
+    "role": "Sumiller y barman",
+    "company": "Lasarte",
+    "location": "Barcelona",
+    "sector": "sector-del-vino"
+  },
+  {
+    "name": "Camps, Martí",
+    "role": "Jefe de cocina",
+    "company": "Mugaritz",
+    "location": "Gipuzkoa",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Cano Figueira, Esperança",
+    "role": "Segunda de cocina",
+    "company": "Restaurante el Xato i Cristina Figueira",
+    "location": "Alicante",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Martín Minguélez, José María",
+    "role": "Cofundador e investigador",
+    "company": "CHACINO (Universidad de Extremadura)",
+    "location": "Cáceres",
+    "sector": "investigacion"
+  },
+  {
+    "name": "Sukia, Iker",
+    "role": "Pastor y maestro quesero",
+    "company": "Quesos Ixidro",
+    "location": "Gipuzkoa",
+    "sector": "productor"
+  },
+  {
+    "name": "Zeberio, Ane",
+    "role": "Productora",
+    "company": "Caserío Arriatzu",
+    "location": "Gipuzkoa",
+    "sector": "productor"
+  },
+  {
+    "name": "Sua, Aitor",
+    "role": "Jefe de cocina y copropietario",
+    "company": "Trèsde",
+    "location": "Madrid",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Subías, Arnau",
+    "role": "Biólogo marino",
+    "company": "Estimar",
+    "location": "Barcelona",
+    "sector": "investigacion"
+  },
+  {
+    "name": "Ferrón, Adrián",
+    "role": "Sumiller",
+    "company": "Restaurante Lera",
+    "location": "Zamora",
+    "sector": "sector-del-vino"
+  },
+  {
+    "name": "De Haro Soler, Ángela",
+    "role": "Directora de Operaciones",
+    "company": "Cooking Numbers",
+    "location": "Barcelona",
+    "sector": "otros-perfiles"
+  },
+  {
+    "name": "Herreros, Arlette",
+    "role": "Control de sala y sumillería",
+    "company": "Umma / Bena Santander",
+    "location": "Cantabria",
+    "sector": "sector-del-vino"
+  },
+  {
+    "name": "Morales, Francisco",
+    "role": "Responsable de impresión 3D",
+    "company": "Noor",
+    "location": "Córdoba",
+    "sector": "otros-perfiles"
+  },
+  {
+    "name": "Córnago, Lander",
+    "role": "Responsable de I+D",
+    "company": "Arzak",
+    "location": "Gipuzkoa",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Quintana, Alain",
+    "role": "Viticultor, cosechero y enólogo",
+    "company": "Bodegas Quintana",
+    "location": "Álava",
+    "sector": "sector-del-vino"
+  },
+  {
+    "name": "Sánchez Manzano, Jesús",
+    "role": "Jefe de Cocina",
+    "company": "Casa San Marcial",
+    "location": "Asturias",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Kupervaser, Denise",
+    "role": "Directora de Calidad y Sostenibilidad",
+    "company": "Casa Montaña",
+    "location": "Valencia",
+    "sector": "otros-perfiles"
+  },
+  {
+    "name": "Romeo, Elena",
+    "role": "Investigadora",
+    "company": "BCC Innovation",
+    "location": "Gipuzkoa",
+    "sector": "investigacion"
+  },
+  {
+    "name": "Elorriaga, Ander",
+    "role": "Gestión",
+    "company": "Azurmendi",
+    "location": "Bizkaia",
+    "sector": "otros-perfiles"
+  },
+  {
+    "name": "Maccarone, Vicky",
+    "role": "Directora y copropietaria",
+    "company": "Alapar",
+    "location": "Barcelona",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Rábade, Erlinda",
+    "role": "Jefa de sala",
+    "company": "Toki (Grupo Marcos Granda)",
+    "location": "Madrid",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Tracchia, Graziano",
+    "role": "Chef pastry",
+    "company": "DiverXO",
+    "location": "Madrid",
+    "sector": "pasteleria-panaderia"
+  },
+  {
+    "name": "Juez Martínez, María",
+    "role": "Coordinadora de innovación",
+    "company": "Makro Innovación",
+    "location": "Madrid",
+    "sector": "otros-perfiles"
+  },
+  {
+    "name": "López García, Elio",
+    "role": "Cofundador y CEO",
+    "company": "Innogando",
+    "location": "Lugo",
+    "sector": "start-ups"
+  },
+  {
+    "name": "Santamaría, Sergio",
+    "role": "Propietario",
+    "company": "La Mesedora",
+    "location": "Valencia",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Rivera Contreras, Ninitzen",
+    "role": "Segunda de cocina y jefa de pastelería",
+    "company": "Bardal",
+    "location": "Málaga",
+    "sector": "pasteleria-panaderia"
+  },
+  {
+    "name": "Mateo, Ignasi",
+    "role": "I+D",
+    "company": "Investigador independiente",
+    "location": "Cádiz",
+    "sector": "investigacion"
+  },
+  {
+    "name": "López de Lacalle, Patricia",
+    "role": "Gestión y segunda generación",
+    "company": "Bodegas Artadi",
+    "location": "Álava",
+    "sector": "sector-del-vino"
+  },
+  {
+    "name": "Berbegall, Iván",
+    "role": "Marinero en barco de artes menores",
+    "company": "Barco Verge del Rebollet",
+    "location": "Valencia",
+    "sector": "productor"
+  },
+  {
+    "name": "Aguiar, Alba",
+    "role": "Chef y copropietaria",
+    "company": "D'Leria",
+    "location": "Pontevedra",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Cruz, Adrià",
+    "role": "Cofundador",
+    "company": "B3tter",
+    "location": "Girona",
+    "sector": "start-ups"
+  },
+  {
+    "name": "Linares, Pablo",
+    "role": "Jefe de cocina y pastelero",
+    "company": "Restaurante OBA",
+    "location": "Albacete",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Jurado, Javier",
+    "role": "Jefe de cocina y copropietario",
+    "company": "Malak",
+    "location": "Jaén",
+    "sector": "restauracion"
+  },
+  {
+    "name": "García Lamas, Mauro",
+    "role": "Jefe de cocina y restaurant manager",
+    "company": "Amós",
+    "location": "Madrid",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Ruiz Lafita, Lucía",
+    "role": "Fundadora",
+    "company": "Catering Delirium",
+    "location": "Madrid",
+    "sector": "otros-perfiles"
+  },
+  {
+    "name": "Ruiz, Óscar",
+    "role": "Jefe de partida",
+    "company": "Martín Berasategui",
+    "location": "Gipuzkoa",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Castro, Laura",
+    "role": "Directora de cuentas",
+    "company": "Agencia de comunicación Brava",
+    "location": "Valencia",
+    "sector": "comunicacion"
+  },
+  {
+    "name": "Gutiérrez, Lucía",
+    "role": "Chef y copropietaria",
+    "company": "Lur",
+    "location": "Madrid",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Valencia, Martín",
+    "role": "Segundo maître",
+    "company": "Martín Berasategui",
+    "location": "Gipuzkoa",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Arrate, Paula",
+    "role": "Copropietaria",
+    "company": "Somos Bakery",
+    "location": "Gipuzkoa",
+    "sector": "pasteleria-panaderia"
+  },
+  {
+    "name": "García, Diego",
+    "role": "Investigador y activista; presentador y guionista",
+    "company": "HBOMax \"Zero Waste Chef\"",
+    "location": "Madrid",
+    "sector": "comunicacion"
+  },
+  {
+    "name": "Galán Corbacho, Miguel",
+    "role": "Gerente y miembro de la directiva",
+    "company": "Fundación y Grupo Atrio",
+    "location": "Cáceres",
+    "sector": "otros-perfiles"
+  },
+  {
+    "name": "Oldenburg, Sara",
+    "role": "Sumiller y cofundadora",
+    "company": "Fondo Supper Club (catering)",
+    "location": "Madrid",
+    "sector": "otros-perfiles"
+  },
+  {
+    "name": "Rebollo, Mónica",
+    "role": "Pastelera",
+    "company": "Desde 1911",
+    "location": "Madrid",
+    "sector": "pasteleria-panaderia"
+  },
+  {
+    "name": "García Quintana, Koldo",
+    "role": "Viticultor",
+    "company": "Bodega Área Pequeña Viticultores",
+    "location": "Álava",
+    "sector": "sector-del-vino"
+  },
+  {
+    "name": "Gómez, Vero",
+    "role": "Creadora de contenido, fundadora de la 'despensa online' COL y chef privada",
+    "company": "COL y Vero Gómez",
+    "location": "Madrid",
+    "sector": "comunicacion"
+  },
+  {
+    "name": "Ciaurriz, Adrián",
+    "role": "Pastelero",
+    "company": "Chocolate Academy",
+    "location": "Barcelona",
+    "sector": "pasteleria-panaderia"
+  },
+  {
+    "name": "Jordán, Iris",
+    "role": "Jefa de cocina y copropietaria",
+    "company": "Ansils",
+    "location": "Huesca",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Sánchez, Andoni",
+    "role": "Jefe de cocina y segunda generación",
+    "company": "Villa de Fromista",
+    "location": "Palencia",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Beltrán, Juan",
+    "role": "Cofundador y CEO",
+    "company": "The Hype",
+    "location": "Madrid",
+    "sector": "restauracion"
+  },
+  {
+    "name": "Seguí, Antonio",
+    "role": "Agricultor, ganadero y socio",
+    "company": "SOT Son Jover",
+    "location": "Baleares",
+    "sector": "productor"
+  },
+  {
+    "name": "Maneja, Marta",
+    "role": "Cofundadora y socia",
+    "company": "Gloop",
+    "location": "Bizkaia",
+    "sector": "start-ups"
+  }
+]

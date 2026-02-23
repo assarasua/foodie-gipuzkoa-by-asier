@@ -1,11 +1,16 @@
 import { useTranslation } from '@/contexts/TranslationContext';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
-export const LanguageToggle = () => {
+interface LanguageToggleProps {
+  className?: string;
+}
+
+export const LanguageToggle = ({ className }: LanguageToggleProps) => {
   const { language, setLanguage } = useTranslation();
 
   return (
-    <div className="fixed top-4 right-4 z-50">
+    <div className={cn("z-50", className)}>
       <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-lg p-1 shadow-lg">
         <div className="flex gap-1">
           <Button
