@@ -134,7 +134,33 @@ export const api = {
       limit: filters.limit
     });
 
-    return apiGet<PaginatedResponse<RestaurantListItem>>(`/restaurants${query}`);
+    const raw = await apiGet<Partial<PaginatedResponse<RestaurantListItem>> & { data: RestaurantListItem[] }>(
+      `/restaurants${query}`
+    );
+
+    const page = raw.page ?? filters.page ?? 1;
+    const requestedLimit = filters.limit ?? 100;
+    const limit = raw.limit ?? requestedLimit;
+
+    const filteredData =
+      filters.includeYoungTalents === true ? raw.data : raw.data.filter((item) => !item.isYoungTalent);
+
+    const count = filteredData.length;
+    const hasMore =
+      raw.hasMore ??
+      (typeof raw.total === "number" ? page * limit < raw.total : count >= limit);
+    const total =
+      raw.total ??
+      (hasMore ? Math.max(page * limit + 1, filteredData.length) : (page - 1) * limit + filteredData.length);
+
+    return {
+      data: filteredData,
+      count,
+      total,
+      hasMore,
+      page,
+      limit
+    };
   },
   async getTalents(params: {
     search?: string;
