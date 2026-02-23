@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { ArrowLeft, MapPin, Search, SlidersHorizontal, Star, TriangleAlert } from "lucide-react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,6 +12,8 @@ import { useTranslation } from "@/contexts/TranslationContext";
 import { getFallbackCategories, getFallbackRestaurants } from "@/lib/fallbackData";
 
 const priceLabel = (priceTier: number) => "€".repeat(Math.max(1, Math.min(4, priceTier)));
+const asierSelectionNames = ["asador nicolas", "ganbara", "ama", "elkano", "arrea"] as const;
+const normalizeName = (value: string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
 
 const ratingStars = (rating?: number | null) => {
   const safe = Math.max(0, Math.min(5, rating ?? 0));
@@ -76,7 +78,8 @@ const RestaurantDetail = ({
 
 export const CategoryPage = () => {
   const navigate = useNavigate();
-  const { category } = useParams<{ category: string }>();
+  const { category: categoryParam } = useParams<{ category: string }>();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { language, t } = useTranslation();
 
   const [search, setSearch] = useState("");
@@ -85,6 +88,10 @@ export const CategoryPage = () => {
   const [ratingMin, setRatingMin] = useState("all");
   const [sort, setSort] = useState<RestaurantFilterState["sort"]>("recommended");
   const [selected, setSelected] = useState<RestaurantListItem | null>(null);
+  const categoryFromQuery = searchParams.get("category") ?? "all";
+  const categoryFilter = categoryParam ?? categoryFromQuery;
+  const activeCategorySlug = categoryFilter === "all" ? undefined : categoryFilter;
+  const isRestaurantsHub = !categoryParam;
 
   const filters = useMemo<RestaurantFilterState>(
     () => ({
@@ -115,27 +122,38 @@ export const CategoryPage = () => {
   });
 
   const restaurantsQuery = useQuery({
-    queryKey: ["restaurants", category, language, filters],
+    queryKey: ["restaurants", activeCategorySlug ?? "all", language, filters],
     queryFn: async () => {
       try {
-        const response = await api.getRestaurants(language, category, filters);
+        const response = await api.getRestaurants(language, activeCategorySlug, filters);
         return { data: response.data, isFallback: false, error: null as ApiError | null };
       } catch (error) {
         return {
-          data: getFallbackRestaurants(language, category, filters),
+          data: getFallbackRestaurants(language, activeCategorySlug, filters),
           isFallback: true,
           error: error instanceof ApiError ? error : new ApiError(t("common.error"), 0)
         };
       }
-    },
-    enabled: Boolean(category)
+    }
   });
 
   const categories = categoryQuery.data?.data ?? [];
   const restaurants = restaurantsQuery.data?.data ?? [];
-  const currentCategory = categories.find((item) => item.slug === category);
+  const currentCategory = categories.find((item) => item.slug === activeCategorySlug);
   const cities = Array.from(new Set(restaurants.map((item) => item.city))).sort();
   const isFallback = Boolean(categoryQuery.data?.isFallback || restaurantsQuery.data?.isFallback);
+  const asierSelection = asierSelectionNames
+    .map((target) => restaurants.find((item) => normalizeName(item.name).includes(target)))
+    .filter((item): item is RestaurantListItem => Boolean(item));
+
+  const handleCategoryChange = (value: string) => {
+    if (!isRestaurantsHub) return;
+    if (value === "all") {
+      setSearchParams({});
+      return;
+    }
+    setSearchParams({ category: value });
+  };
 
   return (
     <div className="mx-auto w-full max-w-7xl space-y-6 px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
@@ -156,9 +174,11 @@ export const CategoryPage = () => {
           <div className="space-y-2">
             <p className="editorial-kicker">{t("category.label")}</p>
             <h1 className="text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-              {currentCategory?.title ?? t("category.loadingTitle")}
+              {currentCategory?.title ?? t("category.allTitle")}
             </h1>
-            <p className="max-w-2xl text-sm text-muted-foreground sm:text-base">{currentCategory?.description}</p>
+            <p className="max-w-2xl text-sm text-muted-foreground sm:text-base">
+              {currentCategory?.description ?? t("category.allDescription")}
+            </p>
           </div>
           <Badge variant="outline" className="rounded-full border-primary/40 bg-primary/10 px-3 py-1.5 text-primary">
             {t("category.editorialTag")}
@@ -169,8 +189,60 @@ export const CategoryPage = () => {
         </div>
       </section>
 
+      {isRestaurantsHub && asierSelection.length > 0 && (
+        <section className="editorial-card space-y-4 p-5 sm:p-6">
+          <div className="flex items-center justify-between gap-3">
+            <p className="editorial-kicker">{t("common.curatedByAsier")}</p>
+            <Badge variant="outline" className="rounded-full border-primary/40 bg-primary/10 text-primary">
+              Top 5
+            </Badge>
+          </div>
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4">
+            {asierSelection.map((item) => (
+              <Card key={item.slug} className="border-border/70 bg-background/70">
+                <CardContent className="space-y-2 p-4">
+                  <p className="text-base font-semibold text-foreground">{item.name}</p>
+                  <p className="text-xs text-muted-foreground">{item.city}</p>
+                  <div className="flex items-center justify-between text-xs text-muted-foreground">
+                    <span>{priceLabel(item.priceTier)}</span>
+                    <span className="inline-flex items-center gap-1">
+                      <Star className="h-3.5 w-3.5 text-amber-500" />
+                      {item.ratingAsier ?? "-"}
+                    </span>
+                  </div>
+                  {item.mapUrl && (
+                    <a
+                      href={item.mapUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex min-h-10 w-full items-center justify-center rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground transition hover:brightness-95"
+                    >
+                      {t("common.openMap")}
+                    </a>
+                  )}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
+      )}
+
       <section className="sticky top-20 z-30 rounded-2xl border border-border/70 bg-background/95 p-4 backdrop-blur-lg">
-        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
+        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-6">
+          <Select value={categoryFilter} onValueChange={handleCategoryChange} disabled={!isRestaurantsHub}>
+            <SelectTrigger className="min-h-11 rounded-xl">
+              <SelectValue placeholder={t("common.allCategories")} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">{t("common.allCategories")}</SelectItem>
+              {categories.map((item) => (
+                <SelectItem key={item.slug} value={item.slug}>
+                  {item.title}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
           <div className="relative md:col-span-2 xl:col-span-1">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input

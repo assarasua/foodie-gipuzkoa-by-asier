@@ -13,21 +13,21 @@ export const AppShell = ({ children }: { children: ReactNode }) => {
 
   const navItems = [
     { label: t("nav.home"), to: "/" },
-    { label: t("nav.categories"), to: "/#categories" },
+    { label: t("nav.categories"), to: "/restaurants" },
     { label: t("nav.talents"), to: "/jovenes-talentos" }
   ];
 
   const mobileActions = [
     { label: t("nav.explore"), icon: Compass, to: "/" },
-    { label: t("nav.filters"), icon: Filter, to: "/#categories" },
+    { label: t("nav.filters"), icon: Filter, to: "/restaurants" },
     { label: t("nav.map"), icon: MapPinned, href: MAP_FALLBACK },
-    { label: t("nav.categories"), icon: UtensilsCrossed, to: "/#categories" }
+    { label: t("nav.categories"), icon: UtensilsCrossed, to: "/restaurants" }
   ];
 
   const isActive = (target: string) => {
     if (target === "/") return location.pathname === "/";
     if (target === "/jovenes-talentos") return location.pathname === "/jovenes-talentos";
-    if (target === "/#categories") return location.pathname === "/";
+    if (target === "/restaurants") return location.pathname === "/restaurants" || location.pathname.startsWith("/category/");
     return false;
   };
 

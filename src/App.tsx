@@ -24,6 +24,7 @@ const App = () => (
             <AppShell>
               <Routes>
                 <Route path="/" element={<Index />} />
+                <Route path="/restaurants" element={<CategoryPage />} />
                 <Route path="/category/:category" element={<CategoryPage />} />
                 <Route path="/jovenes-talentos" element={<JovenesTalentos />} />
                 <Route path="*" element={<NotFound />} />
@@ -32,6 +33,7 @@ const App = () => (
           ) : (
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/restaurants" element={<CategoryPage />} />
               <Route path="/category/:category" element={<CategoryPage />} />
               <Route path="/jovenes-talentos" element={<JovenesTalentos />} />
               <Route path="*" element={<NotFound />} />

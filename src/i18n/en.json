@@ -19,6 +19,7 @@
     "viewDetails": "View details",
     "backHome": "Back to home",
     "allCities": "All cities",
+    "allCategories": "All categories",
     "allPrices": "All prices",
     "allRatings": "All ratings",
     "allLocations": "All locations",
@@ -27,6 +28,20 @@
   },
   "home": {
     "kicker": "Editorial gourmet guide",
+    "aboutTitle": "I am Asier Sarasua",
+    "aboutIntro": "This guide comes from years of visiting restaurants in Gipuzkoa and documenting what is truly worth recommending. You will find a curated, practical, and honest selection to decide better.",
+    "ctaRestaurants": "Go to restaurants",
+    "ctaTalents": "View young talents",
+    "howStep1Title": "How it started",
+    "howStep1Desc": "I started by sharing personal recommendations of places with great product and execution.",
+    "howStep2Title": "How it was built",
+    "howStep2Desc": "We turned that curation into a database with categories, price, rating, and map links.",
+    "howStep3Title": "How to use it now",
+    "howStep3Desc": "Filter by what matters to you, open map, and decide quickly with real context.",
+    "categoriesOptionsTitle": "Category options",
+    "categoriesOptionsSubtitle": "You can choose category from here without showing the full category grid on Home.",
+    "asierSelectionCompactTitle": "Asier's Selection",
+    "asierSelectionCompactSubtitle": "A direct shortlist to start without losing time.",
     "title": "Gipuzkoa restaurants selected with an authorial point of view",
     "subtitle": "A personal and up-to-date guide to decide where to eat better, with local context and direct map access.",
     "ctaPrimary": "Open curated picks on map",
@@ -66,6 +81,8 @@
   },
   "category": {
     "label": "Editorial selection",
+    "allTitle": "Restaurants curated by Asier",
+    "allDescription": "The full selection in one place, with filters by category, city, price, and rating.",
     "loadingTitle": "Loading...",
     "card": {
       "discover": "Discover"
