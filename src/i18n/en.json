@@ -1,7 +1,7 @@
 {
   "brand": {
     "region": "Gipuzkoa",
-    "name": "Foodie Guide"
+    "name": "Asier Sarasua Curated"
   },
   "nav": {
     "home": "Home",
@@ -22,26 +22,40 @@
     "allPrices": "All prices",
     "allRatings": "All ratings",
     "allLocations": "All locations",
-    "fallbackBanner": "Showing contingency data due to a temporary API issue."
+    "fallbackBanner": "Showing contingency data due to a temporary API incident.",
+    "curatedByAsier": "Curated by Asier Sarasua"
   },
   "home": {
-    "kicker": "Editorial guide",
-    "title": "Discover Gipuzkoa's new gourmet scene",
-    "subtitle": "Premium yet approachable picks focused on where to eat today and how to get there quickly.",
-    "ctaPrimary": "Open featured picks on map",
-    "ctaSecondary": "Explore categories",
-    "categoriesTitle": "Restaurants",
-    "categoriesSubtitle": "Browse restaurants by culinary style with an interface built for faster decisions.",
-    "trending": "Trending in Gipuzkoa",
+    "kicker": "Editorial gourmet guide",
+    "title": "Gipuzkoa restaurants selected with an authorial point of view",
+    "subtitle": "A personal and up-to-date guide to decide where to eat better, with local context and direct map access.",
+    "ctaPrimary": "Open curated picks on map",
+    "ctaSecondary": "Browse restaurants",
+    "selectionTitle": "Asier's Selection",
+    "selectionSubtitle": "Top picks based on rating, consistency, and real on-site experience.",
+    "principlesTitle": "Why Asier recommends it",
+    "principleProductTitle": "Product",
+    "principleProductDesc": "Seasonal ingredients and reliable sourcing.",
+    "principleTechniqueTitle": "Technique",
+    "principleTechniqueDesc": "Solid execution, precise cooking, and personality.",
+    "principleConsistencyTitle": "Consistency",
+    "principleConsistencyDesc": "Steady level in kitchen, service, and dining room.",
+    "weeklyTitle": "This week in Gipuzkoa",
+    "weeklySubtitle": "Restaurants with the strongest editorial signal per category.",
+    "categoriesTitle": "Restaurants by style",
+    "categoriesSubtitle": "Quickly find the cuisine style you want, with real counts by category.",
+    "trending": "Trending",
     "byMood": "By mood",
     "topRated": "Top rated",
     "talents": "View talents",
     "quickPaths": "Quick paths to decide faster.",
-    "loadingHighlights": "Loading highlights...",
-    "errorHighlights": "Highlights could not be loaded.",
+    "loadingHighlights": "Loading curated selection...",
+    "errorHighlights": "The curated selection could not be loaded.",
     "loadingCategories": "Loading categories...",
     "errorCategories": "Categories could not be loaded.",
-    "spots": "spots"
+    "spots": "restaurants",
+    "signatureTitle": "Asier's editorial note",
+    "signatureQuote": "I do not only look for memorable dishes. I look for places you will want to revisit."
   },
   "moods": {
     "casual": "Casual",
@@ -51,14 +65,14 @@
     "michelin": "Michelin"
   },
   "category": {
-    "label": "Category",
+    "label": "Editorial selection",
     "loadingTitle": "Loading...",
     "card": {
       "discover": "Discover"
     },
     "searchPlaceholder": "Search by name, specialty, or city...",
     "sort": "Sort",
-    "sortRecommended": "Recommended",
+    "sortRecommended": "Asier recommended",
     "sortHighestRated": "Highest rated",
     "sortPriceLow": "Price low to high",
     "sortPriceHigh": "Price high to low",
@@ -69,7 +83,10 @@
     "noResultsHint": "Try clearing filters or changing the query.",
     "specialty": "Specialty",
     "city": "City",
-    "stars": "stars"
+    "stars": "stars",
+    "editorialTag": "Asier selection",
+    "price": "Price",
+    "rating": "Asier rating"
   },
   "hero": {
     "subtitle": "The best gourmet recommendations in Gipuzkoa.",
@@ -85,15 +102,18 @@
     "badge3": "Basque identity"
   },
   "talents": {
-    "kicker": "Basque Culinary Center",
-    "title": "100 Young Talents of Spanish Gastronomy",
-    "subtitle": "Search and filter catalog to discover rising profiles in restaurants, wine, research, and food innovation.",
+    "kicker": "Curated ecosystem",
+    "title": "Talents shaping the next chapter of gastronomy",
+    "subtitle": "Rising profiles in kitchen, service, wine, and innovation that Asier considers key to follow the local scene.",
     "searchPlaceholder": "Search by name, company, or role...",
     "sector": "Sector",
     "location": "Location",
     "loading": "Loading talents...",
     "error": "Talents could not be loaded.",
     "noResults": "No talents found for current filters.",
+    "spotlightTitle": "Talent radar",
+    "spotlightText": "A selection to discover who is raising the gastronomic standard.",
+    "curationNote": "Profiles are highlighted for vision, execution, and real ability to elevate the dining experience.",
     "sectors": {
       "all": "All sectors",
       "restauracion": "Restaurant",

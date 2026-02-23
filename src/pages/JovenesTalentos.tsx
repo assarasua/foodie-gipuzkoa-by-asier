@@ -55,17 +55,30 @@ export const JovenesTalentos = () => {
         {t("common.backHome")}
       </Button>
 
-      <section className="rounded-2xl border border-border/70 bg-card/85 p-6 sm:p-8">
-        <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">{t("talents.kicker")}</p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-          {t("talents.title")}
-        </h1>
-        <p className="mt-3 max-w-3xl text-sm text-muted-foreground sm:text-base">
-          {t("talents.subtitle")}
-        </p>
+      <section className="editorial-card p-6 sm:p-8">
+        <div className="space-y-3">
+          <p className="editorial-kicker">{t("talents.kicker")}</p>
+          <h1 className="text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">{t("talents.title")}</h1>
+          <p className="max-w-3xl text-sm text-muted-foreground sm:text-base">{t("talents.subtitle")}</p>
+        </div>
       </section>
 
-      <section className="sticky top-16 z-30 rounded-2xl border border-border/70 bg-background/95 p-4 backdrop-blur-lg">
+      <section className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+        <Card className="editorial-card border-primary/25 bg-primary/5">
+          <CardContent className="space-y-2 p-5">
+            <p className="text-sm uppercase tracking-[0.18em] text-primary">{t("talents.spotlightTitle")}</p>
+            <p className="text-sm text-foreground">{t("talents.spotlightText")}</p>
+          </CardContent>
+        </Card>
+        <Card className="editorial-card">
+          <CardContent className="space-y-2 p-5">
+            <p className="text-sm font-semibold text-foreground">{t("common.curatedByAsier")}</p>
+            <p className="text-sm text-muted-foreground">{t("talents.curationNote")}</p>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="sticky top-20 z-30 rounded-2xl border border-border/70 bg-background/95 p-4 backdrop-blur-lg">
         <div className="grid gap-3 md:grid-cols-[1.4fr_1fr_1fr]">
           <div className="relative">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -111,11 +124,11 @@ export const JovenesTalentos = () => {
 
       <section className="grid grid-cols-1 gap-3 lg:grid-cols-2">
         {(talentsQuery.data ?? []).map((talent) => (
-          <Card key={talent.id} className="border-border/70 bg-card/90 transition hover:-translate-y-0.5 hover:shadow-sm">
+          <Card key={talent.id} className="editorial-card">
             <CardContent className="space-y-3 p-5">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="text-lg font-semibold text-foreground">{talent.name}</p>
+                  <p className="text-2xl font-semibold text-foreground">{talent.name}</p>
                   <p className="text-sm text-muted-foreground">{talent.role}</p>
                 </div>
                 <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">
@@ -126,7 +139,7 @@ export const JovenesTalentos = () => {
                 </span>
               </div>
               <p className="text-sm text-foreground">{talent.company}</p>
-              <p className="text-xs text-muted-foreground">{talent.location}</p>
+              <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground">{talent.location}</p>
               {talent.description && <p className="text-sm text-muted-foreground">{talent.description}</p>}
             </CardContent>
           </Card>
@@ -134,7 +147,7 @@ export const JovenesTalentos = () => {
       </section>
 
       {!talentsQuery.isLoading && (talentsQuery.data ?? []).length === 0 && (
-        <Card className="border-border/70 bg-card/90">
+        <Card className="editorial-card">
           <CardContent className="p-6 text-sm text-muted-foreground">{t("talents.noResults")}</CardContent>
         </Card>
       )}

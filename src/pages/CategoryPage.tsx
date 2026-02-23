@@ -13,12 +13,31 @@ import { getFallbackCategories, getFallbackRestaurants } from "@/lib/fallbackDat
 
 const priceLabel = (priceTier: number) => "€".repeat(Math.max(1, Math.min(4, priceTier)));
 
-const RestaurantDetail = ({ item, openMapLabel, specialtyLabel, cityLabel }: { item: RestaurantListItem; openMapLabel: string; specialtyLabel: string; cityLabel: string }) => (
-  <Card className="border-border/70 bg-card/90">
+const ratingStars = (rating?: number | null) => {
+  const safe = Math.max(0, Math.min(5, rating ?? 0));
+  return "★".repeat(safe) || "-";
+};
+
+const RestaurantDetail = ({
+  item,
+  openMapLabel,
+  specialtyLabel,
+  cityLabel,
+  priceLabelText,
+  ratingLabel
+}: {
+  item: RestaurantListItem;
+  openMapLabel: string;
+  specialtyLabel: string;
+  cityLabel: string;
+  priceLabelText: string;
+  ratingLabel: string;
+}) => (
+  <Card className="editorial-card">
     <CardContent className="space-y-4 p-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h3 className="text-2xl font-semibold text-foreground">{item.name}</h3>
+          <h3 className="text-3xl font-semibold text-foreground">{item.name}</h3>
           <p className="text-sm text-muted-foreground">{item.locationLabel}</p>
         </div>
         <Badge variant="outline" className="rounded-full border-primary/30 bg-primary/10 text-primary">
@@ -26,12 +45,18 @@ const RestaurantDetail = ({ item, openMapLabel, specialtyLabel, cityLabel }: { i
         </Badge>
       </div>
       <p className="text-sm text-muted-foreground">{item.description}</p>
-      <div className="grid gap-3 text-sm text-muted-foreground sm:grid-cols-2">
+      <div className="grid gap-2 text-sm text-muted-foreground sm:grid-cols-2">
         <p>
           <span className="font-semibold text-foreground">{specialtyLabel}:</span> {item.specialty}
         </p>
         <p>
           <span className="font-semibold text-foreground">{cityLabel}:</span> {item.city}
+        </p>
+        <p>
+          <span className="font-semibold text-foreground">{priceLabelText}:</span> {priceLabel(item.priceTier)}
+        </p>
+        <p>
+          <span className="font-semibold text-foreground">{ratingLabel}:</span> {ratingStars(item.ratingAsier)}
         </p>
       </div>
       {item.mapUrl && (
@@ -126,24 +151,27 @@ export const CategoryPage = () => {
         {t("common.backHome")}
       </Button>
 
-      <section className="rounded-2xl border border-border/70 bg-card/80 p-5 sm:p-8">
+      <section className="editorial-card p-5 sm:p-8">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="space-y-2">
-            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">{t("category.label")}</p>
-            <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+            <p className="editorial-kicker">{t("category.label")}</p>
+            <h1 className="text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
               {currentCategory?.title ?? t("category.loadingTitle")}
             </h1>
             <p className="max-w-2xl text-sm text-muted-foreground sm:text-base">{currentCategory?.description}</p>
           </div>
+          <Badge variant="outline" className="rounded-full border-primary/40 bg-primary/10 px-3 py-1.5 text-primary">
+            {t("category.editorialTag")}
+          </Badge>
           <div className="rounded-2xl bg-primary/10 px-4 py-3 text-primary">
             <SlidersHorizontal className="h-5 w-5" />
           </div>
         </div>
       </section>
 
-      <section className="sticky top-16 z-30 rounded-2xl border border-border/70 bg-background/95 p-4 backdrop-blur-lg">
-        <div className="grid gap-3 md:grid-cols-[1.5fr_repeat(4,minmax(0,1fr))]">
-          <div className="relative">
+      <section className="sticky top-20 z-30 rounded-2xl border border-border/70 bg-background/95 p-4 backdrop-blur-lg">
+        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
+          <div className="relative md:col-span-2 xl:col-span-1">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               value={search}
@@ -187,7 +215,7 @@ export const CategoryPage = () => {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">{t("common.allRatings")}</SelectItem>
-              {[1, 2, 3].map((value) => (
+              {[1, 2, 3, 4, 5].map((value) => (
                 <SelectItem key={value} value={String(value)}>
                   {value}+ {t("category.stars")}
                 </SelectItem>
@@ -213,7 +241,7 @@ export const CategoryPage = () => {
       {restaurantsQuery.isError && <p className="text-sm text-destructive">{t("category.errorRestaurants")}</p>}
 
       {!restaurantsQuery.isLoading && restaurants.length === 0 && (
-        <Card className="border-border/70 bg-card/90">
+        <Card className="editorial-card">
           <CardContent className="p-6 text-sm text-muted-foreground">
             <p>{t("category.noResults")}</p>
             <p className="mt-1 text-xs">{t("category.noResultsHint")}</p>
@@ -223,12 +251,12 @@ export const CategoryPage = () => {
 
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {restaurants.map((item) => (
-          <Card key={item.slug} className="border-border/70 bg-card/90 transition hover:-translate-y-0.5 hover:shadow-sm">
+          <Card key={item.slug} className="editorial-card">
             <CardContent className="space-y-4 p-5">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="text-lg font-semibold text-foreground">{item.name}</p>
-                  <p className="text-sm text-muted-foreground">{item.locationLabel}</p>
+                  <p className="text-2xl font-semibold text-foreground">{item.name}</p>
+                  <p className="text-sm text-muted-foreground">{item.specialty}</p>
                 </div>
                 <Badge variant="secondary" className="rounded-full bg-muted text-muted-foreground">
                   {priceLabel(item.priceTier)}
@@ -237,12 +265,19 @@ export const CategoryPage = () => {
 
               <p className="line-clamp-2 text-sm text-muted-foreground">{item.description}</p>
 
-              <div className="flex items-center justify-between text-xs text-muted-foreground">
-                <span className="inline-flex items-center gap-1">
-                  <Star className="h-3.5 w-3.5 text-amber-500" />
-                  {item.ratingAsier ?? "-"}
-                </span>
-                <span>{item.city}</span>
+              <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
+                <div className="rounded-lg bg-muted/50 px-2 py-1.5">
+                  <p className="font-semibold text-foreground">{t("category.rating")}</p>
+                  <p>{ratingStars(item.ratingAsier)}</p>
+                </div>
+                <div className="rounded-lg bg-muted/50 px-2 py-1.5">
+                  <p className="font-semibold text-foreground">{t("category.price")}</p>
+                  <p>{priceLabel(item.priceTier)}</p>
+                </div>
+                <div className="col-span-2 rounded-lg bg-muted/50 px-2 py-1.5">
+                  <p className="font-semibold text-foreground">{t("category.city")}</p>
+                  <p>{item.city}</p>
+                </div>
               </div>
 
               <div className="flex flex-wrap gap-2">
@@ -251,12 +286,12 @@ export const CategoryPage = () => {
                     href={item.mapUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex min-h-11 items-center rounded-xl bg-primary px-3 text-sm font-semibold text-primary-foreground transition hover:brightness-95"
+                    className="inline-flex min-h-11 flex-1 items-center justify-center rounded-xl bg-primary px-3 text-sm font-semibold text-primary-foreground transition hover:brightness-95"
                   >
                     {t("common.openMap")}
                   </a>
                 )}
-                <Button variant="outline" className="min-h-11 rounded-xl" onClick={() => setSelected(item)}>
+                <Button variant="outline" className="min-h-11 flex-1 rounded-xl" onClick={() => setSelected(item)}>
                   {t("common.viewDetails")}
                 </Button>
               </div>
@@ -271,6 +306,8 @@ export const CategoryPage = () => {
           openMapLabel={t("common.openMap")}
           specialtyLabel={t("category.specialty")}
           cityLabel={t("category.city")}
+          priceLabelText={t("category.price")}
+          ratingLabel={t("category.rating")}
         />
       )}
     </div>

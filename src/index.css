@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -48,6 +49,13 @@
     --ocean-blue: 210 70% 55%;
     --golden-yellow: 44 85% 58%;
     --warm-orange: 24 80% 54%;
+    --surface-1: 0 0% 100%;
+    --surface-2: 40 28% 96%;
+    --surface-3: 33 24% 92%;
+    --text-primary: 24 18% 18%;
+    --text-secondary: 26 10% 42%;
+    --accent-editorial: 19 72% 40%;
+    --border-soft: 30 19% 80%;
   }
 
   .dark {
@@ -92,6 +100,25 @@
 
   body {
     @apply bg-background text-foreground antialiased;
+    font-family: "Manrope", "Source Sans 3", sans-serif;
+    background-image:
+      radial-gradient(circle at 0% 0%, hsl(var(--accent) / 0.08), transparent 35%),
+      radial-gradient(circle at 100% 0%, hsl(var(--primary) / 0.1), transparent 30%),
+      linear-gradient(to bottom, hsl(var(--background)), hsl(var(--surface-2)));
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: "Cormorant Garamond", "Crimson Text", serif;
+    letter-spacing: -0.01em;
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--accent-editorial));
+    outline-offset: 2px;
+    border-radius: 10px;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -113,5 +140,38 @@
 
   .text-balance {
     text-wrap: balance;
+  }
+
+  .editorial-card {
+    @apply rounded-2xl border border-border/70 bg-card/90 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-md;
+  }
+
+  .editorial-kicker {
+    @apply text-xs uppercase tracking-[0.24em] text-muted-foreground;
+  }
+
+  .editorial-title {
+    @apply text-balance text-4xl font-semibold leading-tight text-foreground sm:text-5xl lg:text-6xl;
+  }
+
+  .editorial-section-title {
+    @apply text-3xl font-semibold tracking-tight text-foreground sm:text-4xl;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    animation: reveal 500ms ease-out both;
+  }
+
+  @keyframes reveal {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }

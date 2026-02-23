@@ -1,7 +1,7 @@
 {
   "brand": {
     "region": "Gipuzkoa",
-    "name": "Foodie Guide"
+    "name": "Asier Sarasua Curated"
   },
   "nav": {
     "home": "Inicio",
@@ -22,26 +22,40 @@
     "allPrices": "Todos los precios",
     "allRatings": "Todas las valoraciones",
     "allLocations": "Todas las ubicaciones",
-    "fallbackBanner": "Mostrando datos de contingencia por incidencia temporal en la API."
+    "fallbackBanner": "Mostrando datos de contingencia por una incidencia temporal de la API.",
+    "curatedByAsier": "Curado por Asier Sarasua"
   },
   "home": {
-    "kicker": "Guía editorial",
-    "title": "Descubre la nueva escena gastronómica de Gipuzkoa",
-    "subtitle": "Selecciones premium pero accesibles, con foco en dónde comer hoy y cómo llegar rápido.",
-    "ctaPrimary": "Abrir selección destacada en el mapa",
-    "ctaSecondary": "Explorar categorías",
-    "categoriesTitle": "Restaurantes",
-    "categoriesSubtitle": "Explora restaurantes por estilo culinario con una interfaz pensada para decidir más rápido.",
-    "trending": "Tendencia en Gipuzkoa",
+    "kicker": "Guía editorial gourmet",
+    "title": "Restaurantes de Gipuzkoa seleccionados con criterio de autor",
+    "subtitle": "Una guía personal y actualizada para decidir dónde comer mejor, con contexto local y acceso directo a mapa.",
+    "ctaPrimary": "Abrir selección en mapa",
+    "ctaSecondary": "Explorar restaurantes",
+    "selectionTitle": "Selección de Asier",
+    "selectionSubtitle": "Top picks basados en valoración, consistencia y experiencia real.",
+    "principlesTitle": "Por qué Asier lo recomienda",
+    "principleProductTitle": "Producto",
+    "principleProductDesc": "Materia prima estacional y de origen fiable.",
+    "principleTechniqueTitle": "Técnica",
+    "principleTechniqueDesc": "Ejecución sólida, cocción precisa y personalidad propia.",
+    "principleConsistencyTitle": "Consistencia",
+    "principleConsistencyDesc": "Nivel sostenido en cocina, servicio y sala.",
+    "weeklyTitle": "Esta semana en Gipuzkoa",
+    "weeklySubtitle": "Restaurantes con mejor señal editorial por categoría.",
+    "categoriesTitle": "Restaurantes por estilo",
+    "categoriesSubtitle": "Encuentra rápidamente el tipo de cocina que buscas, con conteo real por categoría.",
+    "trending": "Tendencia",
     "byMood": "Por momento",
     "topRated": "Mejor valorados",
     "talents": "Ver talentos",
-    "quickPaths": "Atajos para decidir más rápido.",
-    "loadingHighlights": "Cargando destacados...",
-    "errorHighlights": "No se han podido cargar los destacados.",
+    "quickPaths": "Atajos para elegir más rápido.",
+    "loadingHighlights": "Cargando selección...",
+    "errorHighlights": "No se ha podido cargar la selección.",
     "loadingCategories": "Cargando categorías...",
     "errorCategories": "No se han podido cargar las categorías.",
-    "spots": "sitios"
+    "spots": "restaurantes",
+    "signatureTitle": "Nota editorial de Asier",
+    "signatureQuote": "No busco solo platos memorables. Busco lugares a los que quieras volver."
   },
   "moods": {
     "casual": "Casual",
@@ -51,15 +65,15 @@
     "michelin": "Michelin"
   },
   "category": {
-    "label": "Categoría",
+    "label": "Selección editorial",
     "loadingTitle": "Cargando...",
     "card": {
       "discover": "Descubrir"
     },
     "searchPlaceholder": "Buscar por nombre, especialidad o ciudad...",
     "sort": "Ordenar",
-    "sortRecommended": "Recomendado",
-    "sortHighestRated": "Mejor valorados",
+    "sortRecommended": "Recomendado por Asier",
+    "sortHighestRated": "Mayor valoración",
     "sortPriceLow": "Precio ascendente",
     "sortPriceHigh": "Precio descendente",
     "ratingMin": "Valoración",
@@ -69,7 +83,10 @@
     "noResultsHint": "Prueba a limpiar filtros o cambiar la búsqueda.",
     "specialty": "Especialidad",
     "city": "Ciudad",
-    "stars": "estrellas"
+    "stars": "estrellas",
+    "editorialTag": "Selección Asier",
+    "price": "Precio",
+    "rating": "Valoración Asier"
   },
   "hero": {
     "subtitle": "Las mejores recomendaciones gastronómicas de Gipuzkoa.",
@@ -85,15 +102,18 @@
     "badge3": "Identidad vasca"
   },
   "talents": {
-    "kicker": "Basque Culinary Center",
-    "title": "100 Jóvenes Talentos de la Gastronomía Española",
-    "subtitle": "Catálogo de búsqueda y filtros para descubrir perfiles emergentes en restauración, vino, investigación e innovación gastronómica.",
-    "searchPlaceholder": "Buscar por nombre, empresa o puesto...",
+    "kicker": "Ecosistema curado",
+    "title": "Talentos que están definiendo la nueva gastronomía",
+    "subtitle": "Perfiles emergentes de cocina, sala, vino e innovación que Asier considera clave para seguir la escena local.",
+    "searchPlaceholder": "Buscar por nombre, empresa o rol...",
     "sector": "Sector",
     "location": "Ubicación",
     "loading": "Cargando talentos...",
     "error": "No se han podido cargar los talentos.",
     "noResults": "No se han encontrado talentos para los filtros actuales.",
+    "spotlightTitle": "Radar de talento",
+    "spotlightText": "Una selección para descubrir quién está elevando el estándar gastronómico.",
+    "curationNote": "Se destacan perfiles por visión, ejecución y capacidad real de transformar la experiencia gastronómica.",
     "sectors": {
       "all": "Todos los sectores",
       "restauracion": "Restauración",
