@@ -5,10 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:api": "npm --prefix apps/api run dev",
     "build": "vite build",
+    "build:api": "npm --prefix apps/api run build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "api:migrate": "npm --prefix apps/api run prisma:migrate",
+    "api:seed": "npm --prefix apps/api run seed"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

@@ -60,6 +60,19 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## Backend API (Railway + PostgreSQL)
+
+This repository now includes a backend under `/apps/api` with:
+
+- Express API (`/v1/health`, `/v1/categories`, `/v1/restaurants`)
+- Prisma ORM
+- PostgreSQL connection via `DATABASE_URL`
+- Seed script for categories and restaurants
+
+Railway deployment/environment details are documented in:
+
+- `/docs/railway-backend.md`
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/aa6f91cd-9ae2-442b-aa5b-5e4083306698) and click on Share -> Publish.
