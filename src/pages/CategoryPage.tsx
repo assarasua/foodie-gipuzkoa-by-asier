@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowLeft, MapPin, Search, TriangleAlert } from "lucide-react";
+import { ArrowLeft, ChevronDown, MapPin, Search, SlidersHorizontal, TriangleAlert } from "lucide-react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { api, ApiError, PaginatedResponse, RestaurantFilterState, type RestaurantListItem } from "@/lib/api";
@@ -40,6 +40,7 @@ export const CategoryPage = () => {
   const [ratingMin, setRatingMin] = useState("all");
   const [sort, setSort] = useState<RestaurantFilterState["sort"]>("highest-rated");
   const [selected, setSelected] = useState<RestaurantListItem | null>(null);
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
   const categoryFromQuery = searchParams.get("category") ?? "all";
@@ -202,7 +203,103 @@ export const CategoryPage = () => {
       )}
 
       <section className="sticky top-28 z-30 rounded-2xl border border-border/70 bg-background/95 p-4 backdrop-blur-lg md:top-20">
-        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-6">
+        <div className="flex items-center justify-between md:hidden">
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{t("nav.filters")}</p>
+          <Button
+            type="button"
+            variant="outline"
+            className="min-h-10 rounded-xl"
+            onClick={() => setShowMobileFilters((value) => !value)}
+          >
+            <SlidersHorizontal className="mr-1.5 h-4 w-4" />
+            {t("nav.filters")}
+            <ChevronDown className={`ml-1.5 h-4 w-4 transition-transform ${showMobileFilters ? "rotate-180" : ""}`} />
+          </Button>
+        </div>
+
+        {showMobileFilters && (
+          <div className="mt-3 grid gap-3 md:hidden">
+            <Select value={categoryFilter} onValueChange={handleCategoryChange} disabled={!isRestaurantsHub}>
+              <SelectTrigger className="min-h-11 rounded-xl">
+                <SelectValue placeholder={t("common.allCategories")} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">{t("common.allCategories")}</SelectItem>
+                {categories.map((item) => (
+                  <SelectItem key={item.slug} value={item.slug}>
+                    {item.title}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            <div className="relative">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+                placeholder={t("category.searchPlaceholder")}
+                className="min-h-11 rounded-xl pl-9"
+              />
+            </div>
+
+            <Select value={city} onValueChange={setCity}>
+              <SelectTrigger className="min-h-11 rounded-xl">
+                <SelectValue placeholder={t("common.allCities")} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">{t("common.allCities")}</SelectItem>
+                {cities.map((cityOption) => (
+                  <SelectItem key={cityOption} value={cityOption}>
+                    {cityOption}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            <Select value={priceTier} onValueChange={setPriceTier}>
+              <SelectTrigger className="min-h-11 rounded-xl">
+                <SelectValue placeholder={t("common.allPrices")} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">{t("common.allPrices")}</SelectItem>
+                {[1, 2, 3, 4].map((tier) => (
+                  <SelectItem key={tier} value={String(tier)}>
+                    {priceLabel(tier)}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            <Select value={ratingMin} onValueChange={setRatingMin}>
+              <SelectTrigger className="min-h-11 rounded-xl">
+                <SelectValue placeholder={t("common.allRatings")} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">{t("common.allRatings")}</SelectItem>
+                {[1, 2, 3].map((value) => (
+                  <SelectItem key={value} value={String(value)}>
+                    {value}+ {t("category.stars")}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            <Select value={sort} onValueChange={(value) => setSort(value as RestaurantFilterState["sort"])}>
+              <SelectTrigger className="min-h-11 rounded-xl">
+                <SelectValue placeholder={t("category.sort")} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="recommended">{t("category.sortRecommended")}</SelectItem>
+                <SelectItem value="highest-rated">{t("category.sortHighestRated")}</SelectItem>
+                <SelectItem value="price-low">{t("category.sortPriceLow")}</SelectItem>
+                <SelectItem value="price-high">{t("category.sortPriceHigh")}</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+
+        <div className="hidden gap-3 md:grid md:grid-cols-2 xl:grid-cols-6">
           <Select value={categoryFilter} onValueChange={handleCategoryChange} disabled={!isRestaurantsHub}>
             <SelectTrigger className="min-h-11 rounded-xl">
               <SelectValue placeholder={t("common.allCategories")} />

@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { ArrowLeft, Search, Sparkles } from "lucide-react";
+import { ArrowLeft, ChevronDown, Search, SlidersHorizontal, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
@@ -29,6 +29,7 @@ export const JovenesTalentos = () => {
   const [search, setSearch] = useState("");
   const [sector, setSector] = useState<SectorValue>("all");
   const [location, setLocation] = useState("");
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   const talentsQuery = useQuery({
     queryKey: ["talents", search, sector, location],
@@ -79,7 +80,62 @@ export const JovenesTalentos = () => {
       </section>
 
       <section className="sticky top-28 z-30 rounded-2xl border border-border/70 bg-background/95 p-4 backdrop-blur-lg md:top-20">
-        <div className="grid gap-3 md:grid-cols-[1.4fr_1fr_1fr]">
+        <div className="flex items-center justify-between md:hidden">
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{t("nav.filters")}</p>
+          <Button
+            type="button"
+            variant="outline"
+            className="min-h-10 rounded-xl"
+            onClick={() => setShowMobileFilters((value) => !value)}
+          >
+            <SlidersHorizontal className="mr-1.5 h-4 w-4" />
+            {t("nav.filters")}
+            <ChevronDown className={`ml-1.5 h-4 w-4 transition-transform ${showMobileFilters ? "rotate-180" : ""}`} />
+          </Button>
+        </div>
+
+        {showMobileFilters && (
+          <div className="mt-3 grid gap-3 md:hidden">
+            <div className="relative">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+                placeholder={t("talents.searchPlaceholder")}
+                className="min-h-11 rounded-xl pl-9"
+              />
+            </div>
+
+            <Select value={sector} onValueChange={setSector}>
+              <SelectTrigger className="min-h-11 rounded-xl">
+                <SelectValue placeholder={t("talents.sector")} />
+              </SelectTrigger>
+              <SelectContent>
+                {sectorValues.map((value) => (
+                  <SelectItem key={value} value={value}>
+                    {t(`talents.sectors.${value}`)}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            <Select value={location || "all"} onValueChange={(value) => setLocation(value === "all" ? "" : value)}>
+              <SelectTrigger className="min-h-11 rounded-xl">
+                <SelectValue placeholder={t("talents.location")} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">{t("common.allLocations")}</SelectItem>
+                {locations.map((item) => (
+                  <SelectItem key={item} value={item}>
+                    {item}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+
+        <div className="hidden gap-3 md:grid md:grid-cols-[1.4fr_1fr_1fr]">
           <div className="relative">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
