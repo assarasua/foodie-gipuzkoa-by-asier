@@ -11,13 +11,15 @@ const Index = () => {
   return (
     <div className="mx-auto max-w-6xl space-y-8 px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
       <section className="editorial-card space-y-6 p-6 sm:p-8 lg:p-10">
-        <img
-          src="/images/gipuzkoafoodie.png"
-          alt="Foodie logo"
-          className="h-20 w-20 rounded-2xl object-cover shadow-elegant"
-        />
         <p className="editorial-kicker">{t("home.kicker")}</p>
-        <h1 className="editorial-title text-5xl sm:text-6xl">{t("home.title")}</h1>
+        <div className="flex items-start justify-between gap-6">
+          <h1 className="editorial-title text-5xl sm:text-6xl">{t("home.title")}</h1>
+          <img
+            src="/images/gipuzkoafoodie.png"
+            alt="Foodie logo"
+            className="h-24 w-24 flex-shrink-0 rounded-2xl object-cover shadow-elegant sm:h-28 sm:w-28"
+          />
+        </div>
         <p className="max-w-3xl text-base text-muted-foreground sm:text-lg">{t("home.subtitle")}</p>
         <div className="grid gap-3 sm:grid-cols-2">
           <p className="rounded-2xl border border-border/60 bg-background/70 p-4 text-sm text-muted-foreground">
@@ -57,45 +59,6 @@ const Index = () => {
             <p className="text-sm text-muted-foreground">{t("home.role3Desc")}</p>
           </CardContent>
         </Card>
-      </section>
-
-      <section className="editorial-card space-y-4 p-6 sm:p-8">
-        <div>
-          <p className="editorial-kicker">{t("home.projectTitle")}</p>
-          <h2 className="text-3xl font-semibold text-foreground">{t("home.projectSubtitle")}</h2>
-        </div>
-        <p className="max-w-3xl text-sm text-muted-foreground sm:text-base">{t("home.projectText")}</p>
-      </section>
-
-      <section className="editorial-card space-y-5 p-6 sm:p-8">
-        <div>
-          <p className="editorial-kicker">{t("home.useGuideTitle")}</p>
-          <h2 className="text-3xl font-semibold text-foreground">{t("home.useGuideSubtitle")}</h2>
-        </div>
-        <p className="max-w-3xl text-sm text-muted-foreground sm:text-base">{t("home.useGuideIntro")}</p>
-        <div className="grid gap-3 md:grid-cols-3">
-          <Card className="border-border/60 bg-background/70 shadow-none">
-            <CardContent className="space-y-2 p-4">
-              <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">01</p>
-              <p className="text-sm font-semibold text-foreground">{t("home.step1Title")}</p>
-              <p className="text-sm text-muted-foreground">{t("home.step1Desc")}</p>
-            </CardContent>
-          </Card>
-          <Card className="border-border/60 bg-background/70 shadow-none">
-            <CardContent className="space-y-2 p-4">
-              <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">02</p>
-              <p className="text-sm font-semibold text-foreground">{t("home.step2Title")}</p>
-              <p className="text-sm text-muted-foreground">{t("home.step2Desc")}</p>
-            </CardContent>
-          </Card>
-          <Card className="border-border/60 bg-background/70 shadow-none">
-            <CardContent className="space-y-2 p-4">
-              <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">03</p>
-              <p className="text-sm font-semibold text-foreground">{t("home.step3Title")}</p>
-              <p className="text-sm text-muted-foreground">{t("home.step3Desc")}</p>
-            </CardContent>
-          </Card>
-        </div>
       </section>
     </div>
   );
