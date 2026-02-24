@@ -11,6 +11,11 @@ const Index = () => {
   return (
     <div className="mx-auto max-w-6xl space-y-8 px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
       <section className="editorial-card space-y-6 p-6 sm:p-8 lg:p-10">
+        <img
+          src="/images/gipuzkoafoodie.png"
+          alt="Foodie logo"
+          className="h-20 w-20 rounded-2xl object-cover shadow-elegant"
+        />
         <p className="editorial-kicker">{t("home.kicker")}</p>
         <h1 className="editorial-title text-5xl sm:text-6xl">{t("home.title")}</h1>
         <p className="max-w-3xl text-base text-muted-foreground sm:text-lg">{t("home.subtitle")}</p>

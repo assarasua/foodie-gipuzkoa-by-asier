@@ -36,11 +36,6 @@ export const AppShell = ({ children }: { children: ReactNode }) => {
       <header className="sticky top-0 z-40 border-b border-border/70 bg-background/95 backdrop-blur-xl">
         <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
           <Link to="/" className="inline-flex items-center gap-3">
-            <img
-              src="/images/gipuzkoafoodie.png"
-              alt="Foodie logo"
-              className="h-10 w-10 rounded-xl object-cover"
-            />
             <div>
               <p className="text-[10px] uppercase tracking-[0.24em] text-muted-foreground">{t("brand.region")}</p>
               <p className="text-sm font-semibold text-foreground sm:text-base">{t("brand.name")}</p>
