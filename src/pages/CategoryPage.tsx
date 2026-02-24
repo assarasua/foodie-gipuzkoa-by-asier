@@ -201,7 +201,7 @@ export const CategoryPage = () => {
         </section>
       )}
 
-      <section className="sticky top-20 z-30 rounded-2xl border border-border/70 bg-background/95 p-4 backdrop-blur-lg">
+      <section className="sticky top-28 z-30 rounded-2xl border border-border/70 bg-background/95 p-4 backdrop-blur-lg md:top-20">
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-6">
           <Select value={categoryFilter} onValueChange={handleCategoryChange} disabled={!isRestaurantsHub}>
             <SelectTrigger className="min-h-11 rounded-xl">
