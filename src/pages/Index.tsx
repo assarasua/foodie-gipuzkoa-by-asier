@@ -17,7 +17,7 @@ const Index = () => {
           <img
             src="/images/gipuzkoafoodie.png"
             alt="Foodie logo"
-            className="h-24 w-24 flex-shrink-0 rounded-2xl object-cover shadow-elegant sm:h-28 sm:w-28"
+            className="h-28 w-28 flex-shrink-0 rounded-2xl object-cover shadow-elegant sm:h-36 sm:w-36 lg:h-40 lg:w-40"
           />
         </div>
         <p className="max-w-3xl text-base text-muted-foreground sm:text-lg">{t("home.subtitle")}</p>
