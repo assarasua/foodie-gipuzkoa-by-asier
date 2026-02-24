@@ -1,6 +1,6 @@
 import { useTranslation } from '@/contexts/TranslationContext';
 
-const sanSebastianImage = "/lovable-uploads/7c182f6b-c1b0-4ee0-96b1-8b702df96d01.png";
+const sanSebastianImage = "/images/san-sebastian.png";
 
 export const HeroSection = () => {
   const { t } = useTranslation();

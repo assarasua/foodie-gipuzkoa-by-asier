@@ -12,7 +12,7 @@ export const AboutSection = () => {
               <div className="flex-shrink-0">
                 <div className="relative">
                   <img 
-                    src="/lovable-uploads/a6d93fda-c011-458a-8b81-fe144a606939.png"
+                    src="/images/asier-profile.png"
                     alt="Asier Sarasua"
                     className="w-32 h-32 md:w-40 md:h-40 object-cover rounded-full border-4 border-primary/20 shadow-elegant"
                   />
