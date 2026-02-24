@@ -1,4 +1,15 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL ?? "https://api.gipuzkoafoodie.eu/v1";
+const FALLBACK_API_BASE_URL = "https://api.gipuzkoafoodie.eu/v1";
+
+function normalizeApiBaseUrl(rawUrl?: string) {
+  const raw = rawUrl?.trim();
+  if (!raw) return FALLBACK_API_BASE_URL;
+
+  const cleaned = raw.endsWith("/") ? raw.slice(0, -1) : raw;
+  if (cleaned.endsWith("/v1")) return cleaned;
+  return `${cleaned}/v1`;
+}
+
+const API_BASE_URL = normalizeApiBaseUrl(import.meta.env.VITE_API_URL);
 
 export type ApiLocale = "es" | "en";
 

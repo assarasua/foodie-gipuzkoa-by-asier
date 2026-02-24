@@ -4,7 +4,13 @@ import express, { type Request, type Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import { z } from "zod";
 
-if (!process.env.DATABASE_URL && process.env.DATABASE_PUBLIC_URL) {
+const rawDatabaseUrl = process.env.DATABASE_URL?.trim();
+if (
+  (!rawDatabaseUrl ||
+    rawDatabaseUrl === "${DATABASE_PUBLIC_URL}" ||
+    rawDatabaseUrl === "${{DATABASE_PUBLIC_URL}}") &&
+  process.env.DATABASE_PUBLIC_URL
+) {
   process.env.DATABASE_URL = process.env.DATABASE_PUBLIC_URL;
 }
 
@@ -38,7 +44,7 @@ const asyncHandler =
   (req: Request, res: Response, next: express.NextFunction) =>
     Promise.resolve(handler(req, res)).catch(next);
 
-app.get("/v1/health", asyncHandler(async (_req: Request, res: Response) => {
+const healthHandler = asyncHandler(async (_req: Request, res: Response) => {
   let db = "ok";
   try {
     await prisma.$queryRaw`SELECT 1`;
@@ -52,7 +58,11 @@ app.get("/v1/health", asyncHandler(async (_req: Request, res: Response) => {
     service: API_BASE_URL,
     timestamp: new Date().toISOString()
   });
-}));
+});
+
+app.get("/", healthHandler);
+app.get("/health", healthHandler);
+app.get("/v1/health", healthHandler);
 
 app.get("/v1/categories", asyncHandler(async (req: Request, res: Response) => {
   const locale = localeSchema.parse(req.query.locale);
