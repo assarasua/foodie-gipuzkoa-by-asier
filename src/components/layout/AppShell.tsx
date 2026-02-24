@@ -63,15 +63,6 @@ export const AppShell = ({ children }: { children: ReactNode }) => {
           </nav>
 
           <div className="hidden items-center gap-3 md:flex">
-            <a
-              href={MAP_FALLBACK}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-primary px-3.5 text-sm font-semibold text-primary-foreground transition hover:brightness-95"
-            >
-              <MapPinned className="h-4 w-4" />
-              {t("common.openMap")}
-            </a>
             <LanguageToggle />
           </div>
 
