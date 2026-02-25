@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowLeft, ChevronDown, MapPin, Search, SlidersHorizontal, TriangleAlert } from "lucide-react";
+import { ArrowLeft, MapPin, Search, SlidersHorizontal, TriangleAlert } from "lucide-react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { api, ApiError, PaginatedResponse, RestaurantFilterState, type RestaurantListItem } from "@/lib/api";
@@ -17,11 +17,22 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MobileFilterSheet } from "@/components/filters/MobileFilterSheet";
 
 const PAGE_SIZE = 24;
 const priceLabel = (priceTier: number) => "€".repeat(Math.max(1, Math.min(4, priceTier)));
 const ratingValue = (rating?: number | null) => Math.max(1, Math.min(3, rating ?? 3));
 const ratingStars = (rating?: number | null) => "★".repeat(ratingValue(rating));
+const DEFAULT_SORT: RestaurantFilterState["sort"] = "highest-rated";
+
+interface RestaurantFilterDraftState {
+  category: string;
+  search: string;
+  city: string;
+  priceTier: string;
+  ratingMin: string;
+  sort: RestaurantFilterState["sort"];
+}
 
 type RestaurantsPage = PaginatedResponse<RestaurantListItem> & {
   isFallback: boolean;
@@ -38,15 +49,23 @@ export const CategoryPage = () => {
   const [city, setCity] = useState("all");
   const [priceTier, setPriceTier] = useState("all");
   const [ratingMin, setRatingMin] = useState("all");
-  const [sort, setSort] = useState<RestaurantFilterState["sort"]>("highest-rated");
+  const [sort, setSort] = useState<RestaurantFilterState["sort"]>(DEFAULT_SORT);
   const [selected, setSelected] = useState<RestaurantListItem | null>(null);
-  const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [isFilterSheetOpen, setIsFilterSheetOpen] = useState(false);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
   const categoryFromQuery = searchParams.get("category") ?? "all";
   const categoryFilter = categoryParam ?? categoryFromQuery;
   const activeCategorySlug = categoryFilter === "all" ? undefined : categoryFilter;
   const isRestaurantsHub = !categoryParam;
+  const [draftFilters, setDraftFilters] = useState<RestaurantFilterDraftState>({
+    category: categoryFilter,
+    search,
+    city,
+    priceTier,
+    ratingMin,
+    sort
+  });
 
   const baseFilters = useMemo<RestaurantFilterState>(
     () => ({
@@ -60,6 +79,18 @@ export const CategoryPage = () => {
     }),
     [search, city, priceTier, ratingMin, sort]
   );
+
+  useEffect(() => {
+    if (isFilterSheetOpen) return;
+    setDraftFilters({
+      category: categoryFilter,
+      search,
+      city,
+      priceTier,
+      ratingMin,
+      sort
+    });
+  }, [isFilterSheetOpen, categoryFilter, search, city, priceTier, ratingMin, sort]);
 
   const categoryQuery = useQuery({
     queryKey: ["categories", language],
@@ -146,6 +177,51 @@ export const CategoryPage = () => {
     setSearchParams({ category: value });
   };
 
+  const appliedFilterCount =
+    (isRestaurantsHub && categoryFilter !== "all" ? 1 : 0) +
+    (search.trim() ? 1 : 0) +
+    (city !== "all" ? 1 : 0) +
+    (priceTier !== "all" ? 1 : 0) +
+    (ratingMin !== "all" ? 1 : 0) +
+    (sort !== DEFAULT_SORT ? 1 : 0);
+
+  const draftFilterCount =
+    (isRestaurantsHub && draftFilters.category !== "all" ? 1 : 0) +
+    (draftFilters.search.trim() ? 1 : 0) +
+    (draftFilters.city !== "all" ? 1 : 0) +
+    (draftFilters.priceTier !== "all" ? 1 : 0) +
+    (draftFilters.ratingMin !== "all" ? 1 : 0) +
+    (draftFilters.sort !== DEFAULT_SORT ? 1 : 0);
+
+  const clearDraftFilters = () => {
+    setDraftFilters({
+      category: isRestaurantsHub ? "all" : categoryFilter,
+      search: "",
+      city: "all",
+      priceTier: "all",
+      ratingMin: "all",
+      sort: DEFAULT_SORT
+    });
+  };
+
+  const applyDraftFilters = () => {
+    setSearch(draftFilters.search);
+    setCity(draftFilters.city);
+    setPriceTier(draftFilters.priceTier);
+    setRatingMin(draftFilters.ratingMin);
+    setSort(draftFilters.sort);
+
+    if (isRestaurantsHub && draftFilters.category !== categoryFilter) {
+      if (draftFilters.category === "all") {
+        setSearchParams({});
+      } else {
+        setSearchParams({ category: draftFilters.category });
+      }
+    }
+
+    setIsFilterSheetOpen(false);
+  };
+
   return (
     <div className="mx-auto w-full max-w-7xl space-y-6 px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
       {isFallback && (
@@ -204,46 +280,78 @@ export const CategoryPage = () => {
 
       <section className="sticky top-28 z-30 rounded-2xl border border-border/70 bg-background/95 p-4 backdrop-blur-lg md:top-20">
         <div className="flex items-center justify-between md:hidden">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{t("nav.filters")}</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{t("filters.title")}</p>
           <Button
             type="button"
             variant="outline"
-            className="min-h-10 rounded-xl"
-            onClick={() => setShowMobileFilters((value) => !value)}
+            className="min-h-11 rounded-xl"
+            onClick={() => setIsFilterSheetOpen(true)}
+            aria-expanded={isFilterSheetOpen}
+            aria-controls="restaurants-filters-sheet"
           >
             <SlidersHorizontal className="mr-1.5 h-4 w-4" />
-            {t("nav.filters")}
-            <ChevronDown className={`ml-1.5 h-4 w-4 transition-transform ${showMobileFilters ? "rotate-180" : ""}`} />
+            {t("filters.open")}
+            {appliedFilterCount > 0 && (
+              <span className="ml-2 inline-flex min-h-6 min-w-6 items-center justify-center rounded-full bg-primary px-1.5 text-xs font-semibold text-primary-foreground">
+                {appliedFilterCount}
+              </span>
+            )}
           </Button>
         </div>
 
-        {showMobileFilters && (
-          <div className="mt-3 grid gap-3 md:hidden">
-            <Select value={categoryFilter} onValueChange={handleCategoryChange} disabled={!isRestaurantsHub}>
-              <SelectTrigger className="min-h-11 rounded-xl">
-                <SelectValue placeholder={t("common.allCategories")} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">{t("common.allCategories")}</SelectItem>
-                {categories.map((item) => (
-                  <SelectItem key={item.slug} value={item.slug}>
-                    {item.title}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+        <MobileFilterSheet
+          id="restaurants-filters-sheet"
+          open={isFilterSheetOpen}
+          onOpenChange={setIsFilterSheetOpen}
+          title={t("filters.title")}
+          activeCountLabel={`${t("filters.activeCount")}: ${draftFilterCount}`}
+          closeA11yLabel={t("filters.closeA11y")}
+          footerHint={`${t("filters.resultsPreview")}: ${total} ${t("category.totalResults")}`}
+          clearLabel={t("filters.clear")}
+          cancelLabel={t("filters.cancel")}
+          applyLabel={t("filters.apply")}
+          onClear={clearDraftFilters}
+          onApply={applyDraftFilters}
+        >
+          {isRestaurantsHub && (
+            <div className="space-y-1">
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">{t("common.allCategories")}</p>
+              <Select
+                value={draftFilters.category}
+                onValueChange={(value) => setDraftFilters((prev) => ({ ...prev, category: value }))}
+                disabled={!isRestaurantsHub}
+              >
+                <SelectTrigger className="min-h-11 rounded-xl">
+                  <SelectValue placeholder={t("common.allCategories")} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">{t("common.allCategories")}</SelectItem>
+                  {categories.map((item) => (
+                    <SelectItem key={item.slug} value={item.slug}>
+                      {item.title}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
 
+          <div className="space-y-1">
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">{t("category.searchPlaceholder")}</p>
             <div className="relative">
               <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
-                value={search}
-                onChange={(event) => setSearch(event.target.value)}
+                value={draftFilters.search}
+                onChange={(event) => setDraftFilters((prev) => ({ ...prev, search: event.target.value }))}
                 placeholder={t("category.searchPlaceholder")}
                 className="min-h-11 rounded-xl pl-9"
               />
             </div>
+          </div>
 
-            <Select value={city} onValueChange={setCity}>
+          <div className="space-y-1">
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">{t("common.allCities")}</p>
+            <Select value={draftFilters.city} onValueChange={(value) => setDraftFilters((prev) => ({ ...prev, city: value }))}>
               <SelectTrigger className="min-h-11 rounded-xl">
                 <SelectValue placeholder={t("common.allCities")} />
               </SelectTrigger>
@@ -256,8 +364,11 @@ export const CategoryPage = () => {
                 ))}
               </SelectContent>
             </Select>
+          </div>
 
-            <Select value={priceTier} onValueChange={setPriceTier}>
+          <div className="space-y-1">
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">{t("common.allPrices")}</p>
+            <Select value={draftFilters.priceTier} onValueChange={(value) => setDraftFilters((prev) => ({ ...prev, priceTier: value }))}>
               <SelectTrigger className="min-h-11 rounded-xl">
                 <SelectValue placeholder={t("common.allPrices")} />
               </SelectTrigger>
@@ -270,8 +381,11 @@ export const CategoryPage = () => {
                 ))}
               </SelectContent>
             </Select>
+          </div>
 
-            <Select value={ratingMin} onValueChange={setRatingMin}>
+          <div className="space-y-1">
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">{t("common.allRatings")}</p>
+            <Select value={draftFilters.ratingMin} onValueChange={(value) => setDraftFilters((prev) => ({ ...prev, ratingMin: value }))}>
               <SelectTrigger className="min-h-11 rounded-xl">
                 <SelectValue placeholder={t("common.allRatings")} />
               </SelectTrigger>
@@ -284,8 +398,14 @@ export const CategoryPage = () => {
                 ))}
               </SelectContent>
             </Select>
+          </div>
 
-            <Select value={sort} onValueChange={(value) => setSort(value as RestaurantFilterState["sort"])}>
+          <div className="space-y-1">
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">{t("category.sort")}</p>
+            <Select
+              value={draftFilters.sort}
+              onValueChange={(value) => setDraftFilters((prev) => ({ ...prev, sort: value as RestaurantFilterState["sort"] }))}
+            >
               <SelectTrigger className="min-h-11 rounded-xl">
                 <SelectValue placeholder={t("category.sort")} />
               </SelectTrigger>
@@ -297,7 +417,7 @@ export const CategoryPage = () => {
               </SelectContent>
             </Select>
           </div>
-        )}
+        </MobileFilterSheet>
 
         <div className="hidden gap-3 md:grid md:grid-cols-2 xl:grid-cols-6">
           <Select value={categoryFilter} onValueChange={handleCategoryChange} disabled={!isRestaurantsHub}>

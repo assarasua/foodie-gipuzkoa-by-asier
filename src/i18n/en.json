@@ -11,6 +11,16 @@
     "filters": "Filters",
     "map": "Map"
   },
+  "filters": {
+    "open": "Open filters",
+    "title": "Filters",
+    "activeCount": "Active filters",
+    "apply": "Apply",
+    "clear": "Clear",
+    "cancel": "Cancel",
+    "resultsPreview": "Current results",
+    "closeA11y": "Close filters"
+  },
   "common": {
     "loading": "Loading...",
     "error": "Something went wrong.",

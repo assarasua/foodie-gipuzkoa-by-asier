@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { ArrowLeft, ChevronDown, Search, SlidersHorizontal, Sparkles } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { ArrowLeft, Search, SlidersHorizontal, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { api } from "@/lib/api";
 import { useTranslation } from "@/contexts/TranslationContext";
+import { MobileFilterSheet } from "@/components/filters/MobileFilterSheet";
 
 const sectorValues = [
   "all",
@@ -23,13 +24,24 @@ const sectorValues = [
 
 type SectorValue = (typeof sectorValues)[number];
 
+interface TalentFilterDraftState {
+  search: string;
+  sector: SectorValue;
+  location: string;
+}
+
 export const JovenesTalentos = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [search, setSearch] = useState("");
   const [sector, setSector] = useState<SectorValue>("all");
   const [location, setLocation] = useState("");
-  const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [isFilterSheetOpen, setIsFilterSheetOpen] = useState(false);
+  const [draftFilters, setDraftFilters] = useState<TalentFilterDraftState>({
+    search,
+    sector,
+    location
+  });
 
   const talentsQuery = useQuery({
     queryKey: ["talents", search, sector, location],
@@ -48,6 +60,33 @@ export const JovenesTalentos = () => {
     () => Array.from(new Set((talentsQuery.data ?? []).map((item) => item.location))).sort((a, b) => a.localeCompare(b)),
     [talentsQuery.data]
   );
+
+  useEffect(() => {
+    if (isFilterSheetOpen) return;
+    setDraftFilters({
+      search,
+      sector,
+      location
+    });
+  }, [isFilterSheetOpen, search, sector, location]);
+
+  const appliedFilterCount = (search.trim() ? 1 : 0) + (sector !== "all" ? 1 : 0) + (location ? 1 : 0);
+  const draftFilterCount = (draftFilters.search.trim() ? 1 : 0) + (draftFilters.sector !== "all" ? 1 : 0) + (draftFilters.location ? 1 : 0);
+
+  const clearDraftFilters = () => {
+    setDraftFilters({
+      search: "",
+      sector: "all",
+      location: ""
+    });
+  };
+
+  const applyDraftFilters = () => {
+    setSearch(draftFilters.search);
+    setSector(draftFilters.sector);
+    setLocation(draftFilters.location);
+    setIsFilterSheetOpen(false);
+  };
 
   return (
     <div className="mx-auto w-full max-w-7xl space-y-6 px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
@@ -81,32 +120,55 @@ export const JovenesTalentos = () => {
 
       <section className="sticky top-28 z-30 rounded-2xl border border-border/70 bg-background/95 p-4 backdrop-blur-lg md:top-20">
         <div className="flex items-center justify-between md:hidden">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{t("nav.filters")}</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{t("filters.title")}</p>
           <Button
             type="button"
             variant="outline"
-            className="min-h-10 rounded-xl"
-            onClick={() => setShowMobileFilters((value) => !value)}
+            className="min-h-11 rounded-xl"
+            onClick={() => setIsFilterSheetOpen(true)}
+            aria-expanded={isFilterSheetOpen}
+            aria-controls="talents-filters-sheet"
           >
             <SlidersHorizontal className="mr-1.5 h-4 w-4" />
-            {t("nav.filters")}
-            <ChevronDown className={`ml-1.5 h-4 w-4 transition-transform ${showMobileFilters ? "rotate-180" : ""}`} />
+            {t("filters.open")}
+            {appliedFilterCount > 0 && (
+              <span className="ml-2 inline-flex min-h-6 min-w-6 items-center justify-center rounded-full bg-primary px-1.5 text-xs font-semibold text-primary-foreground">
+                {appliedFilterCount}
+              </span>
+            )}
           </Button>
         </div>
 
-        {showMobileFilters && (
-          <div className="mt-3 grid gap-3 md:hidden">
+        <MobileFilterSheet
+          id="talents-filters-sheet"
+          open={isFilterSheetOpen}
+          onOpenChange={setIsFilterSheetOpen}
+          title={t("filters.title")}
+          activeCountLabel={`${t("filters.activeCount")}: ${draftFilterCount}`}
+          closeA11yLabel={t("filters.closeA11y")}
+          footerHint={`${t("filters.resultsPreview")}: ${(talentsQuery.data ?? []).length} ${t("category.totalResults")}`}
+          clearLabel={t("filters.clear")}
+          cancelLabel={t("filters.cancel")}
+          applyLabel={t("filters.apply")}
+          onClear={clearDraftFilters}
+          onApply={applyDraftFilters}
+        >
+          <div className="space-y-1">
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">{t("talents.searchPlaceholder")}</p>
             <div className="relative">
               <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
-                value={search}
-                onChange={(event) => setSearch(event.target.value)}
+                value={draftFilters.search}
+                onChange={(event) => setDraftFilters((prev) => ({ ...prev, search: event.target.value }))}
                 placeholder={t("talents.searchPlaceholder")}
                 className="min-h-11 rounded-xl pl-9"
               />
             </div>
+          </div>
 
-            <Select value={sector} onValueChange={setSector}>
+          <div className="space-y-1">
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">{t("talents.sector")}</p>
+            <Select value={draftFilters.sector} onValueChange={(value) => setDraftFilters((prev) => ({ ...prev, sector: value as SectorValue }))}>
               <SelectTrigger className="min-h-11 rounded-xl">
                 <SelectValue placeholder={t("talents.sector")} />
               </SelectTrigger>
@@ -118,8 +180,14 @@ export const JovenesTalentos = () => {
                 ))}
               </SelectContent>
             </Select>
+          </div>
 
-            <Select value={location || "all"} onValueChange={(value) => setLocation(value === "all" ? "" : value)}>
+          <div className="space-y-1">
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">{t("talents.location")}</p>
+            <Select
+              value={draftFilters.location || "all"}
+              onValueChange={(value) => setDraftFilters((prev) => ({ ...prev, location: value === "all" ? "" : value }))}
+            >
               <SelectTrigger className="min-h-11 rounded-xl">
                 <SelectValue placeholder={t("talents.location")} />
               </SelectTrigger>
@@ -133,7 +201,7 @@ export const JovenesTalentos = () => {
               </SelectContent>
             </Select>
           </div>
-        )}
+        </MobileFilterSheet>
 
         <div className="hidden gap-3 md:grid md:grid-cols-[1.4fr_1fr_1fr]">
           <div className="relative">

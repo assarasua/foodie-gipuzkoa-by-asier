@@ -11,6 +11,16 @@
     "filters": "Filtros",
     "map": "Mapa"
   },
+  "filters": {
+    "open": "Abrir filtros",
+    "title": "Filtros",
+    "activeCount": "Filtros activos",
+    "apply": "Aplicar",
+    "clear": "Limpiar",
+    "cancel": "Cancelar",
+    "resultsPreview": "Resultados actuales",
+    "closeA11y": "Cerrar filtros"
+  },
   "common": {
     "loading": "Cargando...",
     "error": "Ha ocurrido un error.",
