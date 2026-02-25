@@ -308,7 +308,6 @@ export const CategoryPage = () => {
           closeA11yLabel={t("filters.closeA11y")}
           footerHint={`${t("filters.resultsPreview")}: ${total} ${t("category.totalResults")}`}
           clearLabel={t("filters.clear")}
-          cancelLabel={t("filters.cancel")}
           applyLabel={t("filters.apply")}
           onClear={clearDraftFilters}
           onApply={applyDraftFilters}

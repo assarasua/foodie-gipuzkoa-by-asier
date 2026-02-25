@@ -12,7 +12,6 @@ interface MobileFilterSheetProps {
   closeA11yLabel: string;
   footerHint: string;
   clearLabel: string;
-  cancelLabel: string;
   applyLabel: string;
   onClear: () => void;
   onApply: () => void;
@@ -28,7 +27,6 @@ export function MobileFilterSheet({
   closeA11yLabel,
   footerHint,
   clearLabel,
-  cancelLabel,
   applyLabel,
   onClear,
   onApply,
@@ -39,9 +37,9 @@ export function MobileFilterSheet({
       <SheetContent
         side="bottom"
         id={id}
-        className="max-h-[85vh] rounded-t-3xl border-border/70 p-0 focus-visible:outline-none [&>button]:hidden"
+        className="h-[85vh] max-h-[85vh] rounded-t-3xl border-border/70 p-0 focus-visible:outline-none [&>button]:hidden"
       >
-        <div className="flex h-full flex-col">
+        <div className="grid h-full grid-rows-[auto,minmax(0,1fr),auto] overflow-hidden">
           <SheetHeader className="border-b border-border/70 px-4 py-4 text-left">
             <div className="flex items-start justify-between gap-3">
               <div className="space-y-1">
@@ -63,23 +61,15 @@ export function MobileFilterSheet({
             </div>
           </SheetHeader>
 
-          <div className="flex-1 overflow-y-auto px-4 pb-4 pt-3">
+          <div className="overflow-y-auto overscroll-contain px-4 pb-6 pt-3">
             <div className="grid gap-3">{children}</div>
           </div>
 
           <div className="border-t border-border/70 bg-background/95 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur">
             <p className="mb-3 text-xs text-muted-foreground">{footerHint}</p>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-2 gap-2">
               <Button type="button" variant="outline" className="min-h-11 rounded-xl" onClick={onClear}>
                 {clearLabel}
-              </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                className="min-h-11 rounded-xl border border-border/70"
-                onClick={() => onOpenChange(false)}
-              >
-                {cancelLabel}
               </Button>
               <Button type="button" className="min-h-11 rounded-xl" onClick={onApply}>
                 {applyLabel}
